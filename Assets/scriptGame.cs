@@ -4,16 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class scriptGame : MonoBehaviour {
-    public Texture2D background; // Background image from "board.png" asset
-    public Texture2D cell; // Cell image from "cell.png" asset
-    public Sprite[] sprites; // List of sprites used in "cells" and other controls
-    public Image imageIndicator; // Control to output the "Indicator" state
-    public Text textIndicator; // Control to output the text near the "Indicator" image
+    // Background image from "board.png" asset
+    public Texture2D background;
+    // Cell image from "cell.png" asset
+    public GameObject ImgBackground;
+    public Texture2D cell;
+    // List of sprites used in "cells" and other controls
+    public Sprite[] sprites;
+    // Control to output the "Indicator" state
+    public Image imageIndicator;
+    // Control to output the text near the "Indicator" image
+    public Text textIndicator;
 
-    private int turn; // Swaps between 1 and -1 on each turn. -1 means "o" turn, 1 means "x" turn
-    private bool isGameOver; // End of game flag. If true, winner contains result of the game
-    private int winner; // Winner of game,  1 for "x", -1 for "o", 0 - draw. Valid only if isGameOver and not isDraw
-    private ArrayList winnerCells; // Array of cells that take line or diagonal or both. Can be used for special effects, like stroke or blinking.
+    // Swaps between 1 and -1 on each turn. -1 means "o" turn, 1 means "x" turn
+    private int turn;
+    // End of game flag. If true, winner contains result of the game
+    private bool isGameOver;
+    private int winner;
+    // Winner of game,  1 for "x", -1 for "o", 0 - draw. Valid only if isGameOver and not isDraw
+    private ArrayList winnerCells;
+    // Array of cells that take line or diagonal or both. Can be used for special effects, like stroke or blinking.
     private int[] cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
     private int[] sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
 
@@ -33,6 +43,33 @@ public class scriptGame : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Initialization
     void Start () {
+        int ScreenHeight = Screen.height - 4;
+        int ScreenWidth = Screen.width - 4;
+        float DefaultRatio = ImgBackground.GetComponent<RectTransform> ().rect.width / ImgBackground.GetComponent<RectTransform> ().rect.height;
+        float ScreenRatio = ScreenWidth / ScreenHeight;
+        if (Debug.isDebugBuild) {
+            Debug.Log (ScreenHeight);
+            Debug.Log (ScreenWidth);
+        }
+        if (DefaultRatio < ScreenRatio) {
+            ImgBackground.GetComponent<RectTransform> ().sizeDelta = new Vector2 (
+                ScreenHeight * DefaultRatio, ScreenHeight
+            );
+        } else if (DefaultRatio > ScreenRatio) {
+            ImgBackground.GetComponent<RectTransform> ().sizeDelta = new Vector2 (
+                ScreenWidth, ScreenWidth / DefaultRatio
+            );
+        } else {
+            ImgBackground.GetComponent<RectTransform> ().sizeDelta = new Vector2 (
+                ScreenWidth, ScreenHeight
+            );
+        }
+        // ImgBackground.Find ("textTittle").GetComponent<RectTransform> ().position = new Vect;
+        if (Debug.isDebugBuild)
+            Debug.Log (ImgBackground.GetComponent<RectTransform> ().sizeDelta);
+
+        var bg = ImgBackground.GetComponent<RectTransform> ().rect;
+
         //                           0 1 2
         // Cell array for the board: 3 4 5
         //                           6 7 8
@@ -41,14 +78,14 @@ public class scriptGame : MonoBehaviour {
         winnerCells = new ArrayList ();
 
         // Pixel sizes for Cells
-        cellWidth = cell.width;
-        cellHeight = cell.height;
-        cellSpaceX = (int) Math.Round ((double) ((background.width - 3 * cellWidth) / (2 + 2))); // 2 spaces and 2 side offsets
-        cellSpaceY = (int) Math.Round ((double) ((background.width - 3 * cellHeight) / (2 + 2))); // !!!background.width!!! 2 spaces + top and bottom offsets
+        cellWidth = (int) Math.Round (bg.width / 3 * 0.98);
+        cellHeight = (int) Math.Round (bg.width / 3 * 0.98);
+        cellSpaceX = (int) Math.Round ((double) ((bg.width - 3 * cellWidth) / (2 + 2))); // 2 spaces and 2 side offsets
+        cellSpaceY = (int) Math.Round ((double) ((bg.width - 3 * cellHeight) / (2 + 2))); // !!!background.width!!! 2 spaces + top and bottom offsets
         if (Debug.isDebugBuild) {
             Debug.Log (string.Format ("Cell size is {0}x{1} offsets are: {2}, {3}", cellWidth, cellHeight, cellSpaceX, cellSpaceY));
         }
-
+        ImgBackground.SetActive (false);
         // Set all values to default
         gameReset ();
     }
@@ -59,24 +96,20 @@ public class scriptGame : MonoBehaviour {
     void Update () {
         if (isGameOver)
             return;
-        // Do nothing if game is stopped
-
         if (turn == -1)
             turnByAI (turn);
-
-        // AI for "o" player
-
         // if (turn == 1) turnByAI(turn); // AI for "x" player
     }
 
     // --------------------------------------------------------------------------
     // Called when some GUI event or user input event occurs
     void OnGUI () { // Draw background
-        int x = background.width;
-        int y = background.height;
+        // Adjust by Screen 
+        int x = (int) Math.Round (ImgBackground.GetComponent<RectTransform> ().rect.width);
+        int y = (int) Math.Round (ImgBackground.GetComponent<RectTransform> ().rect.height);
+        // int x = background.width;
+        // int y = background.height;
         Rect r = new Rect (0, 0, x, y);
-        //        GUI.DrawTexture(r, background); // !!! Don't use it with new canvas UI !!!
-
         // Draw cells and perform cell state changes
         int beginX = (int) (((Screen.width + x) / 2) - x) + boardLeft;
         int beginY = (int) (((Screen.height + y) / 2) - y) + boardTop;
@@ -102,7 +135,6 @@ public class scriptGame : MonoBehaviour {
             }
 
         }
-        // for (int i = 0; i < cells.Length; i++)
 
         // Draw "Indicator" text and image
         gameUpdateIndicator ();
@@ -209,9 +241,7 @@ public class scriptGame : MonoBehaviour {
         winnerCells.Clear ();
         for (int i = 0; i < sums.Length; i++) {
             if (Math.Abs (sums[i]) >= 3) {
-                int a,
-                b,
-                c;
+                int a, b, c;
                 if (cellBySum (i, out a, out b, out c)) {
                     winnerCells.Add (a);
                     winnerCells.Add (b);
@@ -254,40 +284,7 @@ public class scriptGame : MonoBehaviour {
     // Cells and board
     // ==========================================================================
 
-    static int[, ] mapCellToSum = new int[8, 3] {
-        {
-        0,
-        1,
-        2
-        }, {
-        3,
-        4,
-        5
-        }, {
-        6,
-        7,
-        8
-        }, {
-        0,
-        3,
-        6
-        }, {
-        1,
-        4,
-        7
-        }, {
-        2,
-        5,
-        8
-        }, {
-        0,
-        4,
-        8
-        }, {
-        6,
-        4,
-        2
-        }
+    static int[, ] mapCellToSum = new int[8, 3] { { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, { 0, 4, 8 }, { 6, 4, 2 }
     };
 
     // --------------------------------------------------------------------------
@@ -304,13 +301,6 @@ public class scriptGame : MonoBehaviour {
         }
 
         cells[index] = value;
-        // Should be the single place of entire program where cells[] value is changed
-
-        // if (Debug.isDebugBuild)
-        // {
-        //    Debug.Log(string.Format("Call of setCellValue({0}, {1}) complete", index, value));
-        // }
-
         return true;
     }
 
@@ -321,7 +311,6 @@ public class scriptGame : MonoBehaviour {
         foreach (int i in cells) {
             if (i == 0)
                 count++;
-
         }
         return count;
     }
@@ -340,22 +329,8 @@ public class scriptGame : MonoBehaviour {
     // Updates sum scores for horizontal, vertical and diagonal lines
     void cellSumsUpdate () {
         for (int i = 0; i < mapCellToSum.GetLength (0); i++) {
-            sums[i] = cellSumOf3 (mapCellToSum[
-                i, 0
-            ], mapCellToSum[
-                i, 1
-            ], mapCellToSum[i, 2]);
+            sums[i] = cellSumOf3 (mapCellToSum[i, 0], mapCellToSum[i, 1], mapCellToSum[i, 2]);
         }
-        /* Variant without the loop
-                sums[0] = cellSumOf3(0, 1, 2);
-                sums[1] = cellSumOf3(3, 4, 5);
-                sums[2] = cellSumOf3(6, 7, 8);
-                sums[3] = cellSumOf3(0, 3, 6);
-                sums[4] = cellSumOf3(1, 4, 7);
-                sums[5] = cellSumOf3(2, 5, 8);
-                sums[6] = cellSumOf3(0, 4, 8);
-                sums[7] = cellSumOf3(6, 4, 2);
-        */
     }
 
     // --------------------------------------------------------------------------
@@ -377,6 +352,7 @@ public class scriptGame : MonoBehaviour {
 
     // ==========================================================================
     // Turns routines and AI for computer player
+    // turn logic 
     // ==========================================================================
 
     // --------------------------------------------------------------------------
@@ -414,7 +390,6 @@ public class scriptGame : MonoBehaviour {
     bool turnCenter (int theTurn = 0) {
         if (cells[4] != 0)
             return false;
-        // Center cell is already taken
 
         cellSetValue (4, theTurn);
 
@@ -467,32 +442,28 @@ public class scriptGame : MonoBehaviour {
         if (theTurn < 0)
             lookFor = 2;
 
-        for (int i = 0; i < sums.Length; i++)
-            if (sums[i] == lookFor)
+        for (int i = 0; i < sums.Length; i++) {
+            if (sums[i] == lookFor) {
+                int a, b, c;
+                cellBySum (i, out a, out b, out c);
 
-        { // Opposite player can win on this line
-            int a,
-            b,
-            c;
-            cellBySum (i, out a, out b, out c);
+                // Search for empty cell in line ant take it
+                if (cells[a] == 0) {
+                    cellSetValue (a, theTurn);
+                } else if (cells[b] == 0) {
+                    cellSetValue (b, theTurn);
+                } else if (cells[c] == 0) {
+                    cellSetValue (c, theTurn);
+                } else {
+                    Debug.Log (string.Format ("We found blocking line ({0}, {1}, {2}) but cannot make defense move!", a, b, c));
+                    continue;
+                }
 
-            // Search for empty cell in line ant take it
-            if (cells[a] == 0)
-                cellSetValue (a, theTurn);
-            else if (cells[b] == 0)
-                cellSetValue (b, theTurn);
-            else if (cells[c] == 0)
-                cellSetValue (c, theTurn);
-            else {
-                Debug.Log (string.Format ("We found blocking line ({0}, {1}, {2}) but cannot make defense move!", a, b, c));
-                continue; // Something wrong with this line :(
+                if (Debug.isDebugBuild) {
+                    Debug.Log (string.Format ("We found blocking turn in ({0}, {1}, {2}) line", a, b, c));
+                }
+                return true;
             }
-
-            if (Debug.isDebugBuild) {
-                Debug.Log (string.Format ("We found blocking turn in ({0}, {1}, {2}) line", a, b, c));
-            }
-
-            return true; // We made the blocking turn
         }
 
         return false; // There is no blocking turn
@@ -509,43 +480,37 @@ public class scriptGame : MonoBehaviour {
         if (theTurn < 0)
             lookFor = -2;
 
-        for (int i = 0; i < sums.Length; i++)
-            if (sums[i] == lookFor)
+        for (int i = 0; i < sums.Length; i++) {
+            if (sums[i] == lookFor) {
+                int a, b, c;
+                cellBySum (i, out a, out b, out c);
 
-        { // We can take a win on this line
-            int a,
-            b,
-            c;
-            cellBySum (i, out a, out b, out c);
+                cellSetValue (a, theTurn);
+                cellSetValue (b, theTurn);
+                cellSetValue (c, theTurn);
 
-            // We can search for empty cell here, but setting all 3 is faster and makes the same result
-            cellSetValue (a, theTurn);
-            cellSetValue (b, theTurn);
-            cellSetValue (c, theTurn);
+                if (Debug.isDebugBuild) {
+                    Debug.Log (string.Format ("We found winning turn in line ({0}, {1}, {2})", a, b, c));
+                }
 
-            if (Debug.isDebugBuild) {
-                Debug.Log (string.Format ("We found winning turn in line ({0}, {1}, {2})", a, b, c));
+                return true; // We made the winning turn
             }
-
-            return true; // We made the winning turn
         }
 
         return false; // There is no winning turn
     }
 
     // --------------------------------------------------------------------------
-    // Performs computer turn depending on current level of AI
 
     private int levelAI = 5; // 0 - no AI (manual play), from 1 to 5  - easy to hard AI
 
     void turnByAI (int theTurn = 0) {
         if (levelAI < 1)
             return;
-        // No AI, play manually
 
         bool isTurnOk = false;
         switch (levelAI) {
-            case 5: // Win -> Block -> Center -> Corner -> Random turns
+            case 5:
                 isTurnOk = turnWin (theTurn);
                 if (!isTurnOk)
                     isTurnOk = turnBlock (theTurn);
@@ -587,7 +552,6 @@ public class scriptGame : MonoBehaviour {
         onTurnComplete (theTurn);
 
     }
-    // void doTurnByAI()
 
     // --------------------------------------------------------------------------
 
