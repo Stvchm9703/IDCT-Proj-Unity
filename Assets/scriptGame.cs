@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
 public class scriptGame : MonoBehaviour {
     // Background image from "board.png" asset
     public Texture2D background;
     // Cell image from "cell.png" asset
     public GameObject ImgBackground;
+
+    public GameObject GiveUpPanel;
     public Texture2D cell;
     // List of sprites used in "cells" and other controls
     public Sprite[] sprites;
@@ -140,7 +142,24 @@ public class scriptGame : MonoBehaviour {
         gameUpdateIndicator ();
     }
     // void OnGUI()
+    public void alertOpen () {
+        if (!isGameOver) {
+            GiveUpPanel.SetActive(true);
+        } else {
+            backToMenu ();
+        }
+    }
 
+    public void backToMenu () {
+        // GiveUp
+        SceneManager.LoadScene ("Menu");
+    }
+    public void closeAlert () {
+
+    }
+    public void giveUp_onclick () {
+
+    }
     // ==============================================================================
     // Game and states control
     // ==============================================================================
