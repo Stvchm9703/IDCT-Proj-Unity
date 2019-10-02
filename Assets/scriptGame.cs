@@ -34,8 +34,8 @@ public class scriptGame : MonoBehaviour {
     private int cellSpaceX; // Space between cells and horizontal offset depending on width of background and cells
     private int cellSpaceY; // Space between cells and vertical offset depending on height of background and cells
 
-    private const int boardLeft = 0; // X coordinate for board of cells
-    private const int boardTop = 80;
+    public  int boardLeft = 0; // X coordinate for board of cells
+    public  int boardTop = 80;
     // Y coordinate for board of cells.
 
     // ==========================================================================
@@ -49,28 +49,33 @@ public class scriptGame : MonoBehaviour {
         int ScreenWidth = Screen.width - 4;
         float DefaultRatio = ImgBackground.GetComponent<RectTransform> ().rect.width / ImgBackground.GetComponent<RectTransform> ().rect.height;
         float ScreenRatio = ScreenWidth / ScreenHeight;
+
+        float hei = 0;
+        float wid = 0; 
+        float celcal = 0;
         if (Debug.isDebugBuild) {
             Debug.Log (ScreenHeight);
             Debug.Log (ScreenWidth);
         }
         if (DefaultRatio < ScreenRatio) {
-            ImgBackground.GetComponent<RectTransform> ().sizeDelta = new Vector2 (
-                ScreenHeight * DefaultRatio, ScreenHeight
-            );
+            wid = ScreenHeight * DefaultRatio;
+            hei = ScreenHeight;
+            celcal = wid;
         } else if (DefaultRatio > ScreenRatio) {
-            ImgBackground.GetComponent<RectTransform> ().sizeDelta = new Vector2 (
-                ScreenWidth, ScreenWidth / DefaultRatio
-            );
+            wid = ScreenWidth;
+            hei = ScreenWidth / DefaultRatio;
+            celcal = hei;
         } else {
-            ImgBackground.GetComponent<RectTransform> ().sizeDelta = new Vector2 (
-                ScreenWidth, ScreenHeight
-            );
+            celcal = wid;
+            wid = ScreenWidth;
+            hei = ScreenHeight;
         }
         // ImgBackground.Find ("textTittle").GetComponent<RectTransform> ().position = new Vect;
         if (Debug.isDebugBuild)
             Debug.Log (ImgBackground.GetComponent<RectTransform> ().sizeDelta);
 
         var bg = ImgBackground.GetComponent<RectTransform> ().rect;
+
 
         //                           0 1 2
         // Cell array for the board: 3 4 5
@@ -80,14 +85,21 @@ public class scriptGame : MonoBehaviour {
         winnerCells = new ArrayList ();
 
         // Pixel sizes for Cells
-        cellWidth = (int) Math.Round (bg.width / 3 * 0.98);
-        cellHeight = (int) Math.Round (bg.width / 3 * 0.98);
-        cellSpaceX = (int) Math.Round ((double) ((bg.width - 3 * cellWidth) / (2 + 2))); // 2 spaces and 2 side offsets
-        cellSpaceY = (int) Math.Round ((double) ((bg.width - 3 * cellHeight) / (2 + 2))); // !!!background.width!!! 2 spaces + top and bottom offsets
+        cellWidth = (int) Math.Round (wid/ 3 * 0.98);
+        cellHeight = (int)Math.Round(wid / 3 * 0.98);
+
+        cellSpaceX = (int) Math.Round(wid/3 *0.02); // 2 spaces and 2 side offsets
+        cellSpaceY = (int)Math.Round(wid / 3 * 0.02); // !!!background.width!!! 2 spaces + top and bottom offsets
+
         if (Debug.isDebugBuild) {
             Debug.Log (string.Format ("Cell size is {0}x{1} offsets are: {2}, {3}", cellWidth, cellHeight, cellSpaceX, cellSpaceY));
         }
         ImgBackground.SetActive (false);
+
+        var cellboxpos = GameObject.Find("CellRendBox").transform.position;
+        boardLeft = (int) Math.Round(cellboxpos.x);
+        boardTop = (int) Math.Round( cellboxpos.y);
+
         // Set all values to default
         gameReset ();
     }
@@ -106,42 +118,50 @@ public class scriptGame : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Called when some GUI event or user input event occurs
     void OnGUI () { // Draw background
-        // Adjust by Screen 
-        int x = (int) Math.Round (ImgBackground.GetComponent<RectTransform> ().rect.width);
-        int y = (int) Math.Round (ImgBackground.GetComponent<RectTransform> ().rect.height);
-        // int x = background.width;
-        // int y = background.height;
-        Rect r = new Rect (0, 0, x, y);
-        // Draw cells and perform cell state changes
-        int beginX = (int) (((Screen.width + x) / 2) - x) + boardLeft;
-        int beginY = (int) (((Screen.height + y) / 2) - y) + boardTop;
-        for (int i = 0; i < cells.Length; i++) {
-            x = beginX + cellSpaceX + i % 3 * cellWidth + i % 3 * cellSpaceX;
-            y = beginY + cellSpaceY + i / 3 * cellHeight + i / 3 * cellSpaceY;
-            r = new Rect (x, y, cellWidth, cellHeight);
-
-            // Choose proper sprite to draw current cell
-            Sprite sprite = sprites[0];
-            if (cells[i] == 1)
-                sprite = sprites[1];
-
-            if (cells[i] == -1)
-                sprite = sprites[2];
-
-            // Get button object for current cell
-            if (GUI.Button (r, sprite.texture, GUIStyle.none)) {
-                if (cells[i] == 0 && !isGameOver) {
-                    cellSetValue (i, turn); // Set current turn marker as the cell state
-                    onTurnComplete (turn);
-                }
-            }
-
+        if (!GiveUpPanel.activeSelf){
+            GUIRenderCell();
         }
 
         // Draw "Indicator" text and image
         gameUpdateIndicator ();
     }
     // void OnGUI()
+    void GUIRenderCell(){
+        // int x = (int)Math.Round(ImgBackground.GetComponent<RectTransform>().rect.width);
+        // int y = (int)Math.Round(ImgBackground.GetComponent<RectTransform>().rect.height);
+        int x = Screen.width;
+        int y = Screen.height;
+
+        Rect r = new Rect(0, 0, x, y);
+        // Draw cells and perform cell state changes
+
+        int beginX = (int)(((Screen.width + x) / 2) - x) + boardLeft;
+        int beginY = (int)(((Screen.height + y) / 2) - y) + boardTop;
+        for (int i = 0; i < cells.Length; i ++) {
+            x = beginX + cellSpaceX + i % 3 * cellWidth + i % 3 * cellSpaceX;
+            y = beginY + cellSpaceY + i / 3 * cellHeight + i / 3 * cellSpaceY;
+            r = new Rect(x, y, cellWidth, cellHeight);
+            if (Debug.isDebugBuild){
+                Debug.Log("Cell:" + i.ToString());
+                Debug.Log(x);
+                Debug.Log(y);
+            }
+            // Choose proper sprite to draw current cell
+            Sprite sprite = sprites[0];
+            if (cells[i] == 1) 
+                sprite = sprites[1];
+            if (cells[i] == -1) 
+                sprite = sprites[2];
+            
+            // Get button object for current cell
+            if (GUI.Button(r, sprite.texture, GUIStyle.none)) {
+                if (cells[i] == 0 && !isGameOver) {
+                    cellSetValue(i, turn); // Set current turn marker as the cell state
+                    onTurnComplete(turn);
+                }
+            }
+        }
+    }
     public void alertOpen () {
         if (!isGameOver) {
             GiveUpPanel.SetActive(true);
@@ -243,7 +263,6 @@ public class scriptGame : MonoBehaviour {
         foreach (int i in sums) {
             if (Math.Abs (i) >= 3)
                 return true;
-
         }
         return false;
     }
