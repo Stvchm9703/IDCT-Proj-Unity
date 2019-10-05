@@ -8,7 +8,7 @@ option csharp_namespace = "PlayCli.ProtoMod";
 message Empty {}
 
 message RoomListRequest{
-     string requirement =1;
+    string requirement = 1;
 }
 
 message RoomListResponse {
@@ -42,7 +42,7 @@ message CellStatus{
 }
 
 service RoomStatus {
-    rpc CreateRoom (RoomListRequest) returns (Room);
+    rpc CreateRoom (Empty) returns (Room);
     rpc GetRoomList(RoomListRequest) returns (RoomListResponse); 
     rpc GetRoomCurrentInfo (RoomRequest) returns (Room);
     rpc GetRoomStream (RoomRequest) returns (stream CellStatus);

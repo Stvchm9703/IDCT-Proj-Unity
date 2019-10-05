@@ -10,201 +10,244 @@
 using grpc = global::Grpc.Core;
 
 namespace PlayCli.ProtoMod {
-  public static partial class RoomStatus {
+  public static partial class RoomStatus
+  {
     static readonly string __ServiceName = "RoomStatus.RoomStatus";
 
-    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomListRequest> __Marshaller_RoomStatus_RoomListRequest = grpc::Marshallers.Create ((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray (arg), global::PlayCli.ProtoMod.RoomListRequest.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.Room> __Marshaller_RoomStatus_Room = grpc::Marshallers.Create ((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray (arg), global::PlayCli.ProtoMod.Room.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomListResponse> __Marshaller_RoomStatus_RoomListResponse = grpc::Marshallers.Create ((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray (arg), global::PlayCli.ProtoMod.RoomListResponse.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomRequest> __Marshaller_RoomStatus_RoomRequest = grpc::Marshallers.Create ((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray (arg), global::PlayCli.ProtoMod.RoomRequest.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.CellStatus> __Marshaller_RoomStatus_CellStatus = grpc::Marshallers.Create ((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray (arg), global::PlayCli.ProtoMod.CellStatus.Parser.ParseFrom);
-    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.Empty> __Marshaller_RoomStatus_Empty = grpc::Marshallers.Create ((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray (arg), global::PlayCli.ProtoMod.Empty.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.Empty> __Marshaller_RoomStatus_Empty = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.Empty.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.Room> __Marshaller_RoomStatus_Room = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.Room.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomListRequest> __Marshaller_RoomStatus_RoomListRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.RoomListRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomListResponse> __Marshaller_RoomStatus_RoomListResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.RoomListResponse.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomRequest> __Marshaller_RoomStatus_RoomRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.RoomRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.CellStatus> __Marshaller_RoomStatus_CellStatus = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.CellStatus.Parser.ParseFrom);
 
-    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.Room> __Method_CreateRoom = new grpc::Method<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.Room> (
-      grpc::MethodType.Unary,
-      __ServiceName,
-      "CreateRoom",
-      __Marshaller_RoomStatus_RoomListRequest,
-      __Marshaller_RoomStatus_Room);
+    static readonly grpc::Method<global::PlayCli.ProtoMod.Empty, global::PlayCli.ProtoMod.Room> __Method_CreateRoom = new grpc::Method<global::PlayCli.ProtoMod.Empty, global::PlayCli.ProtoMod.Room>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "CreateRoom",
+        __Marshaller_RoomStatus_Empty,
+        __Marshaller_RoomStatus_Room);
 
-    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.RoomListResponse> __Method_GetRoomList = new grpc::Method<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.RoomListResponse> (
-      grpc::MethodType.Unary,
-      __ServiceName,
-      "GetRoomList",
-      __Marshaller_RoomStatus_RoomListRequest,
-      __Marshaller_RoomStatus_RoomListResponse);
+    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.RoomListResponse> __Method_GetRoomList = new grpc::Method<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.RoomListResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetRoomList",
+        __Marshaller_RoomStatus_RoomListRequest,
+        __Marshaller_RoomStatus_RoomListResponse);
 
-    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room> __Method_GetRoomCurrentInfo = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room> (
-      grpc::MethodType.Unary,
-      __ServiceName,
-      "GetRoomCurrentInfo",
-      __Marshaller_RoomStatus_RoomRequest,
-      __Marshaller_RoomStatus_Room);
+    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room> __Method_GetRoomCurrentInfo = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetRoomCurrentInfo",
+        __Marshaller_RoomStatus_RoomRequest,
+        __Marshaller_RoomStatus_Room);
 
-    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.CellStatus> __Method_GetRoomStream = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.CellStatus> (
-      grpc::MethodType.ServerStreaming,
-      __ServiceName,
-      "GetRoomStream",
-      __Marshaller_RoomStatus_RoomRequest,
-      __Marshaller_RoomStatus_CellStatus);
+    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.CellStatus> __Method_GetRoomStream = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.CellStatus>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "GetRoomStream",
+        __Marshaller_RoomStatus_RoomRequest,
+        __Marshaller_RoomStatus_CellStatus);
 
-    static readonly grpc::Method<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.Empty> __Method_UpdateRoomStatus = new grpc::Method<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.Empty> (
-      grpc::MethodType.Unary,
-      __ServiceName,
-      "UpdateRoomStatus",
-      __Marshaller_RoomStatus_CellStatus,
-      __Marshaller_RoomStatus_Empty);
+    static readonly grpc::Method<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.Empty> __Method_UpdateRoomStatus = new grpc::Method<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.Empty>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "UpdateRoomStatus",
+        __Marshaller_RoomStatus_CellStatus,
+        __Marshaller_RoomStatus_Empty);
 
-    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Empty> __Method_DeleteRoom = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Empty> (
-      grpc::MethodType.Unary,
-      __ServiceName,
-      "DeleteRoom",
-      __Marshaller_RoomStatus_RoomRequest,
-      __Marshaller_RoomStatus_Empty);
+    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Empty> __Method_DeleteRoom = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Empty>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "DeleteRoom",
+        __Marshaller_RoomStatus_RoomRequest,
+        __Marshaller_RoomStatus_Empty);
 
     /// <summary>Service descriptor</summary>
-    public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor {
+    public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
+    {
       get { return global::PlayCli.ProtoMod.GameCtlReflection.Descriptor.Services[0]; }
     }
 
     /// <summary>Base class for server-side implementations of RoomStatus</summary>
-    [grpc::BindServiceMethod (typeof (RoomStatus), "BindService")]
-    public abstract partial class RoomStatusBase {
-      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Room> CreateRoom (global::PlayCli.ProtoMod.RoomListRequest request, grpc::ServerCallContext context) {
-        throw new grpc::RpcException (new grpc::Status (grpc::StatusCode.Unimplemented, ""));
+    [grpc::BindServiceMethod(typeof(RoomStatus), "BindService")]
+    public abstract partial class RoomStatusBase
+    {
+      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Room> CreateRoom(global::PlayCli.ProtoMod.Empty request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.RoomListResponse> GetRoomList (global::PlayCli.ProtoMod.RoomListRequest request, grpc::ServerCallContext context) {
-        throw new grpc::RpcException (new grpc::Status (grpc::StatusCode.Unimplemented, ""));
+      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.RoomListResponse> GetRoomList(global::PlayCli.ProtoMod.RoomListRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Room> GetRoomCurrentInfo (global::PlayCli.ProtoMod.RoomRequest request, grpc::ServerCallContext context) {
-        throw new grpc::RpcException (new grpc::Status (grpc::StatusCode.Unimplemented, ""));
+      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Room> GetRoomCurrentInfo(global::PlayCli.ProtoMod.RoomRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task GetRoomStream (global::PlayCli.ProtoMod.RoomRequest request, grpc::IServerStreamWriter<global::PlayCli.ProtoMod.CellStatus> responseStream, grpc::ServerCallContext context) {
-        throw new grpc::RpcException (new grpc::Status (grpc::StatusCode.Unimplemented, ""));
+      public virtual global::System.Threading.Tasks.Task GetRoomStream(global::PlayCli.ProtoMod.RoomRequest request, grpc::IServerStreamWriter<global::PlayCli.ProtoMod.CellStatus> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Empty> UpdateRoomStatus (global::PlayCli.ProtoMod.CellStatus request, grpc::ServerCallContext context) {
-        throw new grpc::RpcException (new grpc::Status (grpc::StatusCode.Unimplemented, ""));
+      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Empty> UpdateRoomStatus(global::PlayCli.ProtoMod.CellStatus request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Empty> DeleteRoom (global::PlayCli.ProtoMod.RoomRequest request, grpc::ServerCallContext context) {
-        throw new grpc::RpcException (new grpc::Status (grpc::StatusCode.Unimplemented, ""));
+      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Empty> DeleteRoom(global::PlayCli.ProtoMod.RoomRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
     }
 
     /// <summary>Client for RoomStatus</summary>
-    public partial class RoomStatusClient : grpc::ClientBase<RoomStatusClient> {
+    public partial class RoomStatusClient : grpc::ClientBase<RoomStatusClient>
+    {
       /// <summary>Creates a new client for RoomStatus</summary>
       /// <param name="channel">The channel to use to make remote calls.</param>
-      public RoomStatusClient (grpc::ChannelBase channel) : base (channel) { }
+      public RoomStatusClient(grpc::ChannelBase channel) : base(channel)
+      {
+      }
       /// <summary>Creates a new client for RoomStatus that uses a custom <c>CallInvoker</c>.</summary>
       /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
-      public RoomStatusClient (grpc::CallInvoker callInvoker) : base (callInvoker) { }
+      public RoomStatusClient(grpc::CallInvoker callInvoker) : base(callInvoker)
+      {
+      }
       /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
-      protected RoomStatusClient () : base () { }
+      protected RoomStatusClient() : base()
+      {
+      }
       /// <summary>Protected constructor to allow creation of configured clients.</summary>
       /// <param name="configuration">The client configuration.</param>
-      protected RoomStatusClient (ClientBaseConfiguration configuration) : base (configuration) { }
+      protected RoomStatusClient(ClientBaseConfiguration configuration) : base(configuration)
+      {
+      }
 
-      public virtual global::PlayCli.ProtoMod.Room CreateRoom (global::PlayCli.ProtoMod.RoomListRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return CreateRoom (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual global::PlayCli.ProtoMod.Room CreateRoom(global::PlayCli.ProtoMod.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CreateRoom(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::PlayCli.ProtoMod.Room CreateRoom (global::PlayCli.ProtoMod.RoomListRequest request, grpc::CallOptions options) {
-        return CallInvoker.BlockingUnaryCall (__Method_CreateRoom, null, options, request);
+      public virtual global::PlayCli.ProtoMod.Room CreateRoom(global::PlayCli.ProtoMod.Empty request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_CreateRoom, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> CreateRoomAsync (global::PlayCli.ProtoMod.RoomListRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return CreateRoomAsync (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> CreateRoomAsync(global::PlayCli.ProtoMod.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CreateRoomAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> CreateRoomAsync (global::PlayCli.ProtoMod.RoomListRequest request, grpc::CallOptions options) {
-        return CallInvoker.AsyncUnaryCall (__Method_CreateRoom, null, options, request);
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> CreateRoomAsync(global::PlayCli.ProtoMod.Empty request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_CreateRoom, null, options, request);
       }
-      public virtual global::PlayCli.ProtoMod.RoomListResponse GetRoomList (global::PlayCli.ProtoMod.RoomListRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return GetRoomList (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual global::PlayCli.ProtoMod.RoomListResponse GetRoomList(global::PlayCli.ProtoMod.RoomListRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::PlayCli.ProtoMod.RoomListResponse GetRoomList (global::PlayCli.ProtoMod.RoomListRequest request, grpc::CallOptions options) {
-        return CallInvoker.BlockingUnaryCall (__Method_GetRoomList, null, options, request);
+      public virtual global::PlayCli.ProtoMod.RoomListResponse GetRoomList(global::PlayCli.ProtoMod.RoomListRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetRoomList, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.RoomListResponse> GetRoomListAsync (global::PlayCli.ProtoMod.RoomListRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return GetRoomListAsync (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.RoomListResponse> GetRoomListAsync(global::PlayCli.ProtoMod.RoomListRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.RoomListResponse> GetRoomListAsync (global::PlayCli.ProtoMod.RoomListRequest request, grpc::CallOptions options) {
-        return CallInvoker.AsyncUnaryCall (__Method_GetRoomList, null, options, request);
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.RoomListResponse> GetRoomListAsync(global::PlayCli.ProtoMod.RoomListRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetRoomList, null, options, request);
       }
-      public virtual global::PlayCli.ProtoMod.Room GetRoomCurrentInfo (global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return GetRoomCurrentInfo (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual global::PlayCli.ProtoMod.Room GetRoomCurrentInfo(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomCurrentInfo(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::PlayCli.ProtoMod.Room GetRoomCurrentInfo (global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options) {
-        return CallInvoker.BlockingUnaryCall (__Method_GetRoomCurrentInfo, null, options, request);
+      public virtual global::PlayCli.ProtoMod.Room GetRoomCurrentInfo(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetRoomCurrentInfo, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> GetRoomCurrentInfoAsync (global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return GetRoomCurrentInfoAsync (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> GetRoomCurrentInfoAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomCurrentInfoAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> GetRoomCurrentInfoAsync (global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options) {
-        return CallInvoker.AsyncUnaryCall (__Method_GetRoomCurrentInfo, null, options, request);
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> GetRoomCurrentInfoAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetRoomCurrentInfo, null, options, request);
       }
-      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.CellStatus> GetRoomStream (global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return GetRoomStream (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.CellStatus> GetRoomStream(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.CellStatus> GetRoomStream (global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options) {
-        return CallInvoker.AsyncServerStreamingCall (__Method_GetRoomStream, null, options, request);
+      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.CellStatus> GetRoomStream(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncServerStreamingCall(__Method_GetRoomStream, null, options, request);
       }
-      public virtual global::PlayCli.ProtoMod.Empty UpdateRoomStatus (global::PlayCli.ProtoMod.CellStatus request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return UpdateRoomStatus (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual global::PlayCli.ProtoMod.Empty UpdateRoomStatus(global::PlayCli.ProtoMod.CellStatus request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UpdateRoomStatus(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::PlayCli.ProtoMod.Empty UpdateRoomStatus (global::PlayCli.ProtoMod.CellStatus request, grpc::CallOptions options) {
-        return CallInvoker.BlockingUnaryCall (__Method_UpdateRoomStatus, null, options, request);
+      public virtual global::PlayCli.ProtoMod.Empty UpdateRoomStatus(global::PlayCli.ProtoMod.CellStatus request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_UpdateRoomStatus, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> UpdateRoomStatusAsync (global::PlayCli.ProtoMod.CellStatus request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return UpdateRoomStatusAsync (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> UpdateRoomStatusAsync(global::PlayCli.ProtoMod.CellStatus request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UpdateRoomStatusAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> UpdateRoomStatusAsync (global::PlayCli.ProtoMod.CellStatus request, grpc::CallOptions options) {
-        return CallInvoker.AsyncUnaryCall (__Method_UpdateRoomStatus, null, options, request);
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> UpdateRoomStatusAsync(global::PlayCli.ProtoMod.CellStatus request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_UpdateRoomStatus, null, options, request);
       }
-      public virtual global::PlayCli.ProtoMod.Empty DeleteRoom (global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return DeleteRoom (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual global::PlayCli.ProtoMod.Empty DeleteRoom(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return DeleteRoom(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::PlayCli.ProtoMod.Empty DeleteRoom (global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options) {
-        return CallInvoker.BlockingUnaryCall (__Method_DeleteRoom, null, options, request);
+      public virtual global::PlayCli.ProtoMod.Empty DeleteRoom(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_DeleteRoom, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> DeleteRoomAsync (global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default (global::System.Threading.CancellationToken)) {
-        return DeleteRoomAsync (request, new grpc::CallOptions (headers, deadline, cancellationToken));
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> DeleteRoomAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return DeleteRoomAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> DeleteRoomAsync (global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options) {
-        return CallInvoker.AsyncUnaryCall (__Method_DeleteRoom, null, options, request);
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> DeleteRoomAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_DeleteRoom, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
-      protected override RoomStatusClient NewInstance (ClientBaseConfiguration configuration) {
-        return new RoomStatusClient (configuration);
+      protected override RoomStatusClient NewInstance(ClientBaseConfiguration configuration)
+      {
+        return new RoomStatusClient(configuration);
       }
     }
 
     /// <summary>Creates service definition that can be registered with a server</summary>
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
-    public static grpc::ServerServiceDefinition BindService (RoomStatusBase serviceImpl) {
-      return grpc::ServerServiceDefinition.CreateBuilder ()
-        .AddMethod (__Method_CreateRoom, serviceImpl.CreateRoom)
-        .AddMethod (__Method_GetRoomList, serviceImpl.GetRoomList)
-        .AddMethod (__Method_GetRoomCurrentInfo, serviceImpl.GetRoomCurrentInfo)
-        .AddMethod (__Method_GetRoomStream, serviceImpl.GetRoomStream)
-        .AddMethod (__Method_UpdateRoomStatus, serviceImpl.UpdateRoomStatus)
-        .AddMethod (__Method_DeleteRoom, serviceImpl.DeleteRoom).Build ();
+    public static grpc::ServerServiceDefinition BindService(RoomStatusBase serviceImpl)
+    {
+      return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_CreateRoom, serviceImpl.CreateRoom)
+          .AddMethod(__Method_GetRoomList, serviceImpl.GetRoomList)
+          .AddMethod(__Method_GetRoomCurrentInfo, serviceImpl.GetRoomCurrentInfo)
+          .AddMethod(__Method_GetRoomStream, serviceImpl.GetRoomStream)
+          .AddMethod(__Method_UpdateRoomStatus, serviceImpl.UpdateRoomStatus)
+          .AddMethod(__Method_DeleteRoom, serviceImpl.DeleteRoom).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
     /// Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
     /// <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
-    public static void BindService (grpc::ServiceBinderBase serviceBinder, RoomStatusBase serviceImpl) {
-      serviceBinder.AddMethod (__Method_CreateRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.Room> (serviceImpl.CreateRoom));
-      serviceBinder.AddMethod (__Method_GetRoomList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.RoomListResponse> (serviceImpl.GetRoomList));
-      serviceBinder.AddMethod (__Method_GetRoomCurrentInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room> (serviceImpl.GetRoomCurrentInfo));
-      serviceBinder.AddMethod (__Method_GetRoomStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.CellStatus> (serviceImpl.GetRoomStream));
-      serviceBinder.AddMethod (__Method_UpdateRoomStatus, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.Empty> (serviceImpl.UpdateRoomStatus));
-      serviceBinder.AddMethod (__Method_DeleteRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Empty> (serviceImpl.DeleteRoom));
+    public static void BindService(grpc::ServiceBinderBase serviceBinder, RoomStatusBase serviceImpl)
+    {
+      serviceBinder.AddMethod(__Method_CreateRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.Empty, global::PlayCli.ProtoMod.Room>(serviceImpl.CreateRoom));
+      serviceBinder.AddMethod(__Method_GetRoomList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.RoomListResponse>(serviceImpl.GetRoomList));
+      serviceBinder.AddMethod(__Method_GetRoomCurrentInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room>(serviceImpl.GetRoomCurrentInfo));
+      serviceBinder.AddMethod(__Method_GetRoomStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.CellStatus>(serviceImpl.GetRoomStream));
+      serviceBinder.AddMethod(__Method_UpdateRoomStatus, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.Empty>(serviceImpl.UpdateRoomStatus));
+      serviceBinder.AddMethod(__Method_DeleteRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Empty>(serviceImpl.DeleteRoom));
     }
 
   }
