@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 using Grpc.Core;
 using PlayCli.ProtoMod;
 using UnityEngine;
@@ -18,7 +19,9 @@ namespace PlayCli {
 
         public async Task<Room> CreateRoom () {
             try {
-                return await this.client.CreateRoomAsync (new Empty { });
+                Room tmp = await this.client.CreateRoomAsync (new Empty { });
+                Thread.Sleep(5000);
+                return tmp;
             } catch (RpcException e) {
                 Debug.Log ("RPC failed " + e);
                 throw;
