@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using Grpc.Core;
 using PlayCli.ProtoMod;
 using UnityEngine;
@@ -20,21 +20,23 @@ namespace PlayCli {
         public async Task<Room> CreateRoom () {
             try {
                 Room tmp = await this.client.CreateRoomAsync (new Empty { });
-                Thread.Sleep(5000);
+                Thread.Sleep (5000);
                 return tmp;
             } catch (RpcException e) {
                 Debug.Log ("RPC failed " + e);
                 throw;
             }
         }
-        public async Task<Google.Protobuf.Collections.RepeatedField<Room>> GetRoomList (string requirement) {
+        public async Task<List<Room>> GetRoomList (string requirement) {
             try {
                 RoomListResponse tmp = await this.client.GetRoomListAsync (
                     new RoomListRequest {
                         Requirement = requirement,
                     }
                 );
-                return tmp.Result;
+                List<Room> tt = new List<Room>();
+                tt.AddRange (tmp.Result);
+                return tt;
             } catch (RpcException e) {
                 Debug.Log ("RPC failed " + e);
                 throw;

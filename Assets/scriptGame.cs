@@ -10,6 +10,7 @@ public class scriptGame : MonoBehaviour {
     public GameObject ImgBackground;
 
     public GameObject GiveUpPanel;
+    public bool GivePanelIsOpen = false;
     public Texture2D cell;
     // List of sprites used in "cells" and other controls
     public Sprite[] sprites;
@@ -29,7 +30,6 @@ public class scriptGame : MonoBehaviour {
     public int[] cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
     private int[] sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
 
-   
     // Y coordinate for board of cells.
 
     // ==========================================================================
@@ -53,51 +53,58 @@ public class scriptGame : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Update everything
     void Update () {
+        GiveUpPanel.SetActive (GivePanelIsOpen);
         if (isGameOver)
             return;
         if (turn == -1)
             turnByAI (turn);
 
-        GUIRenderCell(); 
-        gameUpdateIndicator();
+        GUIRenderCell ();
+        gameUpdateIndicator ();
         // if (turn == 1) turnByAI(turn); // AI for "x" player
     }
 
-    void GUIRenderCell(){
-        for (int i = 0; i < cells.Length; i ++) {
+    void GUIRenderCell () {
+        for (int i = 0; i < cells.Length; i++) {
             Sprite sprite = sprites[0];
-            if (cells[i] == 1) 
+            if (cells[i] == 1)
                 sprite = sprites[1];
-            if (cells[i] == -1) 
+            if (cells[i] == -1)
                 sprite = sprites[2];
-            GameObject.Find("CellRendBox/cell" +i.ToString() ).GetComponent<Image>().sprite = sprite;
+            GameObject.Find ("CellRendBox/cell" + i.ToString ()).GetComponent<Image> ().sprite = sprite;
         }
     }
-    public void PlayerCellClick (int cell_num){
-        if (cells[cell_num] == 0 && !isGameOver){
-            cellSetValue(cell_num, 1); 
-            GUIRenderCell();
-            onTurnComplete(1);
+    public void PlayerCellClick (int cell_num) {
+        if (cells[cell_num] == 0 && !isGameOver) {
+            cellSetValue (cell_num, 1);
+            GUIRenderCell ();
+            onTurnComplete (1);
         }
     }
     public void alertOpen () {
         if (!isGameOver) {
-            GiveUpPanel.SetActive(true);
+            GiveUpPanel.SetActive (true);
+            // this.closeAlert();
         } else {
+            // OK
             backToMenu ();
         }
     }
 
+    // @OK 
     public void backToMenu () {
         // GiveUp
-        SceneManager.LoadScene ("Menu");
+        SceneManager.LoadScene ("Menu", LoadSceneMode.Single);
     }
     public void closeAlert () {
-        GiveUpPanel.SetActive(false);
+        // check! -> fail
+        Debug.Log ("close called");
+        GiveUpPanel.SetActive (false);
     }
-    public void giveUp_onclick () {
+    public void giveUpOnClick () {
         // finally
-        backToMenu();
+        // checked -> fail
+        backToMenu ();
     }
     // ==============================================================================
     // Game and states control
