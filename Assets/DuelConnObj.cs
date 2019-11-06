@@ -42,6 +42,6 @@ public class DuelConnObj : MonoBehaviour {
     }
     async void Destroy(){
         // this.conn destruct call;
-
+        
     }
 }
