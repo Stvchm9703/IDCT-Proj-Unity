@@ -18,7 +18,7 @@ public class RoomSearch : MonoBehaviour {
 
         } catch (RpcException e) {
             // show message ?
-
+            Debug.Log(e);
         }
         // generate the room-list gameobject 
 
@@ -41,6 +41,7 @@ public class RoomSearch : MonoBehaviour {
 
         } catch (RpcException e) {
             // show fail create message 
+            Debug.Log("create room" , e);
         }
 
     }
