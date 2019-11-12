@@ -13,13 +13,13 @@ public class RoomSearch : MonoBehaviour {
         // show the loading
         DuelConn.transform.Find ("Loading").gameObject.SetActive (true);
         // wait loading the list
-        try {
-            room_list = await DuelConn.GetComponent<DuelConnObj> ().GetRoomList ("");
+        // try {
+        room_list = await DuelConn.GetComponent<DuelConnObj> ().GetRoomList ("");
 
-        } catch (RpcException e) {
-            // show message ?
-            Debug.Log(e);
-        }
+        // } catch (Core.RpcException e) {
+        //     // show message ?
+        //     Debug.Log(e);
+        // }
         // generate the room-list gameobject 
 
         // complete the loading
@@ -39,13 +39,13 @@ public class RoomSearch : MonoBehaviour {
             // start change scene
             // Scene.Load("");
 
-        } catch (RpcException e) {
+        } catch (Core.RpcException e) {
             // show fail create message 
             Debug.Log("create room" , e);
         }
 
     }
-    public async void BackToMenu () {
+    public  void BackToMenu () {
         // destroy  DuenConnObj
         Destroy (DuelConn);
         SceneManager.LoadScene ("OtherSceneName", LoadSceneMode.Single);
