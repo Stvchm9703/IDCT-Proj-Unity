@@ -5,31 +5,66 @@ using Grpc.Core;
 using PlayCli;
 using PlayCli.ProtoMod;
 using UnityEngine;
+// using UnityEditor;
+
 public class DuelConnObj : MonoBehaviour {
     // Start is called before the first frame update
     public DuelConnector conn;
     public Room current_room;
-    public AsyncServerStreamingCall<CellStatus> stream_status;
+    // public AsyncServerStreamingCall<CellStatus> stream_status;
+    public CfServerSetting tmp = new CfServerSetting {
+        Connector = "grpc",
+        Host = "192.168.0.123",
+        Port = 11000,
+        Database = "",
+        Username = "",
+        Password = "",
+        Key = "",
+        KeyPemPath = "",
+    };
+    public DebugTestScript DebugScn;
+    public string config_file;
     void Awake () {
+        this.DebugScn = this.gameObject.GetComponent<DebugTestScript> ();
+        Debug.Log ("on Awake process - DuelConnObj");
+        DebugScn.PrintLog (" DuelConnObj", "on Awake process -");
         GameObject[] objs = GameObject.FindGameObjectsWithTag ("Connector");
         if (objs.Length > 1) {
+            DebugScn.PrintLog (" DuelConnObj", "is exist more than one");
             Destroy (this.gameObject);
         } else {
             DontDestroyOnLoad (this.gameObject);
-            this.conn = new DuelConnector (new CfServerSetting { });
+            DebugScn.PrintLog (" DuelConnObj", "create one");
+            this.gameObject.tag = "Connector";
+            this.conn = new DuelConnector (
+                // Config.LoadCfFile (this.config_file).remote
+                tmp
+            );
         }
     }
 
     public async Task<bool> CreateRoom () {
+        Debug.Log ("on CreateRoom process - DuelConnObj");
+
         // open loading 
-        current_room = await this.conn.CreateRoom ();
-        stream_status = this.conn.GetRoomStream (current_room.Key);
-        return true;
+        try {
+            current_room = await this.conn.CreateRoom ();
+            string str = JsonUtility.ToJson (current_room);
+            Debug.Log (current_room);
+            return true;
+        } catch (RpcException e) {
+            Debug.Log (e);
+            return false;
+            throw;
+        }
+        // stream_status = this.conn.GetRoomStream (current_room.Key);
     }
 
     public async Task<bool> JoinRoom (string key, bool is_player) {
+        Debug.Log ("on JoinRoom process - DuelConnObj");
+
         current_room = await this.conn.GetRoomInfo (key);
-        stream_status = this.conn.GetRoomStream (key);
+        // stream_status = this.conn.GetRoomStream (key);
         return true;
     }
 
@@ -40,8 +75,14 @@ public class DuelConnObj : MonoBehaviour {
     public async Task<bool> UpdateTurn (CellStatus cs) {
         return await this.conn.UpdateRoomTurn (cs);
     }
-    async void Destroy(){
+
+    public async Task<bool> ExitRoom (string para) {
+        // Time.Wait
+        return true;
+    }
+
+    async void Destroy () {
         // this.conn destruct call;
-        
+
     }
 }

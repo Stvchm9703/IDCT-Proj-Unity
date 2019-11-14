@@ -14,18 +14,19 @@ namespace PlayCli.ProtoMod {
   {
     static readonly string __ServiceName = "RoomStatus.RoomStatus";
 
-    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.Empty> __Marshaller_RoomStatus_Empty = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.Empty.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomCreateRequest> __Marshaller_RoomStatus_RoomCreateRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.RoomCreateRequest.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::PlayCli.ProtoMod.Room> __Marshaller_RoomStatus_Room = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.Room.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomListRequest> __Marshaller_RoomStatus_RoomListRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.RoomListRequest.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomListResponse> __Marshaller_RoomStatus_RoomListResponse = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.RoomListResponse.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::PlayCli.ProtoMod.RoomRequest> __Marshaller_RoomStatus_RoomRequest = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.RoomRequest.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Google.Protobuf.WellKnownTypes.Empty.Parser.ParseFrom);
     static readonly grpc::Marshaller<global::PlayCli.ProtoMod.CellStatus> __Marshaller_RoomStatus_CellStatus = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.CellStatus.Parser.ParseFrom);
 
-    static readonly grpc::Method<global::PlayCli.ProtoMod.Empty, global::PlayCli.ProtoMod.Room> __Method_CreateRoom = new grpc::Method<global::PlayCli.ProtoMod.Empty, global::PlayCli.ProtoMod.Room>(
+    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomCreateRequest, global::PlayCli.ProtoMod.Room> __Method_CreateRoom = new grpc::Method<global::PlayCli.ProtoMod.RoomCreateRequest, global::PlayCli.ProtoMod.Room>(
         grpc::MethodType.Unary,
         __ServiceName,
         "CreateRoom",
-        __Marshaller_RoomStatus_Empty,
+        __Marshaller_RoomStatus_RoomCreateRequest,
         __Marshaller_RoomStatus_Room);
 
     static readonly grpc::Method<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.RoomListResponse> __Method_GetRoomList = new grpc::Method<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.RoomListResponse>(
@@ -35,33 +36,26 @@ namespace PlayCli.ProtoMod {
         __Marshaller_RoomStatus_RoomListRequest,
         __Marshaller_RoomStatus_RoomListResponse);
 
-    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room> __Method_GetRoomCurrentInfo = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room>(
+    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room> __Method_GetRoomInfo = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room>(
         grpc::MethodType.Unary,
         __ServiceName,
-        "GetRoomCurrentInfo",
+        "GetRoomInfo",
         __Marshaller_RoomStatus_RoomRequest,
         __Marshaller_RoomStatus_Room);
 
-    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.CellStatus> __Method_GetRoomStream = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.CellStatus>(
-        grpc::MethodType.ServerStreaming,
-        __ServiceName,
-        "GetRoomStream",
-        __Marshaller_RoomStatus_RoomRequest,
-        __Marshaller_RoomStatus_CellStatus);
-
-    static readonly grpc::Method<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.Empty> __Method_UpdateRoomStatus = new grpc::Method<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.Empty>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "UpdateRoomStatus",
-        __Marshaller_RoomStatus_CellStatus,
-        __Marshaller_RoomStatus_Empty);
-
-    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Empty> __Method_DeleteRoom = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Empty>(
+    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::Google.Protobuf.WellKnownTypes.Empty> __Method_DeleteRoom = new grpc::Method<global::PlayCli.ProtoMod.RoomRequest, global::Google.Protobuf.WellKnownTypes.Empty>(
         grpc::MethodType.Unary,
         __ServiceName,
         "DeleteRoom",
         __Marshaller_RoomStatus_RoomRequest,
-        __Marshaller_RoomStatus_Empty);
+        __Marshaller_google_protobuf_Empty);
+
+    static readonly grpc::Method<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.CellStatus> __Method_UpdateRoom = new grpc::Method<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.CellStatus>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "UpdateRoom",
+        __Marshaller_RoomStatus_CellStatus,
+        __Marshaller_RoomStatus_CellStatus);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -73,32 +67,80 @@ namespace PlayCli.ProtoMod {
     [grpc::BindServiceMethod(typeof(RoomStatus), "BindService")]
     public abstract partial class RoomStatusBase
     {
-      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Room> CreateRoom(global::PlayCli.ProtoMod.Empty request, grpc::ServerCallContext context)
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/create"
+      ///     body: "*"
+      /// };  
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Room> CreateRoom(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/list"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
       public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.RoomListResponse> GetRoomList(global::PlayCli.ProtoMod.RoomListRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Room> GetRoomCurrentInfo(global::PlayCli.ProtoMod.RoomRequest request, grpc::ServerCallContext context)
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/info"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Room> GetRoomInfo(global::PlayCli.ProtoMod.RoomRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task GetRoomStream(global::PlayCli.ProtoMod.RoomRequest request, grpc::IServerStreamWriter<global::PlayCli.ProtoMod.CellStatus> responseStream, grpc::ServerCallContext context)
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/delete"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> DeleteRoom(global::PlayCli.ProtoMod.RoomRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Empty> UpdateRoomStatus(global::PlayCli.ProtoMod.CellStatus request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.Empty> DeleteRoom(global::PlayCli.ProtoMod.RoomRequest request, grpc::ServerCallContext context)
+      /// <summary>
+      /// rpc GetRoomStream (RoomRequest) returns (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// rpc UpdateRoomStream(stream CellStatus) returns  (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream/update"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.CellStatus> UpdateRoom(global::PlayCli.ProtoMod.CellStatus request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -128,93 +170,317 @@ namespace PlayCli.ProtoMod {
       {
       }
 
-      public virtual global::PlayCli.ProtoMod.Room CreateRoom(global::PlayCli.ProtoMod.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/create"
+      ///     body: "*"
+      /// };  
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::PlayCli.ProtoMod.Room CreateRoom(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return CreateRoom(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::PlayCli.ProtoMod.Room CreateRoom(global::PlayCli.ProtoMod.Empty request, grpc::CallOptions options)
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/create"
+      ///     body: "*"
+      /// };  
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::PlayCli.ProtoMod.Room CreateRoom(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_CreateRoom, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> CreateRoomAsync(global::PlayCli.ProtoMod.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/create"
+      ///     body: "*"
+      /// };  
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> CreateRoomAsync(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return CreateRoomAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> CreateRoomAsync(global::PlayCli.ProtoMod.Empty request, grpc::CallOptions options)
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/create"
+      ///     body: "*"
+      /// };  
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> CreateRoomAsync(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_CreateRoom, null, options, request);
       }
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/list"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
       public virtual global::PlayCli.ProtoMod.RoomListResponse GetRoomList(global::PlayCli.ProtoMod.RoomListRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetRoomList(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/list"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
       public virtual global::PlayCli.ProtoMod.RoomListResponse GetRoomList(global::PlayCli.ProtoMod.RoomListRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_GetRoomList, null, options, request);
       }
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/list"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.RoomListResponse> GetRoomListAsync(global::PlayCli.ProtoMod.RoomListRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetRoomListAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/list"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.RoomListResponse> GetRoomListAsync(global::PlayCli.ProtoMod.RoomListRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetRoomList, null, options, request);
       }
-      public virtual global::PlayCli.ProtoMod.Room GetRoomCurrentInfo(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/info"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::PlayCli.ProtoMod.Room GetRoomInfo(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return GetRoomCurrentInfo(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return GetRoomInfo(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::PlayCli.ProtoMod.Room GetRoomCurrentInfo(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/info"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::PlayCli.ProtoMod.Room GetRoomInfo(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.BlockingUnaryCall(__Method_GetRoomCurrentInfo, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_GetRoomInfo, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> GetRoomCurrentInfoAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/info"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> GetRoomInfoAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return GetRoomCurrentInfoAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return GetRoomInfoAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> GetRoomCurrentInfoAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/info"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Room> GetRoomInfoAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncUnaryCall(__Method_GetRoomCurrentInfo, null, options, request);
+        return CallInvoker.AsyncUnaryCall(__Method_GetRoomInfo, null, options, request);
       }
-      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.CellStatus> GetRoomStream(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return GetRoomStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.CellStatus> GetRoomStream(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncServerStreamingCall(__Method_GetRoomStream, null, options, request);
-      }
-      public virtual global::PlayCli.ProtoMod.Empty UpdateRoomStatus(global::PlayCli.ProtoMod.CellStatus request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return UpdateRoomStatus(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      public virtual global::PlayCli.ProtoMod.Empty UpdateRoomStatus(global::PlayCli.ProtoMod.CellStatus request, grpc::CallOptions options)
-      {
-        return CallInvoker.BlockingUnaryCall(__Method_UpdateRoomStatus, null, options, request);
-      }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> UpdateRoomStatusAsync(global::PlayCli.ProtoMod.CellStatus request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return UpdateRoomStatusAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> UpdateRoomStatusAsync(global::PlayCli.ProtoMod.CellStatus request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_UpdateRoomStatus, null, options, request);
-      }
-      public virtual global::PlayCli.ProtoMod.Empty DeleteRoom(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/delete"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty DeleteRoom(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return DeleteRoom(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual global::PlayCli.ProtoMod.Empty DeleteRoom(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/delete"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty DeleteRoom(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_DeleteRoom, null, options, request);
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> DeleteRoomAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/delete"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> DeleteRoomAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return DeleteRoomAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.Empty> DeleteRoomAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
+      /// <summary>
+      /// option (google.api.http) = {
+      ///     post: "/v1/room/delete"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> DeleteRoomAsync(global::PlayCli.ProtoMod.RoomRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncUnaryCall(__Method_DeleteRoom, null, options, request);
+      }
+      /// <summary>
+      /// rpc GetRoomStream (RoomRequest) returns (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// rpc UpdateRoomStream(stream CellStatus) returns  (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream/update"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::PlayCli.ProtoMod.CellStatus UpdateRoom(global::PlayCli.ProtoMod.CellStatus request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UpdateRoom(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// rpc GetRoomStream (RoomRequest) returns (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// rpc UpdateRoomStream(stream CellStatus) returns  (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream/update"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::PlayCli.ProtoMod.CellStatus UpdateRoom(global::PlayCli.ProtoMod.CellStatus request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_UpdateRoom, null, options, request);
+      }
+      /// <summary>
+      /// rpc GetRoomStream (RoomRequest) returns (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// rpc UpdateRoomStream(stream CellStatus) returns  (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream/update"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.CellStatus> UpdateRoomAsync(global::PlayCli.ProtoMod.CellStatus request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return UpdateRoomAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// rpc GetRoomStream (RoomRequest) returns (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// rpc UpdateRoomStream(stream CellStatus) returns  (stream CellStatus){
+      ///     option (google.api.http) = {
+      ///         post: "/v1/room/stream/update"
+      ///         body: "*"
+      ///     }; 
+      /// };
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.CellStatus> UpdateRoomAsync(global::PlayCli.ProtoMod.CellStatus request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_UpdateRoom, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override RoomStatusClient NewInstance(ClientBaseConfiguration configuration)
@@ -230,10 +496,9 @@ namespace PlayCli.ProtoMod {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_CreateRoom, serviceImpl.CreateRoom)
           .AddMethod(__Method_GetRoomList, serviceImpl.GetRoomList)
-          .AddMethod(__Method_GetRoomCurrentInfo, serviceImpl.GetRoomCurrentInfo)
-          .AddMethod(__Method_GetRoomStream, serviceImpl.GetRoomStream)
-          .AddMethod(__Method_UpdateRoomStatus, serviceImpl.UpdateRoomStatus)
-          .AddMethod(__Method_DeleteRoom, serviceImpl.DeleteRoom).Build();
+          .AddMethod(__Method_GetRoomInfo, serviceImpl.GetRoomInfo)
+          .AddMethod(__Method_DeleteRoom, serviceImpl.DeleteRoom)
+          .AddMethod(__Method_UpdateRoom, serviceImpl.UpdateRoom).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -242,12 +507,128 @@ namespace PlayCli.ProtoMod {
     /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
     public static void BindService(grpc::ServiceBinderBase serviceBinder, RoomStatusBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_CreateRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.Empty, global::PlayCli.ProtoMod.Room>(serviceImpl.CreateRoom));
+      serviceBinder.AddMethod(__Method_CreateRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomCreateRequest, global::PlayCli.ProtoMod.Room>(serviceImpl.CreateRoom));
       serviceBinder.AddMethod(__Method_GetRoomList, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomListRequest, global::PlayCli.ProtoMod.RoomListResponse>(serviceImpl.GetRoomList));
-      serviceBinder.AddMethod(__Method_GetRoomCurrentInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room>(serviceImpl.GetRoomCurrentInfo));
-      serviceBinder.AddMethod(__Method_GetRoomStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.CellStatus>(serviceImpl.GetRoomStream));
-      serviceBinder.AddMethod(__Method_UpdateRoomStatus, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.Empty>(serviceImpl.UpdateRoomStatus));
-      serviceBinder.AddMethod(__Method_DeleteRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Empty>(serviceImpl.DeleteRoom));
+      serviceBinder.AddMethod(__Method_GetRoomInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room>(serviceImpl.GetRoomInfo));
+      serviceBinder.AddMethod(__Method_DeleteRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.DeleteRoom));
+      serviceBinder.AddMethod(__Method_UpdateRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.CellStatus>(serviceImpl.UpdateRoom));
+    }
+
+  }
+  public static partial class CreditsAuth
+  {
+    static readonly string __ServiceName = "RoomStatus.CreditsAuth";
+
+    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.CreateCredReq> __Marshaller_RoomStatus_CreateCredReq = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.CreateCredReq.Parser.ParseFrom);
+    static readonly grpc::Marshaller<global::PlayCli.ProtoMod.Cred> __Marshaller_RoomStatus_Cred = grpc::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::PlayCli.ProtoMod.Cred.Parser.ParseFrom);
+
+    static readonly grpc::Method<global::PlayCli.ProtoMod.CreateCredReq, global::PlayCli.ProtoMod.Cred> __Method_CreateCred = new grpc::Method<global::PlayCli.ProtoMod.CreateCredReq, global::PlayCli.ProtoMod.Cred>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "CreateCred",
+        __Marshaller_RoomStatus_CreateCredReq,
+        __Marshaller_RoomStatus_Cred);
+
+    /// <summary>Service descriptor</summary>
+    public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
+    {
+      get { return global::PlayCli.ProtoMod.GameCtlReflection.Descriptor.Services[1]; }
+    }
+
+    /// <summary>Base class for server-side implementations of CreditsAuth</summary>
+    [grpc::BindServiceMethod(typeof(CreditsAuth), "BindService")]
+    public abstract partial class CreditsAuthBase
+    {
+      /// <summary>
+      ///  option (google.api.http) = {
+      ///     post: "/v1/cred/create"
+      ///     body: "*"
+      /// };  
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
+      public virtual global::System.Threading.Tasks.Task CreateCred(global::PlayCli.ProtoMod.CreateCredReq request, grpc::IServerStreamWriter<global::PlayCli.ProtoMod.Cred> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+    }
+
+    /// <summary>Client for CreditsAuth</summary>
+    public partial class CreditsAuthClient : grpc::ClientBase<CreditsAuthClient>
+    {
+      /// <summary>Creates a new client for CreditsAuth</summary>
+      /// <param name="channel">The channel to use to make remote calls.</param>
+      public CreditsAuthClient(grpc::ChannelBase channel) : base(channel)
+      {
+      }
+      /// <summary>Creates a new client for CreditsAuth that uses a custom <c>CallInvoker</c>.</summary>
+      /// <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+      public CreditsAuthClient(grpc::CallInvoker callInvoker) : base(callInvoker)
+      {
+      }
+      /// <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+      protected CreditsAuthClient() : base()
+      {
+      }
+      /// <summary>Protected constructor to allow creation of configured clients.</summary>
+      /// <param name="configuration">The client configuration.</param>
+      protected CreditsAuthClient(ClientBaseConfiguration configuration) : base(configuration)
+      {
+      }
+
+      /// <summary>
+      ///  option (google.api.http) = {
+      ///     post: "/v1/cred/create"
+      ///     body: "*"
+      /// };  
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.Cred> CreateCred(global::PlayCli.ProtoMod.CreateCredReq request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CreateCred(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      ///  option (google.api.http) = {
+      ///     post: "/v1/cred/create"
+      ///     body: "*"
+      /// };  
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.Cred> CreateCred(global::PlayCli.ProtoMod.CreateCredReq request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncServerStreamingCall(__Method_CreateCred, null, options, request);
+      }
+      /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+      protected override CreditsAuthClient NewInstance(ClientBaseConfiguration configuration)
+      {
+        return new CreditsAuthClient(configuration);
+      }
+    }
+
+    /// <summary>Creates service definition that can be registered with a server</summary>
+    /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+    public static grpc::ServerServiceDefinition BindService(CreditsAuthBase serviceImpl)
+    {
+      return grpc::ServerServiceDefinition.CreateBuilder()
+          .AddMethod(__Method_CreateCred, serviceImpl.CreateCred).Build();
+    }
+
+    /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
+    /// Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
+    /// <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
+    /// <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+    public static void BindService(grpc::ServiceBinderBase serviceBinder, CreditsAuthBase serviceImpl)
+    {
+      serviceBinder.AddMethod(__Method_CreateCred, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::PlayCli.ProtoMod.CreateCredReq, global::PlayCli.ProtoMod.Cred>(serviceImpl.CreateCred));
     }
 
   }

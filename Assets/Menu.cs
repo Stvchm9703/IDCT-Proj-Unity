@@ -9,4 +9,7 @@ public class Menu : MonoBehaviour {
     public void GotoRoomSearch () {
         SceneManager.LoadScene ("RoomSearch", LoadSceneMode.Single);
     }
+    public void GotoDebugTest(){
+        SceneManager.LoadScene("DebugRunConsole", LoadSceneMode.Single);
+    }
 }

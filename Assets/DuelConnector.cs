@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.IO;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,15 +12,17 @@ namespace PlayCli {
         private RoomStatus.RoomStatusClient client;
 
         public DuelConnector (CfServerSetting s) {
+            var crt = new SslCredentials(File.ReadAllText(s.KeyPemPath));
             this.channel = new Channel (
                 s.Host + ":" + s.Port,
-                ChannelCredentials.Insecure);
+                crt);
+           
             this.client = new RoomStatus.RoomStatusClient (this.channel);
         }
 
         public async Task<Room> CreateRoom () {
             try {
-                Room tmp = await this.client.CreateRoomAsync (new Empty { });
+                Room tmp = await this.client.CreateRoomAsync (new RoomCreateRequest { });
                 Thread.Sleep (5000);
                 return tmp;
             } catch (RpcException e) {
@@ -34,7 +37,7 @@ namespace PlayCli {
                         Requirement = requirement,
                     }
                 );
-                List<Room> tt = new List<Room>();
+                List<Room> tt = new List<Room> ();
                 tt.AddRange (tmp.Result);
                 return tt;
             } catch (RpcException e) {
@@ -44,7 +47,7 @@ namespace PlayCli {
         }
         public async Task<Room> GetRoomInfo (string key_ref) {
             try {
-                Room tmp = await this.client.GetRoomCurrentInfoAsync (
+                Room tmp = await this.client.GetRoomInfoAsync (
                     new RoomRequest { Key = key_ref }
                 );
                 return tmp;
@@ -54,15 +57,15 @@ namespace PlayCli {
             }
         }
 
-        public AsyncServerStreamingCall<CellStatus> GetRoomStream (string key_ref) {
-            return this.client.GetRoomStream (
-                new RoomRequest { Key = key_ref }
-            );
-        }
+        // public AsyncServerStreamingCall<CellStatus> GetRoomStream (string key_ref) {
+        //     return this.client.GetRoomStream (
+        //         new RoomRequest { Key = key_ref }
+        //     );
+        // }
 
         public async Task<bool> UpdateRoomTurn (CellStatus cs) {
             try {
-                await this.client.UpdateRoomStatusAsync (cs);
+                await this.client.UpdateRoomAsync (cs);
                 return true;
             } catch (RpcException e) {
                 Debug.Log ("RPC failed " + e);

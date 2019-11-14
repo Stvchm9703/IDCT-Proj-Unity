@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Grpc.Core;
+using Newtonsoft.Json;
 using PlayCli.ProtoMod;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,13 +14,14 @@ public class RoomSearch : MonoBehaviour {
         // show the loading
         DuelConn.transform.Find ("Loading").gameObject.SetActive (true);
         // wait loading the list
-        // try {
-        room_list = await DuelConn.GetComponent<DuelConnObj> ().GetRoomList ("");
+        try {
+            room_list = await DuelConn.GetComponent<DuelConnObj> ().GetRoomList ("");
 
-        // } catch (Core.RpcException e) {
-        //     // show message ?
-        //     Debug.Log(e);
-        // }
+        } catch (RpcException e) {
+            // show message ?
+            string str = JsonUtility.ToJson (e);
+            Debug.Log (str);
+        }
         // generate the room-list gameobject 
 
         // complete the loading
@@ -33,19 +35,20 @@ public class RoomSearch : MonoBehaviour {
 
         // once complete the create-room phase 
         try {
-            await DuelConn.GetComponent<DuelConnObj> ().CreateRoom ();
+            var t = await DuelConn.GetComponent<DuelConnObj> ().CreateRoom ();
             // off the loading 
             DuelConn.transform.Find ("Loading").gameObject.SetActive (false);
             // start change scene
             // Scene.Load("");
 
-        } catch (Core.RpcException e) {
+        } catch (RpcException e) {
             // show fail create message 
-            Debug.Log("create room" , e);
+            string str = JsonUtility.ToJson (e);
+            Debug.Log ("create room" + str);
         }
 
     }
-    public  void BackToMenu () {
+    public void BackToMenu () {
         // destroy  DuenConnObj
         Destroy (DuelConn);
         SceneManager.LoadScene ("OtherSceneName", LoadSceneMode.Single);
