@@ -12,7 +12,17 @@ public class DuelConnObj : MonoBehaviour {
     public DuelConnector conn;
     public Room current_room;
     // public AsyncServerStreamingCall<CellStatus> stream_status;
-    public CfServerSetting tmp = new CfServerSetting {
+    public CfServerSetting Win_DevTmp = new CfServerSetting {
+        Connector = "grpc",
+        Host = "192.168.0.123",
+        Port = 11000,
+        Database = "",
+        Username = "",
+        Password = "",
+        Key = "",
+        KeyPemPath = "A:\\Gitrepo\\IDCT-Proj-Unity\\server.pem",
+    };
+    public CfServerSetting Mac_DevTmp = new CfServerSetting {
         Connector = "grpc",
         Host = "192.168.0.123",
         Port = 11000,
@@ -38,7 +48,7 @@ public class DuelConnObj : MonoBehaviour {
             this.gameObject.tag = "Connector";
             this.conn = new DuelConnector (
                 // Config.LoadCfFile (this.config_file).remote
-                tmp
+                Win_DevTmp
             );
         }
     }
@@ -76,12 +86,12 @@ public class DuelConnObj : MonoBehaviour {
         return await this.conn.UpdateRoomTurn (cs);
     }
 
-    public async Task<bool> ExitRoom (string para) {
+    public bool ExitRoom (string para) {
         // Time.Wait
         return true;
     }
 
-    async void Destroy () {
+    void Destroy () {
         // this.conn destruct call;
 
     }

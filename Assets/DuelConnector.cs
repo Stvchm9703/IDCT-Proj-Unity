@@ -7,15 +7,16 @@ using Grpc.Core;
 using PlayCli.ProtoMod;
 using UnityEngine;
 namespace PlayCli {
+    
     public class DuelConnector {
         private Channel channel;
         private RoomStatus.RoomStatusClient client;
-
+        
         public DuelConnector (CfServerSetting s) {
             var crt = new SslCredentials(File.ReadAllText(s.KeyPemPath));
             this.channel = new Channel (
                 s.Host + ":" + s.Port,
-                crt);
+                ChannelCredentials.Insecure);
            
             this.client = new RoomStatus.RoomStatusClient (this.channel);
         }
