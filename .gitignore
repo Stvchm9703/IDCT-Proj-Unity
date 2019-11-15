@@ -59,5 +59,8 @@ sysinfo.txt
 *.unitypackage
 
 # Crashlytics generated file
+
 crashlytics-build.properties
 
+
+Assets\Plugins\grpc.core.api.2.24.0\runtimes\

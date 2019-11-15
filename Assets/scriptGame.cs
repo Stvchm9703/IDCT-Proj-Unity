@@ -9,8 +9,6 @@ public class scriptGame : MonoBehaviour {
     // Cell image from "cell.png" asset
     public GameObject ImgBackground;
 
-    public GameObject GiveUpPanel;
-    public bool GivePanelIsOpen = false;
     public Texture2D cell;
     // List of sprites used in "cells" and other controls
     public Sprite[] sprites;
@@ -22,7 +20,7 @@ public class scriptGame : MonoBehaviour {
     // Swaps between 1 and -1 on each turn. -1 means "o" turn, 1 means "x" turn
     private int turn;
     // End of game flag. If true, winner contains result of the game
-    private bool isGameOver;
+    public bool isGameOver;
     private int winner;
     // Winner of game,  1 for "x", -1 for "o", 0 - draw. Valid only if isGameOver and not isDraw
     private ArrayList winnerCells;
@@ -53,7 +51,7 @@ public class scriptGame : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Update everything
     void Update () {
-        GiveUpPanel.SetActive (GivePanelIsOpen);
+       
         if (isGameOver)
             return;
         if (turn == -1)
@@ -81,29 +79,27 @@ public class scriptGame : MonoBehaviour {
             onTurnComplete (1);
         }
     }
-    public void alertOpen () {
-        if (!isGameOver) {
-            GiveUpPanel.SetActive (true);
-            // this.closeAlert();
-        } else {
-            // OK
-            backToMenu ();
-        }
-    }
+    // public void alertOpen () {
+    //     if (!isGameOver) {
+    //         Debug.Log ("alert open click : " + isGameOver);
+    //         this.GivePanelIsOpen = true;
+    //     } else {
+    //         backToMenu (); // OK
+    //     }
+    // }
 
     // @OK 
     public void backToMenu () {
         // GiveUp
         SceneManager.LoadScene ("Menu", LoadSceneMode.Single);
     }
-    public void closeAlert () {
-        // check! -> fail
-        Debug.Log ("close called");
-        GiveUpPanel.SetActive (false);
-    }
-    public void giveUpOnClick () {
-        // finally
-        // checked -> fail
+    // public void closeAlert () {
+    //     // check! -> fail
+    //     Debug.Log ("close called");
+    //     this.GivePanelIsOpen = false;
+    // }
+    public void giveUp () {
+        Debug.Log ("give up on click");
         backToMenu ();
     }
     // ==============================================================================
