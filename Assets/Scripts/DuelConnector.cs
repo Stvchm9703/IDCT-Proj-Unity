@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+// using System.Net.Http;
+// using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
+// using Grpc.Net.Client;
 using Newtonsoft.Json;
 using PlayCli.ProtoMod;
 using UnityEngine;
@@ -13,35 +16,34 @@ namespace PlayCli {
         private string UserID;
         private string Key;
 
-        public string HostId {
-            get {
-                return this.UserID + "-" + this.Key;
-            }
-        }
+        public string HostId { get { return this.UserID + "-" + this.Key; } }
         private Channel channel;
         private RoomStatus.RoomStatusClient client;
 
+        public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StreamHandler;
+
+        public AsyncServerStreamingCall<CellStatusResp> GetOnlyStream;
         public DuelConnector (CfServerSetting s) {
-            // TextAsset ta = Resources.Load<TextAsset>(s.KeyPemPath);
-            var tt = File.ReadAllText (s.KeyPemPath); 
             var crt = new SslCredentials (File.ReadAllText (s.KeyPemPath));
             this.channel = new Channel (
-                s.Host + ":" + s.Port,
-                crt);
+                s.Host, s.Port,
+                SslCredentials.Insecure);
             this.UserID = s.Username;
             this.Key = s.Key;
             this.client = new RoomStatus.RoomStatusClient (this.channel);
+
         }
 
         public async Task<Room> CreateRoom () {
-            return await this.client.CreateRoomAsync (new RoomCreateRequest {
-                HostId = this.HostId
+            var t = await this.client.CreateRoomAsync (new RoomCreateReq {
+                UserId = this.HostId
             });
+            return t.RoomInfo;
         }
         public async Task<List<Room>> GetRoomList (string requirement) {
             try {
-                RoomListResponse tmp = await this.client.GetRoomListAsync (
-                    new RoomListRequest {
+                RoomListResp tmp = await this.client.GetRoomListAsync (
+                    new RoomListReq {
                         Requirement = requirement,
                     }
                 );
@@ -55,28 +57,38 @@ namespace PlayCli {
                 throw;
             }
         }
-        public async Task<Room> GetRoomInfo (string key_ref) {
+        public async Task<RoomResp> GetRoomInfo (string key_ref) {
             return await this.client.GetRoomInfoAsync (
-                new RoomRequest { Key = key_ref }
+                new RoomReq { Key = key_ref }
             );
         }
 
-        // public AsyncServerStreamingCall<CellStatus> GetRoomStream (string key_ref) {
-        //     return this.client.GetRoomStream (
-        //         new RoomRequest { Key = key_ref }
-        //     );
-        // }
-
+        public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> RoomStream () {
+            this.StreamHandler = this.client.RoomStream ();
+            return this.StreamHandler;
+        }
+        public AsyncServerStreamingCall<CellStatusResp> GetRoomStream (CellStatusReq request) {
+            if (this.GetOnlyStream == null) {
+                this.GetOnlyStream = this.client.GetRoomStream (request);
+            }
+            return this.GetOnlyStream;
+            // return this.client.GetRoomStream (request);
+        }
         public async Task<CellStatus> UpdateRoomTurn (CellStatus cs) {
-            return await this.client.UpdateRoomAsync (cs);
+            CellStatusReq tmp = new CellStatusReq {
+                UserId = this.HostId,
+                Key = cs.Key,
+                CellStatus = cs,
+            };
+            var kt = await this.client.UpdateRoomAsync (tmp);
+            return kt.CellStatus;
         }
 
-        public async Task<bool> DeleteRoom (string room_key) {
+        public async Task<RoomResp> DeleteRoom (string room_key) {
             try {
-                await this.client.DeleteRoomAsync (new RoomRequest {
+                return await this.client.DeleteRoomAsync (new RoomReq {
                     Key = room_key,
                 });
-                return true;
             } catch (RpcException e) {
                 Debug.Log ("RPC failed " + e);
                 throw;
@@ -84,8 +96,8 @@ namespace PlayCli {
         }
         public async Task<bool> QuitRoom () {
             try {
-                await this.client.QuitRoomAsync (new RoomCreateRequest {
-                    HostId = this.HostId
+                await this.client.QuitRoomAsync (new RoomCreateReq {
+                    UserId = this.HostId,
                 });
                 return true;
             } catch (RpcException e) {
@@ -95,6 +107,23 @@ namespace PlayCli {
         }
 
         ~DuelConnector () {
+            if (this.StreamHandler != null) {
+                var shutdownTkn = new CancellationTokenSource ();
+                // Debug.Log ("try kill");
+                // Debug.Log (this.StreamHandler);
+                this.StreamHandler.RequestStream.CompleteAsync ();
+                this.StreamHandler.ResponseStream.MoveNext (shutdownTkn.Token);
+                shutdownTkn.Cancel ();
+                this.StreamHandler = null;
+            }
+            if (this.GetOnlyStream != null) {
+                var shutdownTkn = new CancellationTokenSource ();
+                // Debug.Log ("try kill");
+                // Debug.Log (this.GetOnlyStream);
+                this.GetOnlyStream.ResponseStream.MoveNext (shutdownTkn.Token);
+                shutdownTkn.Cancel ();
+                this.GetOnlyStream = null;
+            }
             this.client = null;
             this.channel.ShutdownAsync ().Wait ();
             Debug.Log ("destructor DuelConnector");

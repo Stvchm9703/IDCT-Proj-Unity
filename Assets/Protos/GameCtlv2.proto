@@ -7,21 +7,8 @@ import "google/protobuf/empty.proto";
 // import "github.com/mwitkow/go-proto-validators/validator.proto";
 
 package RoomStatus;
-option csharp_namespace = "PlayCli.ProtoModv2";
-option go_package  = "v2";
-// option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
-//   info: { version: "0.2"; };
-//   external_docs: {
-//     url: "https://github.com/stvchm9703/IDCT";
-//     description: "gRPC server Impletement repository";
-//   }
-//   schemes: HTTPS;
-// };
-// option (gogoproto.marshaler_all) = true;
-// option (gogoproto.unmarshaler_all) = true;
-// option (gogoproto.sizer_all) = true;
-// option (gogoproto.goproto_registration) = true;
-// option (gogoproto.messagename_all) = true;
+option csharp_namespace = "PlayCli.ProtoMod";
+
 
 
 message ErrorMsg{

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
-using PlayCli.ProtoModv2;
+using PlayCli.ProtoMod;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -38,7 +38,7 @@ public class scriptGameVS : MonoBehaviour {
     // PlayCli implement 
     //  -1 == Host
     //  1 == Dueler
-    private DuelConnObjv2 DuelConn;
+    private DuelConnObj DuelConn;
     public bool IsConnected = false;
     public CancellationTokenSource close_tkn;
     public int player_sign = 1;
@@ -69,7 +69,7 @@ public class scriptGameVS : MonoBehaviour {
     void Awake () {
         GameObject[] objs = GameObject.FindGameObjectsWithTag ("Connector");
         if (objs.Length == 1) {
-            DuelConn = objs[0].GetComponent<DuelConnObjv2> ();
+            DuelConn = objs[0].GetComponent<DuelConnObj> ();
             IsConnected = true;
         }
     }

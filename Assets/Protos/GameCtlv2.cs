@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace PlayCli.ProtoModv2 {
+namespace PlayCli.ProtoMod {
 
   /// <summary>Holder for reflection information generated from GameCtlv2.proto</summary>
   public static partial class GameCtlv2Reflection {
@@ -67,24 +67,24 @@ namespace PlayCli.ProtoModv2 {
             "bGxTdGF0dXNSZXNwIgASPwoIUXVpdFJvb20SGS5Sb29tU3RhdHVzLlJvb21D",
             "cmVhdGVSZXEaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiADJMCgtDcmVkaXRz",
             "QXV0aBI9CgpDcmVhdGVDcmVkEhkuUm9vbVN0YXR1cy5DcmVhdGVDcmVkUmVx",
-            "GhAuUm9vbVN0YXR1cy5DcmVkIgAwAUIZWgJ2MqoCElBsYXlDbGkuUHJvdG9N",
-            "b2R2MmIGcHJvdG8z"));
+            "GhAuUm9vbVN0YXR1cy5DcmVkIgAwAUITqgIQUGxheUNsaS5Qcm90b01vZGIG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.ErrorMsg), global::PlayCli.ProtoModv2.ErrorMsg.Parser, new[]{ "MsgInfo", "MsgDesp" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.RoomListReq), global::PlayCli.ProtoModv2.RoomListReq.Parser, new[]{ "Requirement" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.RoomListResp), global::PlayCli.ProtoModv2.RoomListResp.Parser, new[]{ "Timestamp", "Result", "ErrorMsg" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.RoomCreateReq), global::PlayCli.ProtoModv2.RoomCreateReq.Parser, new[]{ "UserId" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.RoomCreateResp), global::PlayCli.ProtoModv2.RoomCreateResp.Parser, new[]{ "UserId", "Timestamp", "Status", "CellStatus", "ErrorMsg" }, new[]{ "ResponseMsg" }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.RoomReq), global::PlayCli.ProtoModv2.RoomReq.Parser, new[]{ "Key" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.RoomResp), global::PlayCli.ProtoModv2.RoomResp.Parser, new[]{ "Timestamp", "RoomInfo", "Error" }, new[]{ "ResponseMsg" }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.Room), global::PlayCli.ProtoModv2.Room.Parser, new[]{ "Key", "HostId", "DuelerId", "Status", "Round", "Cell", "CellStatus" }, null, new[]{ typeof(global::PlayCli.ProtoModv2.Room.Types.Status) }, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.CellStatus), global::PlayCli.ProtoModv2.CellStatus.Parser, new[]{ "Key", "Turn", "CellNum" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.CellStatusReq), global::PlayCli.ProtoModv2.CellStatusReq.Parser, new[]{ "UserId", "Key", "IsPlayer", "CellStatus" }, new[]{ "Player" }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.CellStatusResp), global::PlayCli.ProtoModv2.CellStatusResp.Parser, new[]{ "UserId", "Key", "Timestamp", "Status", "CellStatus", "ErrorMsg" }, new[]{ "ResponseMsg" }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.CreateCredReq), global::PlayCli.ProtoModv2.CreateCredReq.Parser, new[]{ "Ip", "Username", "Password" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoModv2.Cred), global::PlayCli.ProtoModv2.Cred.Parser, new[]{ "File" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.ErrorMsg), global::PlayCli.ProtoMod.ErrorMsg.Parser, new[]{ "MsgInfo", "MsgDesp" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomListReq), global::PlayCli.ProtoMod.RoomListReq.Parser, new[]{ "Requirement" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomListResp), global::PlayCli.ProtoMod.RoomListResp.Parser, new[]{ "Timestamp", "Result", "ErrorMsg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomCreateReq), global::PlayCli.ProtoMod.RoomCreateReq.Parser, new[]{ "UserId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomCreateResp), global::PlayCli.ProtoMod.RoomCreateResp.Parser, new[]{ "UserId", "Timestamp", "Status", "CellStatus", "ErrorMsg" }, new[]{ "ResponseMsg" },  null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomReq), global::PlayCli.ProtoMod.RoomReq.Parser, new[]{ "Key" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomResp), global::PlayCli.ProtoMod.RoomResp.Parser, new[]{ "Timestamp", "RoomInfo", "Error" }, new[]{ "ResponseMsg" }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.Room), global::PlayCli.ProtoMod.Room.Parser, new[]{ "Key", "HostId", "DuelerId", "Status", "Round", "Cell", "CellStatus" }, null, new[]{ typeof(global::PlayCli.ProtoMod.Room.Types.Status) },  null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CellStatus), global::PlayCli.ProtoMod.CellStatus.Parser, new[]{ "Key", "Turn", "CellNum" }, null,null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CellStatusReq), global::PlayCli.ProtoMod.CellStatusReq.Parser, new[]{ "UserId", "Key", "IsPlayer", "CellStatus" }, new[]{ "Player" }, null,  null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CellStatusResp), global::PlayCli.ProtoMod.CellStatusResp.Parser, new[]{ "UserId", "Key", "Timestamp", "Status", "CellStatus", "ErrorMsg" }, new[]{ "ResponseMsg" }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CreateCredReq), global::PlayCli.ProtoMod.CreateCredReq.Parser, new[]{ "Ip", "Username", "Password" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.Cred), global::PlayCli.ProtoMod.Cred.Parser, new[]{ "File" },  null, null, null)
           }));
     }
     #endregion
@@ -99,7 +99,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[0]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -256,7 +256,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[1]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -385,7 +385,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[2]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -426,19 +426,19 @@ namespace PlayCli.ProtoModv2 {
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::PlayCli.ProtoModv2.Room> _repeated_result_codec
-        = pb::FieldCodec.ForMessage(18, global::PlayCli.ProtoModv2.Room.Parser);
-    private readonly pbc::RepeatedField<global::PlayCli.ProtoModv2.Room> result_ = new pbc::RepeatedField<global::PlayCli.ProtoModv2.Room>();
+    private static readonly pb::FieldCodec<global::PlayCli.ProtoMod.Room> _repeated_result_codec
+        = pb::FieldCodec.ForMessage(18, global::PlayCli.ProtoMod.Room.Parser);
+    private readonly pbc::RepeatedField<global::PlayCli.ProtoMod.Room> result_ = new pbc::RepeatedField<global::PlayCli.ProtoMod.Room>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::PlayCli.ProtoModv2.Room> Result {
+    public pbc::RepeatedField<global::PlayCli.ProtoMod.Room> Result {
       get { return result_; }
     }
 
     /// <summary>Field number for the "error_msg" field.</summary>
     public const int ErrorMsgFieldNumber = 3;
-    private global::PlayCli.ProtoModv2.ErrorMsg errorMsg_;
+    private global::PlayCli.ProtoMod.ErrorMsg errorMsg_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::PlayCli.ProtoModv2.ErrorMsg ErrorMsg {
+    public global::PlayCli.ProtoMod.ErrorMsg ErrorMsg {
       get { return errorMsg_; }
       set {
         errorMsg_ = value;
@@ -524,7 +524,7 @@ namespace PlayCli.ProtoModv2 {
       result_.Add(other.result_);
       if (other.errorMsg_ != null) {
         if (errorMsg_ == null) {
-          ErrorMsg = new global::PlayCli.ProtoModv2.ErrorMsg();
+          ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
         }
         ErrorMsg.MergeFrom(other.ErrorMsg);
       }
@@ -549,7 +549,7 @@ namespace PlayCli.ProtoModv2 {
           }
           case 26: {
             if (errorMsg_ == null) {
-              ErrorMsg = new global::PlayCli.ProtoModv2.ErrorMsg();
+              ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
             }
             input.ReadMessage(ErrorMsg);
             break;
@@ -568,7 +568,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[3]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -697,7 +697,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[4]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -770,8 +770,8 @@ namespace PlayCli.ProtoModv2 {
     /// <summary>Field number for the "cell_status" field.</summary>
     public const int CellStatusFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::PlayCli.ProtoModv2.Room CellStatus {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.CellStatus ? (global::PlayCli.ProtoModv2.Room) responseMsg_ : null; }
+    public global::PlayCli.ProtoMod.Room CellStatus {
+      get { return responseMsgCase_ == ResponseMsgOneofCase.CellStatus ? (global::PlayCli.ProtoMod.Room) responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.CellStatus;
@@ -781,8 +781,8 @@ namespace PlayCli.ProtoModv2 {
     /// <summary>Field number for the "error_msg" field.</summary>
     public const int ErrorMsgFieldNumber = 5;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::PlayCli.ProtoModv2.ErrorMsg ErrorMsg {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg ? (global::PlayCli.ProtoModv2.ErrorMsg) responseMsg_ : null; }
+    public global::PlayCli.ProtoMod.ErrorMsg ErrorMsg {
+      get { return responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg ? (global::PlayCli.ProtoMod.ErrorMsg) responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.ErrorMsg;
@@ -918,13 +918,13 @@ namespace PlayCli.ProtoModv2 {
       switch (other.ResponseMsgCase) {
         case ResponseMsgOneofCase.CellStatus:
           if (CellStatus == null) {
-            CellStatus = new global::PlayCli.ProtoModv2.Room();
+            CellStatus = new global::PlayCli.ProtoMod.Room();
           }
           CellStatus.MergeFrom(other.CellStatus);
           break;
         case ResponseMsgOneofCase.ErrorMsg:
           if (ErrorMsg == null) {
-            ErrorMsg = new global::PlayCli.ProtoModv2.ErrorMsg();
+            ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
           }
           ErrorMsg.MergeFrom(other.ErrorMsg);
           break;
@@ -954,7 +954,7 @@ namespace PlayCli.ProtoModv2 {
             break;
           }
           case 34: {
-            global::PlayCli.ProtoModv2.Room subBuilder = new global::PlayCli.ProtoModv2.Room();
+            global::PlayCli.ProtoMod.Room subBuilder = new global::PlayCli.ProtoMod.Room();
             if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) {
               subBuilder.MergeFrom(CellStatus);
             }
@@ -963,7 +963,7 @@ namespace PlayCli.ProtoModv2 {
             break;
           }
           case 42: {
-            global::PlayCli.ProtoModv2.ErrorMsg subBuilder = new global::PlayCli.ProtoModv2.ErrorMsg();
+            global::PlayCli.ProtoMod.ErrorMsg subBuilder = new global::PlayCli.ProtoMod.ErrorMsg();
             if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) {
               subBuilder.MergeFrom(ErrorMsg);
             }
@@ -985,7 +985,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[5]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1114,7 +1114,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[6]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1163,8 +1163,8 @@ namespace PlayCli.ProtoModv2 {
     /// <summary>Field number for the "room_info" field.</summary>
     public const int RoomInfoFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::PlayCli.ProtoModv2.Room RoomInfo {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.RoomInfo ? (global::PlayCli.ProtoModv2.Room) responseMsg_ : null; }
+    public global::PlayCli.ProtoMod.Room RoomInfo {
+      get { return responseMsgCase_ == ResponseMsgOneofCase.RoomInfo ? (global::PlayCli.ProtoMod.Room) responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.RoomInfo;
@@ -1174,8 +1174,8 @@ namespace PlayCli.ProtoModv2 {
     /// <summary>Field number for the "error" field.</summary>
     public const int ErrorFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::PlayCli.ProtoModv2.ErrorMsg Error {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.Error ? (global::PlayCli.ProtoModv2.ErrorMsg) responseMsg_ : null; }
+    public global::PlayCli.ProtoMod.ErrorMsg Error {
+      get { return responseMsgCase_ == ResponseMsgOneofCase.Error ? (global::PlayCli.ProtoMod.ErrorMsg) responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.Error;
@@ -1287,13 +1287,13 @@ namespace PlayCli.ProtoModv2 {
       switch (other.ResponseMsgCase) {
         case ResponseMsgOneofCase.RoomInfo:
           if (RoomInfo == null) {
-            RoomInfo = new global::PlayCli.ProtoModv2.Room();
+            RoomInfo = new global::PlayCli.ProtoMod.Room();
           }
           RoomInfo.MergeFrom(other.RoomInfo);
           break;
         case ResponseMsgOneofCase.Error:
           if (Error == null) {
-            Error = new global::PlayCli.ProtoModv2.ErrorMsg();
+            Error = new global::PlayCli.ProtoMod.ErrorMsg();
           }
           Error.MergeFrom(other.Error);
           break;
@@ -1315,7 +1315,7 @@ namespace PlayCli.ProtoModv2 {
             break;
           }
           case 18: {
-            global::PlayCli.ProtoModv2.Room subBuilder = new global::PlayCli.ProtoModv2.Room();
+            global::PlayCli.ProtoMod.Room subBuilder = new global::PlayCli.ProtoMod.Room();
             if (responseMsgCase_ == ResponseMsgOneofCase.RoomInfo) {
               subBuilder.MergeFrom(RoomInfo);
             }
@@ -1324,7 +1324,7 @@ namespace PlayCli.ProtoModv2 {
             break;
           }
           case 26: {
-            global::PlayCli.ProtoModv2.ErrorMsg subBuilder = new global::PlayCli.ProtoModv2.ErrorMsg();
+            global::PlayCli.ProtoMod.ErrorMsg subBuilder = new global::PlayCli.ProtoMod.ErrorMsg();
             if (responseMsgCase_ == ResponseMsgOneofCase.Error) {
               subBuilder.MergeFrom(Error);
             }
@@ -1346,7 +1346,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[7]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1413,9 +1413,9 @@ namespace PlayCli.ProtoModv2 {
 
     /// <summary>Field number for the "status" field.</summary>
     public const int StatusFieldNumber = 4;
-    private global::PlayCli.ProtoModv2.Room.Types.Status status_ = global::PlayCli.ProtoModv2.Room.Types.Status.OnStart;
+    private global::PlayCli.ProtoMod.Room.Types.Status status_ = global::PlayCli.ProtoMod.Room.Types.Status.OnStart;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::PlayCli.ProtoModv2.Room.Types.Status Status {
+    public global::PlayCli.ProtoMod.Room.Types.Status Status {
       get { return status_; }
       set {
         status_ = value;
@@ -1446,11 +1446,11 @@ namespace PlayCli.ProtoModv2 {
 
     /// <summary>Field number for the "cell_status" field.</summary>
     public const int CellStatusFieldNumber = 7;
-    private static readonly pb::FieldCodec<global::PlayCli.ProtoModv2.CellStatus> _repeated_cellStatus_codec
-        = pb::FieldCodec.ForMessage(58, global::PlayCli.ProtoModv2.CellStatus.Parser);
-    private readonly pbc::RepeatedField<global::PlayCli.ProtoModv2.CellStatus> cellStatus_ = new pbc::RepeatedField<global::PlayCli.ProtoModv2.CellStatus>();
+    private static readonly pb::FieldCodec<global::PlayCli.ProtoMod.CellStatus> _repeated_cellStatus_codec
+        = pb::FieldCodec.ForMessage(58, global::PlayCli.ProtoMod.CellStatus.Parser);
+    private readonly pbc::RepeatedField<global::PlayCli.ProtoMod.CellStatus> cellStatus_ = new pbc::RepeatedField<global::PlayCli.ProtoMod.CellStatus>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::PlayCli.ProtoModv2.CellStatus> CellStatus {
+    public pbc::RepeatedField<global::PlayCli.ProtoMod.CellStatus> CellStatus {
       get { return cellStatus_; }
     }
 
@@ -1483,7 +1483,7 @@ namespace PlayCli.ProtoModv2 {
       if (Key.Length != 0) hash ^= Key.GetHashCode();
       if (HostId.Length != 0) hash ^= HostId.GetHashCode();
       if (DuelerId.Length != 0) hash ^= DuelerId.GetHashCode();
-      if (Status != global::PlayCli.ProtoModv2.Room.Types.Status.OnStart) hash ^= Status.GetHashCode();
+      if (Status != global::PlayCli.ProtoMod.Room.Types.Status.OnStart) hash ^= Status.GetHashCode();
       if (Round != 0) hash ^= Round.GetHashCode();
       if (Cell != 0) hash ^= Cell.GetHashCode();
       hash ^= cellStatus_.GetHashCode();
@@ -1512,7 +1512,7 @@ namespace PlayCli.ProtoModv2 {
         output.WriteRawTag(26);
         output.WriteString(DuelerId);
       }
-      if (Status != global::PlayCli.ProtoModv2.Room.Types.Status.OnStart) {
+      if (Status != global::PlayCli.ProtoMod.Room.Types.Status.OnStart) {
         output.WriteRawTag(32);
         output.WriteEnum((int) Status);
       }
@@ -1542,7 +1542,7 @@ namespace PlayCli.ProtoModv2 {
       if (DuelerId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(DuelerId);
       }
-      if (Status != global::PlayCli.ProtoModv2.Room.Types.Status.OnStart) {
+      if (Status != global::PlayCli.ProtoMod.Room.Types.Status.OnStart) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Status);
       }
       if (Round != 0) {
@@ -1572,7 +1572,7 @@ namespace PlayCli.ProtoModv2 {
       if (other.DuelerId.Length != 0) {
         DuelerId = other.DuelerId;
       }
-      if (other.Status != global::PlayCli.ProtoModv2.Room.Types.Status.OnStart) {
+      if (other.Status != global::PlayCli.ProtoMod.Room.Types.Status.OnStart) {
         Status = other.Status;
       }
       if (other.Round != 0) {
@@ -1606,7 +1606,7 @@ namespace PlayCli.ProtoModv2 {
             break;
           }
           case 32: {
-            Status = (global::PlayCli.ProtoModv2.Room.Types.Status) input.ReadEnum();
+            Status = (global::PlayCli.ProtoMod.Room.Types.Status) input.ReadEnum();
             break;
           }
           case 40: {
@@ -1650,7 +1650,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[8]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1838,7 +1838,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[9]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1910,8 +1910,8 @@ namespace PlayCli.ProtoModv2 {
     /// <summary>Field number for the "cell_status" field.</summary>
     public const int CellStatusFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::PlayCli.ProtoModv2.CellStatus CellStatus {
-      get { return playerCase_ == PlayerOneofCase.CellStatus ? (global::PlayCli.ProtoModv2.CellStatus) player_ : null; }
+    public global::PlayCli.ProtoMod.CellStatus CellStatus {
+      get { return playerCase_ == PlayerOneofCase.CellStatus ? (global::PlayCli.ProtoMod.CellStatus) player_ : null; }
       set {
         player_ = value;
         playerCase_ = value == null ? PlayerOneofCase.None : PlayerOneofCase.CellStatus;
@@ -2038,7 +2038,7 @@ namespace PlayCli.ProtoModv2 {
           break;
         case PlayerOneofCase.CellStatus:
           if (CellStatus == null) {
-            CellStatus = new global::PlayCli.ProtoModv2.CellStatus();
+            CellStatus = new global::PlayCli.ProtoMod.CellStatus();
           }
           CellStatus.MergeFrom(other.CellStatus);
           break;
@@ -2068,7 +2068,7 @@ namespace PlayCli.ProtoModv2 {
             break;
           }
           case 34: {
-            global::PlayCli.ProtoModv2.CellStatus subBuilder = new global::PlayCli.ProtoModv2.CellStatus();
+            global::PlayCli.ProtoMod.CellStatus subBuilder = new global::PlayCli.ProtoMod.CellStatus();
             if (playerCase_ == PlayerOneofCase.CellStatus) {
               subBuilder.MergeFrom(CellStatus);
             }
@@ -2090,7 +2090,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[10]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2175,8 +2175,8 @@ namespace PlayCli.ProtoModv2 {
     /// <summary>Field number for the "cell_status" field.</summary>
     public const int CellStatusFieldNumber = 5;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::PlayCli.ProtoModv2.CellStatus CellStatus {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.CellStatus ? (global::PlayCli.ProtoModv2.CellStatus) responseMsg_ : null; }
+    public global::PlayCli.ProtoMod.CellStatus CellStatus {
+      get { return responseMsgCase_ == ResponseMsgOneofCase.CellStatus ? (global::PlayCli.ProtoMod.CellStatus) responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.CellStatus;
@@ -2186,8 +2186,8 @@ namespace PlayCli.ProtoModv2 {
     /// <summary>Field number for the "error_msg" field.</summary>
     public const int ErrorMsgFieldNumber = 6;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::PlayCli.ProtoModv2.ErrorMsg ErrorMsg {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg ? (global::PlayCli.ProtoModv2.ErrorMsg) responseMsg_ : null; }
+    public global::PlayCli.ProtoMod.ErrorMsg ErrorMsg {
+      get { return responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg ? (global::PlayCli.ProtoMod.ErrorMsg) responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.ErrorMsg;
@@ -2335,13 +2335,13 @@ namespace PlayCli.ProtoModv2 {
       switch (other.ResponseMsgCase) {
         case ResponseMsgOneofCase.CellStatus:
           if (CellStatus == null) {
-            CellStatus = new global::PlayCli.ProtoModv2.CellStatus();
+            CellStatus = new global::PlayCli.ProtoMod.CellStatus();
           }
           CellStatus.MergeFrom(other.CellStatus);
           break;
         case ResponseMsgOneofCase.ErrorMsg:
           if (ErrorMsg == null) {
-            ErrorMsg = new global::PlayCli.ProtoModv2.ErrorMsg();
+            ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
           }
           ErrorMsg.MergeFrom(other.ErrorMsg);
           break;
@@ -2375,7 +2375,7 @@ namespace PlayCli.ProtoModv2 {
             break;
           }
           case 42: {
-            global::PlayCli.ProtoModv2.CellStatus subBuilder = new global::PlayCli.ProtoModv2.CellStatus();
+            global::PlayCli.ProtoMod.CellStatus subBuilder = new global::PlayCli.ProtoMod.CellStatus();
             if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) {
               subBuilder.MergeFrom(CellStatus);
             }
@@ -2384,7 +2384,7 @@ namespace PlayCli.ProtoModv2 {
             break;
           }
           case 50: {
-            global::PlayCli.ProtoModv2.ErrorMsg subBuilder = new global::PlayCli.ProtoModv2.ErrorMsg();
+            global::PlayCli.ProtoMod.ErrorMsg subBuilder = new global::PlayCli.ProtoMod.ErrorMsg();
             if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) {
               subBuilder.MergeFrom(ErrorMsg);
             }
@@ -2406,7 +2406,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[11]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2591,7 +2591,7 @@ namespace PlayCli.ProtoModv2 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::PlayCli.ProtoModv2.GameCtlv2Reflection.Descriptor.MessageTypes[12]; }
+      get { return global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

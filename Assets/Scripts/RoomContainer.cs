@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using PlayCli.ProtoModv2;
+using PlayCli.ProtoMod;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Newtonsoft.Json;
-using PlayCli.ProtoModv2;
+using PlayCli.ProtoMod;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class RoomSearch : MonoBehaviour {
-    public DuelConnObjv2 DuelConn;
+    public DuelConnObj DuelConn;
     public GameObject Loading;
     public GameObject ContentGO;
     public GameObject ListItemPF;
