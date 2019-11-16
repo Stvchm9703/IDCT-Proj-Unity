@@ -1,23 +1,24 @@
 ﻿using System.Collections;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
+using Newtonsoft.Json;
 using PlayCli.ProtoMod;
 using UnityEngine;
 namespace PlayCli {
-    
+
     public class DuelConnector {
         private Channel channel;
         private RoomStatus.RoomStatusClient client;
-        
+
         public DuelConnector (CfServerSetting s) {
-            var crt = new SslCredentials(File.ReadAllText(s.KeyPemPath));
+            var crt = new SslCredentials (File.ReadAllText (s.KeyPemPath));
             this.channel = new Channel (
                 s.Host + ":" + s.Port,
-                ChannelCredentials.Insecure);
-           
+                crt);
+
             this.client = new RoomStatus.RoomStatusClient (this.channel);
         }
 
@@ -39,7 +40,9 @@ namespace PlayCli {
                     }
                 );
                 List<Room> tt = new List<Room> ();
-                tt.AddRange (tmp.Result);
+                foreach (var item in tmp.Result) {
+                    tt.Add (item);
+                }
                 return tt;
             } catch (RpcException e) {
                 Debug.Log ("RPC failed " + e);

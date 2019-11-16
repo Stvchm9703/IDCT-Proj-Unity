@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using PlayCli.ProtoMod;
 using UnityEngine;
 using UnityEngine.UI;
 public class DebugTestScript : MonoBehaviour {
@@ -21,12 +23,25 @@ public class DebugTestScript : MonoBehaviour {
 
     }
 
-    public void TestCreateRoom () {
-
+    public async void TestCreateRoom () {
+        var t = await this.TestObject.CreateRoom ();
+        if (t) {
+            var ty = JsonConvert.SerializeObject (this.TestObject.current_room);
+            PrintLog ("create room ", ty);
+        } else {
+            PrintLog ("create room", "fail");
+        }
     }
 
-    public void TestGetListRoom () {
-
+    public async void TestGetListRoom () {
+        List<Room> t = await this.TestObject.GetRoomList ("");
+        if (t.Count > 0) {
+            string output = JsonConvert.SerializeObject (t);
+            Debug.Log (output);
+            PrintLog ("list room ", output);
+        } else {
+            PrintLog ("list room", "fail");
+        }
     }
 
     public void PrintLog (string title, string info) {

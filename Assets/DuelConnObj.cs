@@ -14,7 +14,7 @@ public class DuelConnObj : MonoBehaviour {
     // public AsyncServerStreamingCall<CellStatus> stream_status;
     public CfServerSetting Win_DevTmp = new CfServerSetting {
         Connector = "grpc",
-        Host = "192.168.0.123",
+        Host = "127.0.0.1",
         Port = 11000,
         Database = "",
         Username = "",
