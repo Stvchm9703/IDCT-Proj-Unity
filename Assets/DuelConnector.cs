@@ -13,7 +13,7 @@ namespace PlayCli {
         private string UserID;
         private string Key;
 
-        private string HostId {
+        public string HostId {
             get {
                 return this.UserID + "-" + this.Key;
             }
@@ -69,10 +69,21 @@ namespace PlayCli {
             return await this.client.UpdateRoomAsync (cs);
         }
 
-        public async Task<bool> DeleteRoom (string key) {
+        public async Task<bool> DeleteRoom (string room_key) {
             try {
                 await this.client.DeleteRoomAsync (new RoomRequest {
-                    Key = key,
+                    Key = room_key,
+                });
+                return true;
+            } catch (RpcException e) {
+                Debug.Log ("RPC failed " + e);
+                throw;
+            }
+        }
+        public async Task<bool> QuitRoom () {
+            try {
+                await this.client.QuitRoomAsync (new RoomCreateRequest {
+                    HostId = this.HostId
                 });
                 return true;
             } catch (RpcException e) {
