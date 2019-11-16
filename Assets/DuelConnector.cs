@@ -10,6 +10,14 @@ using UnityEngine;
 namespace PlayCli {
 
     public class DuelConnector {
+        private string UserID;
+        private string Key;
+
+        private string HostId {
+            get {
+                return this.UserID + "-" + this.Key;
+            }
+        }
         private Channel channel;
         private RoomStatus.RoomStatusClient client;
 
@@ -18,19 +26,15 @@ namespace PlayCli {
             this.channel = new Channel (
                 s.Host + ":" + s.Port,
                 crt);
-
+            this.UserID = s.Username;
+            this.Key = s.Key;
             this.client = new RoomStatus.RoomStatusClient (this.channel);
         }
 
         public async Task<Room> CreateRoom () {
-            try {
-                Room tmp = await this.client.CreateRoomAsync (new RoomCreateRequest { });
-                Thread.Sleep (5000);
-                return tmp;
-            } catch (RpcException e) {
-                Debug.Log ("RPC failed " + e);
-                throw;
-            }
+            return await this.client.CreateRoomAsync (new RoomCreateRequest {
+                HostId = this.HostId
+            });
         }
         public async Task<List<Room>> GetRoomList (string requirement) {
             try {
@@ -50,15 +54,9 @@ namespace PlayCli {
             }
         }
         public async Task<Room> GetRoomInfo (string key_ref) {
-            try {
-                Room tmp = await this.client.GetRoomInfoAsync (
-                    new RoomRequest { Key = key_ref }
-                );
-                return tmp;
-            } catch (RpcException e) {
-                Debug.Log ("RPC failed " + e);
-                throw;
-            }
+            return await this.client.GetRoomInfoAsync (
+                new RoomRequest { Key = key_ref }
+            );
         }
 
         // public AsyncServerStreamingCall<CellStatus> GetRoomStream (string key_ref) {
@@ -67,14 +65,8 @@ namespace PlayCli {
         //     );
         // }
 
-        public async Task<bool> UpdateRoomTurn (CellStatus cs) {
-            try {
-                await this.client.UpdateRoomAsync (cs);
-                return true;
-            } catch (RpcException e) {
-                Debug.Log ("RPC failed " + e);
-                throw;
-            }
+        public async Task<CellStatus> UpdateRoomTurn (CellStatus cs) {
+            return await this.client.UpdateRoomAsync (cs);
         }
 
         public async Task<bool> DeleteRoom (string key) {

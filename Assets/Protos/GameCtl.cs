@@ -37,7 +37,7 @@ namespace PlayCli.ProtoMod {
             "dGVDcmVkUmVxEgoKAklwGAEgASgJEhAKCFVzZXJuYW1lGAIgASgJEhAKCFBh",
             "c3N3b3JkGAMgASgJIhQKBENyZWQSDAoEZmlsZRgBIAEoCSpTCgZTdGF0dXMS",
             "DAoIT05fU1RBUlQQABILCgdPTl9XQUlUEAESEAoMT05fSE9TVF9UVVJOEAIS",
-            "EAoMT05fRFVFTF9UVVJOEAMSCgoGT05fRU5EEAQy1gIKClJvb21TdGF0dXMS",
+            "EAoMT05fRFVFTF9UVVJOEAMSCgoGT05fRU5EEAQymwMKClJvb21TdGF0dXMS",
             "PwoKQ3JlYXRlUm9vbRIdLlJvb21TdGF0dXMuUm9vbUNyZWF0ZVJlcXVlc3Qa",
             "EC5Sb29tU3RhdHVzLlJvb20iABJKCgtHZXRSb29tTGlzdBIbLlJvb21TdGF0",
             "dXMuUm9vbUxpc3RSZXF1ZXN0GhwuUm9vbVN0YXR1cy5Sb29tTGlzdFJlc3Bv",
@@ -45,9 +45,11 @@ namespace PlayCli.ProtoMod {
             "GhAuUm9vbVN0YXR1cy5Sb29tIgASPwoKRGVsZXRlUm9vbRIXLlJvb21TdGF0",
             "dXMuUm9vbVJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABI+CgpV",
             "cGRhdGVSb29tEhYuUm9vbVN0YXR1cy5DZWxsU3RhdHVzGhYuUm9vbVN0YXR1",
-            "cy5DZWxsU3RhdHVzIgAyTAoLQ3JlZGl0c0F1dGgSPQoKQ3JlYXRlQ3JlZBIZ",
-            "LlJvb21TdGF0dXMuQ3JlYXRlQ3JlZFJlcRoQLlJvb21TdGF0dXMuQ3JlZCIA",
-            "MAFCGloFcHJvdG+qAhBQbGF5Q2xpLlByb3RvTW9kYgZwcm90bzM="));
+            "cy5DZWxsU3RhdHVzIgASQwoIUXVpdFJvb20SHS5Sb29tU3RhdHVzLlJvb21D",
+            "cmVhdGVSZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgAyTAoLQ3Jl",
+            "ZGl0c0F1dGgSPQoKQ3JlYXRlQ3JlZBIZLlJvb21TdGF0dXMuQ3JlYXRlQ3Jl",
+            "ZFJlcRoQLlJvb21TdGF0dXMuQ3JlZCIAMAFCGloFcHJvdG+qAhBQbGF5Q2xp",
+            "LlByb3RvTW9kYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PlayCli.ProtoMod.Status), }, null, new pbr::GeneratedClrTypeInfo[] {

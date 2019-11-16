@@ -15,7 +15,6 @@ public class DebugTestScript : MonoBehaviour {
         PrintLog ("Debug Screen", "Start init Debug Screen");
         this.TestObject = gameObject.GetComponent<DuelConnObj> ();
         PrintLog ("Debug Screen", "End init Debug Screen");
-
     }
 
     // Update is called once per frame
@@ -44,6 +43,15 @@ public class DebugTestScript : MonoBehaviour {
         }
     }
 
+    public async void TestJoinRoom () {
+        List<Room> t = await this.TestObject.GetRoomList ("");
+        if (t.Count > 0) {
+            // string output = JsonConvert.SerializeObject (t);
+            // Debug.Log (output);
+            // PrintLog ("list room ", output);
+            bool tmp = await this.TestObject.JoinRoom (t[0].Key, false);
+        }
+    }
     public void PrintLog (string title, string info) {
         // this.Broad ;
         var t = Instantiate (LogPrefab, this.Broad.transform);

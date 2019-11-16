@@ -57,6 +57,13 @@ namespace PlayCli.ProtoMod {
         __Marshaller_RoomStatus_CellStatus,
         __Marshaller_RoomStatus_CellStatus);
 
+    static readonly grpc::Method<global::PlayCli.ProtoMod.RoomCreateRequest, global::Google.Protobuf.WellKnownTypes.Empty> __Method_QuitRoom = new grpc::Method<global::PlayCli.ProtoMod.RoomCreateRequest, global::Google.Protobuf.WellKnownTypes.Empty>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "QuitRoom",
+        __Marshaller_RoomStatus_RoomCreateRequest,
+        __Marshaller_google_protobuf_Empty);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -141,6 +148,20 @@ namespace PlayCli.ProtoMod {
       /// <param name="context">The context of the server-side call handler being invoked.</param>
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.CellStatus> UpdateRoom(global::PlayCli.ProtoMod.CellStatus request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      ///  option (google.api.http) = {
+      ///     post: "/v1/room/quit"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      public virtual global::System.Threading.Tasks.Task<global::Google.Protobuf.WellKnownTypes.Empty> QuitRoom(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -482,6 +503,62 @@ namespace PlayCli.ProtoMod {
       {
         return CallInvoker.AsyncUnaryCall(__Method_UpdateRoom, null, options, request);
       }
+      /// <summary>
+      ///  option (google.api.http) = {
+      ///     post: "/v1/room/quit"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty QuitRoom(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return QuitRoom(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      ///  option (google.api.http) = {
+      ///     post: "/v1/room/quit"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      public virtual global::Google.Protobuf.WellKnownTypes.Empty QuitRoom(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_QuitRoom, null, options, request);
+      }
+      /// <summary>
+      ///  option (google.api.http) = {
+      ///     post: "/v1/room/quit"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> QuitRoomAsync(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return QuitRoomAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      ///  option (google.api.http) = {
+      ///     post: "/v1/room/quit"
+      ///     body: "*"
+      /// }; 
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      public virtual grpc::AsyncUnaryCall<global::Google.Protobuf.WellKnownTypes.Empty> QuitRoomAsync(global::PlayCli.ProtoMod.RoomCreateRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_QuitRoom, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override RoomStatusClient NewInstance(ClientBaseConfiguration configuration)
       {
@@ -498,7 +575,8 @@ namespace PlayCli.ProtoMod {
           .AddMethod(__Method_GetRoomList, serviceImpl.GetRoomList)
           .AddMethod(__Method_GetRoomInfo, serviceImpl.GetRoomInfo)
           .AddMethod(__Method_DeleteRoom, serviceImpl.DeleteRoom)
-          .AddMethod(__Method_UpdateRoom, serviceImpl.UpdateRoom).Build();
+          .AddMethod(__Method_UpdateRoom, serviceImpl.UpdateRoom)
+          .AddMethod(__Method_QuitRoom, serviceImpl.QuitRoom).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -512,6 +590,7 @@ namespace PlayCli.ProtoMod {
       serviceBinder.AddMethod(__Method_GetRoomInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::PlayCli.ProtoMod.Room>(serviceImpl.GetRoomInfo));
       serviceBinder.AddMethod(__Method_DeleteRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomRequest, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.DeleteRoom));
       serviceBinder.AddMethod(__Method_UpdateRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.CellStatus, global::PlayCli.ProtoMod.CellStatus>(serviceImpl.UpdateRoom));
+      serviceBinder.AddMethod(__Method_QuitRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.RoomCreateRequest, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.QuitRoom));
     }
 
   }
