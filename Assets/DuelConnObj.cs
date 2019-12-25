@@ -95,13 +95,29 @@ public class DuelConnObj : MonoBehaviour {
         }
     }
 
-    public bool ExitRoom (string para) {
+    public async Task<bool> ExitRoom (string para) {
+        bool status = false;
         // Time.Wait
-        return true;
+        if (this.current_room.HostId == this.conn.HostId && this.current_room.DuelerId == "") {
+            status = await this.conn.DeleteRoom (this.current_room.Key);
+        } else if (this.current_room.HostId == this.conn.HostId && this.current_room.DuelerId != "") {
+            status = await this.conn.QuitRoom ();
+        } else if (this.current_room.DuelerId == this.conn.HostId) {
+            status = await this.conn.QuitRoom ();
+        } else {
+            // watcher quit
+            status = true;
+        }
+        if (status) {
+            this.current_room = null;
+        }
+        return status;
+        // throw Debug.LogError();
+        // this.current_room.
     }
 
     void Destroy () {
         // this.conn destruct call;
-
+        
     }
 }
