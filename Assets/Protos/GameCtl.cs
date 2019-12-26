@@ -52,15 +52,15 @@ namespace PlayCli.ProtoMod {
             "LlByb3RvTW9kYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PlayCli.ProtoMod.Status), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomListRequest), global::PlayCli.ProtoMod.RoomListRequest.Parser, new[]{ "Requirement" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomListResponse), global::PlayCli.ProtoMod.RoomListResponse.Parser, new[]{ "Result" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomCreateRequest), global::PlayCli.ProtoMod.RoomCreateRequest.Parser, new[]{ "HostId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomRequest), global::PlayCli.ProtoMod.RoomRequest.Parser, new[]{ "Key" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.Room), global::PlayCli.ProtoMod.Room.Parser, new[]{ "Key", "HostId", "DuelerId", "Status", "Round", "Cell", "CellStatus" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CellStatus), global::PlayCli.ProtoMod.CellStatus.Parser, new[]{ "Key", "Turn", "CellNum" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CreateCredReq), global::PlayCli.ProtoMod.CreateCredReq.Parser, new[]{ "Ip", "Username", "Password" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.Cred), global::PlayCli.ProtoMod.Cred.Parser, new[]{ "File" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PlayCli.ProtoMod.Status), }, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomListRequest), global::PlayCli.ProtoMod.RoomListRequest.Parser, new[]{ "Requirement" }, null,  null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomListResponse), global::PlayCli.ProtoMod.RoomListResponse.Parser, new[]{ "Result" }, null,  null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomCreateRequest), global::PlayCli.ProtoMod.RoomCreateRequest.Parser, new[]{ "HostId" }, null,  null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomRequest), global::PlayCli.ProtoMod.RoomRequest.Parser, new[]{ "Key" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.Room), global::PlayCli.ProtoMod.Room.Parser, new[]{ "Key", "HostId", "DuelerId", "Status", "Round", "Cell", "CellStatus" },  null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CellStatus), global::PlayCli.ProtoMod.CellStatus.Parser, new[]{ "Key", "Turn", "CellNum" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CreateCredReq), global::PlayCli.ProtoMod.CreateCredReq.Parser, new[]{ "Ip", "Username", "Password" }, null,  null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.Cred), global::PlayCli.ProtoMod.Cred.Parser, new[]{ "File" }, null, null, null)
           }));
     }
     #endregion

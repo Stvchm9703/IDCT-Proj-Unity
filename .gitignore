@@ -65,3 +65,5 @@ crashlytics-build.properties
 
 Assets/Plugins/grpc_set/
 .DS_Store
+
+Packages/protoc/bin/
