@@ -79,25 +79,14 @@ public class scriptGame : MonoBehaviour {
             onTurnComplete (1);
         }
     }
-    // public void alertOpen () {
-    //     if (!isGameOver) {
-    //         Debug.Log ("alert open click : " + isGameOver);
-    //         this.GivePanelIsOpen = true;
-    //     } else {
-    //         backToMenu (); // OK
-    //     }
-    // }
+    
 
     // @OK 
     public void backToMenu () {
         // GiveUp
         SceneManager.LoadScene ("Menu", LoadSceneMode.Single);
     }
-    // public void closeAlert () {
-    //     // check! -> fail
-    //     Debug.Log ("close called");
-    //     this.GivePanelIsOpen = false;
-    // }
+   
     public void giveUp () {
         Debug.Log ("give up on click");
         backToMenu ();

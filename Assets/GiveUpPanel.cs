@@ -8,6 +8,7 @@ public class GiveUpPanel : MonoBehaviour {
     public scriptGame f;
 
     public GameObject Panel;
+    public  scriptGame MainCtl; 
     public bool GivePanelIsOpen = false;
    
     void Start () {
@@ -15,6 +16,9 @@ public class GiveUpPanel : MonoBehaviour {
         if (Panel == null) {
             Debug.Log ("missing");
             Panel = GameObject.Find ("GiveupPanel");
+        }
+        if (MainCtl == null){
+            MainCtl = this.GetComponent<scriptGame>();
         }
      
     }
@@ -25,6 +29,7 @@ public class GiveUpPanel : MonoBehaviour {
     public void giveuponclick () {
         Debug.Log ("what did you done? Hello?");
         GivePanelIsOpen = false;
+        MainCtl.giveUp();
     }
     public void giveupcloseclick () {
         Debug.Log ("what did you done? Clsoe Hello?");
