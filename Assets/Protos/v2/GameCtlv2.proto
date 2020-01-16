@@ -1,11 +1,28 @@
 // # hello.proto
 syntax = "proto3";
 import "google/protobuf/empty.proto";
+// import "google/api/annotations.proto";
+// import "protoc-gen-swagger/options/annotations.proto";
+// import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+// import "github.com/mwitkow/go-proto-validators/validator.proto";
 
 package RoomStatus;
 option csharp_namespace = "PlayCli.ProtoModv2";
 option go_package  = "v2";
-// 
+// option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+//   info: { version: "0.2"; };
+//   external_docs: {
+//     url: "https://github.com/stvchm9703/IDCT";
+//     description: "gRPC server Impletement repository";
+//   }
+//   schemes: HTTPS;
+// };
+// option (gogoproto.marshaler_all) = true;
+// option (gogoproto.unmarshaler_all) = true;
+// option (gogoproto.sizer_all) = true;
+// option (gogoproto.goproto_registration) = true;
+// option (gogoproto.messagename_all) = true;
+
 
 message ErrorMsg{
     string msg_info = 1;
@@ -95,49 +112,22 @@ message CellStatusResp {
 
 service RoomStatus {
     rpc CreateRoom (RoomCreateReq) returns (RoomResp){ 
-        // option (google.api.http) = {
-        //     post: "/v1/room/create"
-        //     body: "*"
-        // };  
+        
     };
     rpc GetRoomList(RoomListReq) returns (RoomListResp){ 
-        // option (google.api.http) = {
-        //     post: "/v1/room/list"
-        //     body: "*"
-        // }; 
     }; 
     rpc GetRoomInfo (RoomReq) returns (RoomResp){ 
-        // option (google.api.http) = {
-        //     post: "/v1/room/info"
-        //     body: "*"
-        // }; 
     };
     rpc DeleteRoom (RoomReq) returns (RoomResp){
-        // option (google.api.http) = {
-        //     post: "/v1/room/delete"
-        //     body: "*"
-        // }; 
     };
 
     rpc RoomStream (stream CellStatusReq) returns (stream CellStatusResp){
-        // option (google.api.http) = {
-        //     post: "/v1/room/stream"
-        //     body: "*"
-        // }; 
     };
   
     rpc UpdateRoom(CellStatusReq) returns (CellStatusResp){
-        // option (google.api.http) = {
-        //     post: "/v1/room/update"
-        //     body: "*"
-        // }; 
     };
 
     rpc QuitRoom(RoomCreateReq) returns(google.protobuf.Empty){
-        //  option (google.api.http) = {
-        //     post: "/v1/room/quit"
-        //     body: "*"
-        // }; 
     }
 
     
@@ -155,9 +145,5 @@ message Cred{
 
 service CreditsAuth {
     rpc CreateCred (CreateCredReq) returns (stream Cred) {
-        //  option (google.api.http) = {
-        //     post: "/v1/cred/create"
-        //     body: "*"
-        // };  
     } 
 }
