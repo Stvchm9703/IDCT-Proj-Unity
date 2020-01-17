@@ -20,7 +20,7 @@ public class RoomSearch : MonoBehaviour {
             var tmp_list = await DuelConn.GetRoomList ("");
             room_list = tmp_list;
             Debug.Log (room_list);
-            this.gameObject.GetComponent<GUIBtnRender> ().rendRoomList (room_list);
+            this.rendRoomList (room_list);
         } catch (RpcException e) {
             string str = JsonUtility.ToJson (e);
             Debug.Log (str);
@@ -39,14 +39,9 @@ public class RoomSearch : MonoBehaviour {
         // once complete the create-room phase 
         try {
             var t = await DuelConn.CreateRoom ();
-            // off the loading 
             Loading.SetActive (false);
-            // start change scene
-            // Scene.Load("");
-            Debug.Log (DuelConn.current_room.Key);
-
+            this.RefreshList();
         } catch (RpcException e) {
-            // show fail create message 
             string str = JsonUtility.ToJson (e);
             Debug.Log ("create room" + str);
         }
@@ -60,8 +55,12 @@ public class RoomSearch : MonoBehaviour {
         SceneManager.LoadScene ("Menu", LoadSceneMode.Single);
     }
 
-    public async void GoToRoom (string room_key) {
-
+    public void GoToRoom (Room room) {
+        Debug.Log("room :"+ room.Key);
+        DuelConn.current_room = room;
+        // DuelConn.StartBroadCast();
+        DuelConn.StartGStream();
+        SceneManager.LoadScene("VSGame", LoadSceneMode.Single);
     }
 
     public void rendRoomList (List<Room> roomlist) {

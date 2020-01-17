@@ -21,6 +21,9 @@ namespace PlayCli {
         private Channel channel;
         private RoomStatus.RoomStatusClient client;
 
+        public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StreamHandler;
+
+        public AsyncServerStreamingCall<CellStatusResp> GetOnlyStream;
         public DuelConnectorV2 (CfServerSetting s) {
             // TextAsset ta = Resources.Load<TextAsset>(s.KeyPemPath);
             var tt = File.ReadAllText (s.KeyPemPath);
@@ -63,13 +66,19 @@ namespace PlayCli {
         }
 
         public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> RoomStream () {
-            return this.client.RoomStream ();
+            this.StreamHandler = this.client.RoomStream ();
+            return this.StreamHandler;
         }
-
+        public AsyncServerStreamingCall<CellStatusResp> GetRoomStream (CellStatusReq request) {
+            if (this.GetOnlyStream == null) {
+                this.GetOnlyStream = this.client.GetRoomStream (request);
+            }
+            return this.GetOnlyStream;
+        }
         public async Task<CellStatus> UpdateRoomTurn (CellStatus cs) {
             CellStatusReq tmp = new CellStatusReq {
-                UserId = this.UserID,
-                Key = this.Key,
+                UserId = this.HostId,
+                Key = cs.Key,
                 CellStatus = cs,
             };
             var kt = await this.client.UpdateRoomAsync (tmp);
@@ -99,6 +108,18 @@ namespace PlayCli {
         }
 
         ~DuelConnectorV2 () {
+            if (this.StreamHandler != null) {
+                Debug.Log ("try kill");
+                Debug.Log (this.StreamHandler);
+                this.StreamHandler.RequestStream.CompleteAsync ();
+                this.StreamHandler = null;
+            }
+            if (this.GetOnlyStream != null) {
+                Debug.Log ("try kill");
+                Debug.Log (this.GetOnlyStream);
+                this.GetOnlyStream.Dispose ();
+                this.GetOnlyStream = null;
+            }
             this.client = null;
             this.channel.ShutdownAsync ().Wait ();
             Debug.Log ("destructor DuelConnector");

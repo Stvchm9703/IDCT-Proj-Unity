@@ -12,8 +12,7 @@ public class RoomContainer : MonoBehaviour, IPointerClickHandler {
     public Text RmKey;
     public Text Turn;
     public void OnPointerClick (PointerEventData eventData) {
-        Debug.Log ((RectTransform) (this.transform));
-        rs_ctl.GoToRoom (targ_room.Key);
+        rs_ctl.GoToRoom (targ_room);
     }
     public void SetVal () {
         if (targ_room != null) {

@@ -13,6 +13,7 @@ public class DuelConnObjv2 : MonoBehaviour {
     public DuelConnectorV2 conn;
     public Room current_room;
     public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
+    public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream ;
     public bool isBroadcast { get { return is_bc; } }
     bool is_bc = false;
     bool able_update = false;
@@ -128,31 +129,30 @@ public class DuelConnObjv2 : MonoBehaviour {
         if (current_room != null && stream_status == null) {
             is_bc = true;
             stream_status = this.conn.RoomStream ();
+            
             return true;
         }
         return false;
     }
 
-    // async void Update () {
-    //     if (is_bc) {
-    //         using (stream_status) {
-    //             var responseReaderTask = Task.Run (async () => {
-    //                 // 逐一取出 response 內容
-    //                 while (await stream_status.ResponseStream.MoveNext ()) {
-    //                     var candidate = stream_status.ResponseStream.Current;
-    //                     // result.AddRange (candidate.Candidates_);
-    //                 }
-    //             });
-    //             // 將資料逐一傳送至 server
-    //             foreach (var request in createRequests) {
-    //                 await stream_status.RequestStream.WriteAsync (request);
-    //             }
-    //             await stream_status.RequestStream.CompleteAsync ();
-    //             await responseReaderTask;
-    //         }
-    //     }
-    // }
-    void Destroy () {
+    public bool StartGStream (){
+        if (current_room != null && get_only_status_stream == null){
+            get_only_status_stream = this.conn.GetRoomStream(
+                new CellStatusReq{
+                    Key = this.current_room.Key,
+                    UserId = this.conn.HostId,
+                }
+            );
+            return true;
+        }
+        return false;
+    }
+    async void Destroy () {
         // this.conn destruct call;
+        if (stream_status !=null){
+            Debug.Log(stream_status);
+            // await stream_status.RequestStream.CompleteAsync();
+            // stream_status = null;
+        }
     }
 }

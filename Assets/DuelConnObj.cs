@@ -45,7 +45,6 @@ public class DuelConnObj : MonoBehaviour {
             DontDestroyOnLoad (this.gameObject);
             this.gameObject.tag = "Connector";
             this.conn = new DuelConnector (
-                // Config.LoadCfFile (this.config_file).remote
                 Win_DevTmp
             );
         }

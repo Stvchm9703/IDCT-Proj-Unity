@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
+using PlayCli.ProtoModv2;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using PlayCli.ProtoModv2;
 public class scriptGameVS : MonoBehaviour {
     // Background image from "board.png" asset
     public Texture2D background;
@@ -28,15 +30,15 @@ public class scriptGameVS : MonoBehaviour {
     // Array of cells that take line or diagonal or both. Can be used for special effects, like stroke or blinking.
     public int[] cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
     private int[] sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
+    // --------------------------------------------------------------------------
+    // PlayCli implement 
+    //  -1 == Host
+    //  1 == Dueler
+    private DuelConnObjv2 DuelConn;
+    public bool IsConnected = false;
+    public CancellationTokenSource close_tkn;
 
-
-    // private Asy
-    // Y coordinate for board of cells.
-
-    // ==========================================================================
-    // Unity specific
-    // ==========================================================================
-
+    // public DuelConnObjv2 
     // --------------------------------------------------------------------------
     // Initialization
     void Start () {
@@ -49,13 +51,35 @@ public class scriptGameVS : MonoBehaviour {
         ImgBackground.SetActive (false);
         gameReset ();
         GUIRenderCell ();
+        if (close_tkn == null) {
+            close_tkn = new CancellationTokenSource ();
+        }
+        Debug.Log ("room key:" + this.DuelConn.current_room.Key);
+    }
+    void Awake () {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag ("Connector");
+        if (objs.Length == 1) {
+            DuelConn = objs[0].GetComponent<DuelConnObjv2> ();
+            IsConnected = true;
+        }
     }
     // void Start()
 
     // --------------------------------------------------------------------------
     // Update everything
     void Update () {
-
+        if (IsConnected) {
+            // var cancel = new CancellationTokenSource ();
+            // cancel.Cancel();
+            Debug.Log (IsConnected);
+            using (var calling = DuelConn.get_only_status_stream) {
+                var task = Task.Run (async () => {
+                    while (await calling.ResponseStream.MoveNext (close_tkn.Token)) {
+                        Debug.Log (calling.ResponseStream.Current);
+                    }
+                });
+            }
+        }
         if (isGameOver) {
             return;
         }
@@ -63,9 +87,20 @@ public class scriptGameVS : MonoBehaviour {
             // turnByAI (turn);
         }
         gameUpdateIndicator ();
-        // if (turn == 1) turnByAI(turn); // AI for "x" player
     }
 
+    // IEnumerator SearchDuelConn () {
+    //     yield return new WaitForSeconds (1);
+    //     var t = GameObject.Find ("DuelConnObj");
+    //     Debug.Log (t);
+    //     if (t != null) {
+    //         DuelConn = t.GetComponent<DuelConnObjv2> ();
+    //         IsConnected = true;
+    //         yield return true;
+    //     } else {
+    //         yield return new WaitForSeconds (1);
+    //     }
+    // }
     void GUIRenderCell () {
         for (int i = 0; i < cells.Length; i++) {
             Sprite sprite = sprites[0];
@@ -80,6 +115,12 @@ public class scriptGameVS : MonoBehaviour {
         Debug.Log (cell_num);
         if (cells[cell_num] == 0 && !isGameOver) {
             cellSetValue (cell_num, 1);
+
+            DuelConn.UpdateTurn (new CellStatus {
+                Key = this.DuelConn.current_room.Key,
+                    Turn = 1,
+                    CellNum = cell_num + 1,
+            });
             GUIRenderCell ();
             onTurnComplete (1);
         }
@@ -88,11 +129,12 @@ public class scriptGameVS : MonoBehaviour {
     // @OK 
     public void backToMenu () {
         // GiveUp
-        SceneManager.LoadScene ("Menu", LoadSceneMode.Single);
+        SceneManager.LoadScene ("RoomSearch", LoadSceneMode.Single);
     }
 
-    public void giveUp () {
+    public async void giveUp () {
         Debug.Log ("give up on click");
+        await DuelConn.ExitRoom ();
         backToMenu ();
     }
     // ==============================================================================
@@ -214,8 +256,8 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Event is called at the end of every turn.
     void onTurnComplete (int theTurn = 0) {
-        if (Math.Abs (theTurn) == 1) { 
-            turn = theTurn; 
+        if (Math.Abs (theTurn) == 1) {
+            turn = theTurn;
         }
         // Override global value if parameter is set
 

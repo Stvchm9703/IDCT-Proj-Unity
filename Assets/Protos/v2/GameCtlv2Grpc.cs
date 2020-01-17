@@ -58,6 +58,13 @@ namespace PlayCli.ProtoModv2 {
         __Marshaller_RoomStatus_CellStatusReq,
         __Marshaller_RoomStatus_CellStatusResp);
 
+    static readonly grpc::Method<global::PlayCli.ProtoModv2.CellStatusReq, global::PlayCli.ProtoModv2.CellStatusResp> __Method_GetRoomStream = new grpc::Method<global::PlayCli.ProtoModv2.CellStatusReq, global::PlayCli.ProtoModv2.CellStatusResp>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "GetRoomStream",
+        __Marshaller_RoomStatus_CellStatusReq,
+        __Marshaller_RoomStatus_CellStatusResp);
+
     static readonly grpc::Method<global::PlayCli.ProtoModv2.CellStatusReq, global::PlayCli.ProtoModv2.CellStatusResp> __Method_UpdateRoom = new grpc::Method<global::PlayCli.ProtoModv2.CellStatusReq, global::PlayCli.ProtoModv2.CellStatusResp>(
         grpc::MethodType.Unary,
         __ServiceName,
@@ -103,6 +110,11 @@ namespace PlayCli.ProtoModv2 {
       }
 
       public virtual global::System.Threading.Tasks.Task RoomStream(grpc::IAsyncStreamReader<global::PlayCli.ProtoModv2.CellStatusReq> requestStream, grpc::IServerStreamWriter<global::PlayCli.ProtoModv2.CellStatusResp> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      public virtual global::System.Threading.Tasks.Task GetRoomStream(global::PlayCli.ProtoModv2.CellStatusReq request, grpc::IServerStreamWriter<global::PlayCli.ProtoModv2.CellStatusResp> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -214,6 +226,14 @@ namespace PlayCli.ProtoModv2 {
       {
         return CallInvoker.AsyncDuplexStreamingCall(__Method_RoomStream, null, options);
       }
+      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoModv2.CellStatusResp> GetRoomStream(global::PlayCli.ProtoModv2.CellStatusReq request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRoomStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoModv2.CellStatusResp> GetRoomStream(global::PlayCli.ProtoModv2.CellStatusReq request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncServerStreamingCall(__Method_GetRoomStream, null, options, request);
+      }
       public virtual global::PlayCli.ProtoModv2.CellStatusResp UpdateRoom(global::PlayCli.ProtoModv2.CellStatusReq request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return UpdateRoom(request, new grpc::CallOptions(headers, deadline, cancellationToken));
@@ -263,6 +283,7 @@ namespace PlayCli.ProtoModv2 {
           .AddMethod(__Method_GetRoomInfo, serviceImpl.GetRoomInfo)
           .AddMethod(__Method_DeleteRoom, serviceImpl.DeleteRoom)
           .AddMethod(__Method_RoomStream, serviceImpl.RoomStream)
+          .AddMethod(__Method_GetRoomStream, serviceImpl.GetRoomStream)
           .AddMethod(__Method_UpdateRoom, serviceImpl.UpdateRoom)
           .AddMethod(__Method_QuitRoom, serviceImpl.QuitRoom).Build();
     }
@@ -278,6 +299,7 @@ namespace PlayCli.ProtoModv2 {
       serviceBinder.AddMethod(__Method_GetRoomInfo, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoModv2.RoomReq, global::PlayCli.ProtoModv2.RoomResp>(serviceImpl.GetRoomInfo));
       serviceBinder.AddMethod(__Method_DeleteRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoModv2.RoomReq, global::PlayCli.ProtoModv2.RoomResp>(serviceImpl.DeleteRoom));
       serviceBinder.AddMethod(__Method_RoomStream, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::PlayCli.ProtoModv2.CellStatusReq, global::PlayCli.ProtoModv2.CellStatusResp>(serviceImpl.RoomStream));
+      serviceBinder.AddMethod(__Method_GetRoomStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::PlayCli.ProtoModv2.CellStatusReq, global::PlayCli.ProtoModv2.CellStatusResp>(serviceImpl.GetRoomStream));
       serviceBinder.AddMethod(__Method_UpdateRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoModv2.CellStatusReq, global::PlayCli.ProtoModv2.CellStatusResp>(serviceImpl.UpdateRoom));
       serviceBinder.AddMethod(__Method_QuitRoom, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoModv2.RoomCreateReq, global::Google.Protobuf.WellKnownTypes.Empty>(serviceImpl.QuitRoom));
     }

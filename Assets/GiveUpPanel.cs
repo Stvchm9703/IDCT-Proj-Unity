@@ -7,31 +7,34 @@ using UnityEngine.UI;
 [ExecuteInEditMode]
 public class GiveUpPanel : MonoBehaviour {
     // Start is called before the first frame update
-    public scriptGame f;
-
     public GameObject Panel;
-    public  scriptGame MainCtl; 
+    public scriptGameVS MainCtlvs;
+    public scriptGame MainCtl;
     public bool GivePanelIsOpen = false;
-   
+
     void Start () {
         Debug.Log ("gu panel start");
         if (Panel == null) {
             Debug.Log ("missing");
             Panel = GameObject.Find ("GiveupPanel");
         }
-        if (MainCtl == null){
-            MainCtl = this.GetComponent<scriptGame>();
+        if (MainCtl == null) {
+            MainCtl = this.GetComponent<scriptGame> ();
         }
-     
+        if (MainCtlvs == null) {
+            MainCtlvs = this.GetComponent<scriptGameVS> ();
+        }
+
     }
     void Update () {
         Panel.SetActive (GivePanelIsOpen);
     }
-    
+
     public void giveuponclick () {
         Debug.Log ("what did you done? Hello?");
         GivePanelIsOpen = false;
-        MainCtl.giveUp();
+        if (MainCtl != null) MainCtl.giveUp ();
+        if (MainCtl != null) MainCtlvs.giveUp ();
     }
     public void giveupcloseclick () {
         Debug.Log ("what did you done? Clsoe Hello?");
@@ -39,11 +42,18 @@ public class GiveUpPanel : MonoBehaviour {
     }
 
     public void alertOpen () {
-        if (!f.isGameOver) {
-            Debug.Log ("alert open click : " + f.isGameOver);
-            this.GivePanelIsOpen = true;
-        } else {
-            f.backToMenu (); // OK
+        if (MainCtl != null) {
+            if (!MainCtl.isGameOver) {
+                this.GivePanelIsOpen = true;
+            } else {
+                MainCtl.backToMenu (); // OK
+            }
+        } else if (MainCtlvs != null) {
+            if (!MainCtlvs.isGameOver) {
+                this.GivePanelIsOpen = true;
+            } else {
+                MainCtlvs.backToMenu (); // OK
+            }
         }
     }
 
