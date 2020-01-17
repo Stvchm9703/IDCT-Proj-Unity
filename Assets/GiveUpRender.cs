@@ -28,7 +28,7 @@ public class GiveUpRender: MonoBehaviour {
         default_gui.fontSize = (int)(48);
     }
     void OnGUI() {
-        if (this.gameObject.active) {
+        if (this.gameObject.activeSelf) {
             GUI.skin.button = default_gui;
             var t = new GUIContent(btn_gui); // copy
             t.text = "Quit Game";

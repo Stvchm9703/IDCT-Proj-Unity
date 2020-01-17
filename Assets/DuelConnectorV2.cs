@@ -5,11 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Newtonsoft.Json;
-using PlayCli.ProtoMod;
+using PlayCli.ProtoModv2;
 using UnityEngine;
 namespace PlayCli {
 
-    public class DuelConnector {
+    public class DuelConnectorV2 {
         private string UserID;
         private string Key;
 
@@ -21,9 +21,9 @@ namespace PlayCli {
         private Channel channel;
         private RoomStatus.RoomStatusClient client;
 
-        public DuelConnector (CfServerSetting s) {
+        public DuelConnectorV2 (CfServerSetting s) {
             // TextAsset ta = Resources.Load<TextAsset>(s.KeyPemPath);
-            var tt = File.ReadAllText (s.KeyPemPath); 
+            var tt = File.ReadAllText (s.KeyPemPath);
             var crt = new SslCredentials (File.ReadAllText (s.KeyPemPath));
             this.channel = new Channel (
                 s.Host + ":" + s.Port,
@@ -34,14 +34,15 @@ namespace PlayCli {
         }
 
         public async Task<Room> CreateRoom () {
-            return await this.client.CreateRoomAsync (new RoomCreateRequest {
-                HostId = this.HostId
+            var t = await this.client.CreateRoomAsync (new RoomCreateReq {
+                UserId = this.HostId
             });
+            return t.RoomInfo;
         }
         public async Task<List<Room>> GetRoomList (string requirement) {
             try {
-                RoomListResponse tmp = await this.client.GetRoomListAsync (
-                    new RoomListRequest {
+                RoomListResp tmp = await this.client.GetRoomListAsync (
+                    new RoomListReq {
                         Requirement = requirement,
                     }
                 );
@@ -55,28 +56,31 @@ namespace PlayCli {
                 throw;
             }
         }
-        public async Task<Room> GetRoomInfo (string key_ref) {
+        public async Task<RoomResp> GetRoomInfo (string key_ref) {
             return await this.client.GetRoomInfoAsync (
-                new RoomRequest { Key = key_ref }
+                new RoomReq { Key = key_ref }
             );
         }
 
-        // public AsyncServerStreamingCall<CellStatus> GetRoomStream (string key_ref) {
-        //     return this.client.GetRoomStream (
-        //         new RoomRequest { Key = key_ref }
-        //     );
-        // }
-
-        public async Task<CellStatus> UpdateRoomTurn (CellStatus cs) {
-            return await this.client.UpdateRoomAsync (cs);
+        public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> RoomStream () {
+            return this.client.RoomStream ();
         }
 
-        public async Task<bool> DeleteRoom (string room_key) {
+        public async Task<CellStatus> UpdateRoomTurn (CellStatus cs) {
+            CellStatusReq tmp = new CellStatusReq {
+                UserId = this.UserID,
+                Key = this.Key,
+                CellStatus = cs,
+            };
+            var kt = await this.client.UpdateRoomAsync (tmp);
+            return kt.CellStatus;
+        }
+
+        public async Task<RoomResp> DeleteRoom (string room_key) {
             try {
-                await this.client.DeleteRoomAsync (new RoomRequest {
+                return await this.client.DeleteRoomAsync (new RoomReq {
                     Key = room_key,
                 });
-                return true;
             } catch (RpcException e) {
                 Debug.Log ("RPC failed " + e);
                 throw;
@@ -84,8 +88,8 @@ namespace PlayCli {
         }
         public async Task<bool> QuitRoom () {
             try {
-                await this.client.QuitRoomAsync (new RoomCreateRequest {
-                    HostId = this.HostId
+                await this.client.QuitRoomAsync (new RoomCreateReq {
+                    UserId = this.HostId,
                 });
                 return true;
             } catch (RpcException e) {
@@ -94,7 +98,7 @@ namespace PlayCli {
             }
         }
 
-        ~DuelConnector () {
+        ~DuelConnectorV2 () {
             this.client = null;
             this.channel.ShutdownAsync ().Wait ();
             Debug.Log ("destructor DuelConnector");

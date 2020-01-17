@@ -4,15 +4,17 @@ using System.IO;
 using System.Threading.Tasks;
 using Grpc.Core;
 using PlayCli;
-using PlayCli.ProtoMod;
+using PlayCli.ProtoModv2;
 using UnityEngine;
 // using UnityEditor;
 
-public class DuelConnObj : MonoBehaviour {
+public class DuelConnObjv2 : MonoBehaviour {
     // Start is called before the first frame update
-    public DuelConnector conn;
+    public DuelConnectorV2 conn;
     public Room current_room;
-    // public AsyncServerStreamingCall<CellStatus> stream_status;
+    public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
+    public bool isBroadcast { get { return is_bc; } }
+    bool is_bc = false;
     bool able_update = false;
     public CfServerSetting Win_DevTmp = new CfServerSetting {
         Connector = "grpc",
@@ -22,7 +24,7 @@ public class DuelConnObj : MonoBehaviour {
         Username = "TestUser",
         Password = "",
         Key = "Uk54398",
-        KeyPemPath = Path.Combine(Application.streamingAssetsPath,"server.pem"),
+        KeyPemPath = Path.Combine (Application.streamingAssetsPath, "server.pem"),
     };
     public CfServerSetting Mac_DevTmp = new CfServerSetting {
         Connector = "grpc",
@@ -44,7 +46,7 @@ public class DuelConnObj : MonoBehaviour {
         } else {
             DontDestroyOnLoad (this.gameObject);
             this.gameObject.tag = "Connector";
-            this.conn = new DuelConnector (
+            this.conn = new DuelConnectorV2 (
                 // Config.LoadCfFile (this.config_file).remote
                 Win_DevTmp
             );
@@ -69,9 +71,10 @@ public class DuelConnObj : MonoBehaviour {
     public async Task<bool> JoinRoom (string key, bool is_player) {
         Debug.Log ("on JoinRoom process - DuelConnObj");
         try {
-            current_room = await this.conn.GetRoomInfo (key);
+            var ri = await this.conn.GetRoomInfo (key);
+            current_room = ri.RoomInfo;
+            Debug.Log ("time:" + ri.Timestamp);
             this.able_update = is_player;
-            // Get Stream 
             return true;
         } catch (RpcException e) {
             Debug.Log (e);
@@ -96,29 +99,60 @@ public class DuelConnObj : MonoBehaviour {
         }
     }
 
-    public async Task<bool> ExitRoom (string para) {
+    public async Task<bool> ExitRoom () {
         bool status = false;
         // Time.Wait
-        if (this.current_room.HostId == this.conn.HostId && this.current_room.DuelerId == "") {
-            status = await this.conn.DeleteRoom (this.current_room.Key);
-        } else if (this.current_room.HostId == this.conn.HostId && this.current_room.DuelerId != "") {
-            status = await this.conn.QuitRoom ();
-        } else if (this.current_room.DuelerId == this.conn.HostId) {
-            status = await this.conn.QuitRoom ();
+        if (this.current_room != null) {
+            if (this.current_room.HostId == this.conn.HostId) {
+                var status_r = await this.conn.DeleteRoom (this.current_room.Key);
+                status = true;
+                // } else if (this.current_room.HostId == this.conn.HostId && this.current_room.DuelerId != "") {
+                //     status = await this.conn.QuitRoom ();
+
+            } else if (this.current_room.DuelerId == this.conn.HostId) {
+                status = await this.conn.QuitRoom ();
+            } else {
+                // watcher quit
+                status = true;
+            }
+            if (status) {
+                this.current_room = null;
+            }
         } else {
-            // watcher quit
-            status = true;
-        }
-        if (status) {
-            this.current_room = null;
+            
         }
         return status;
-        // throw Debug.LogError();
-        // this.current_room.
     }
 
+    public bool StartBroadCast () {
+        if (current_room != null && stream_status == null) {
+            is_bc = true;
+            stream_status = this.conn.RoomStream ();
+            return true;
+        }
+        return false;
+    }
+
+    // async void Update () {
+    //     if (is_bc) {
+    //         using (stream_status) {
+    //             var responseReaderTask = Task.Run (async () => {
+    //                 // 逐一取出 response 內容
+    //                 while (await stream_status.ResponseStream.MoveNext ()) {
+    //                     var candidate = stream_status.ResponseStream.Current;
+    //                     // result.AddRange (candidate.Candidates_);
+    //                 }
+    //             });
+    //             // 將資料逐一傳送至 server
+    //             foreach (var request in createRequests) {
+    //                 await stream_status.RequestStream.WriteAsync (request);
+    //             }
+    //             await stream_status.RequestStream.CompleteAsync ();
+    //             await responseReaderTask;
+    //         }
+    //     }
+    // }
     void Destroy () {
         // this.conn destruct call;
-
     }
 }

@@ -45,19 +45,17 @@ public class scriptGame : MonoBehaviour {
         winnerCells = new ArrayList ();
         ImgBackground.SetActive (false);
         gameReset ();
+        GUIRenderCell ();
     }
     // void Start()
 
     // --------------------------------------------------------------------------
     // Update everything
     void Update () {
-       
         if (isGameOver)
             return;
         if (turn == -1)
             turnByAI (turn);
-
-        GUIRenderCell ();
         gameUpdateIndicator ();
         // if (turn == 1) turnByAI(turn); // AI for "x" player
     }
@@ -79,14 +77,13 @@ public class scriptGame : MonoBehaviour {
             onTurnComplete (1);
         }
     }
-    
 
     // @OK 
     public void backToMenu () {
         // GiveUp
         SceneManager.LoadScene ("Menu", LoadSceneMode.Single);
     }
-   
+
     public void giveUp () {
         Debug.Log ("give up on click");
         backToMenu ();

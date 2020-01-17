@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using PlayCli.ProtoModv2;
 public class scriptGameVS : MonoBehaviour {
     // Background image from "board.png" asset
     public Texture2D background;
@@ -28,6 +29,8 @@ public class scriptGameVS : MonoBehaviour {
     public int[] cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
     private int[] sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
 
+
+    // private Asy
     // Y coordinate for board of cells.
 
     // ==========================================================================
@@ -45,19 +48,20 @@ public class scriptGameVS : MonoBehaviour {
         winnerCells = new ArrayList ();
         ImgBackground.SetActive (false);
         gameReset ();
+        GUIRenderCell ();
     }
     // void Start()
 
     // --------------------------------------------------------------------------
     // Update everything
     void Update () {
-       
-        if (isGameOver)
-            return;
-        if (turn == -1)
-            turnByAI (turn);
 
-        GUIRenderCell ();
+        if (isGameOver) {
+            return;
+        }
+        if (turn == -1) {
+            // turnByAI (turn);
+        }
         gameUpdateIndicator ();
         // if (turn == 1) turnByAI(turn); // AI for "x" player
     }
@@ -73,20 +77,20 @@ public class scriptGameVS : MonoBehaviour {
         }
     }
     public void PlayerCellClick (int cell_num) {
+        Debug.Log (cell_num);
         if (cells[cell_num] == 0 && !isGameOver) {
             cellSetValue (cell_num, 1);
             GUIRenderCell ();
             onTurnComplete (1);
         }
     }
-    
 
     // @OK 
     public void backToMenu () {
         // GiveUp
         SceneManager.LoadScene ("Menu", LoadSceneMode.Single);
     }
-   
+
     public void giveUp () {
         Debug.Log ("give up on click");
         backToMenu ();
@@ -131,33 +135,33 @@ public class scriptGameVS : MonoBehaviour {
     // Updates image of turn/winner and text near it
     void gameUpdateIndicator () { // Output "Indicator" text
         if (textIndicator) {
-            if (!isGameOver)
+            if (!isGameOver) {
                 textIndicator.text = "Next turn";
-            else if (winner == 0)
+            } else if (winner == 0) {
                 textIndicator.text = "It's a draw";
-            else
+            } else {
                 textIndicator.text = "Winner is";
-
+            }
         }
 
         // Draw "Indicator" image
         if (imageIndicator) {
             if (!isGameOver) {
-                if (turn == 1)
+                if (turn == 1) {
                     imageIndicator.sprite = sprites[1];
-                else if (turn == -1)
+                } else if (turn == -1) {
                     imageIndicator.sprite = sprites[2];
-                else
+                } else {
                     imageIndicator.sprite = sprites[0];
-
+                }
             } else {
-                if (winner == 1)
+                if (winner == 1) {
                     imageIndicator.sprite = sprites[1];
-                else if (winner == -1)
+                } else if (winner == -1) {
                     imageIndicator.sprite = sprites[2];
-                else
+                } else {
                     imageIndicator.sprite = sprites[0];
-
+                }
             }
 
         }
@@ -171,8 +175,9 @@ public class scriptGameVS : MonoBehaviour {
     bool gameIsThereWinner () {
         cellSumsUpdate ();
         foreach (int i in sums) {
-            if (Math.Abs (i) >= 3)
+            if (Math.Abs (i) >= 3) {
                 return true;
+            }
         }
         return false;
     }
@@ -196,11 +201,11 @@ public class scriptGameVS : MonoBehaviour {
                     winnerCells.Add (c);
                 }
                 // There is some winner
-                if (sums[i] > 0)
+                if (sums[i] > 0) {
                     winner = 1;
-                else
+                } else {
                     winner = -1;
-
+                }
             }
         }
 
@@ -209,8 +214,9 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Event is called at the end of every turn.
     void onTurnComplete (int theTurn = 0) {
-        if (Math.Abs (theTurn) == 1)
-            turn = theTurn;
+        if (Math.Abs (theTurn) == 1) { 
+            turn = theTurn; 
+        }
         // Override global value if parameter is set
 
         cellSumsUpdate ();
@@ -257,8 +263,9 @@ public class scriptGameVS : MonoBehaviour {
     int cellEmptyCount () {
         int count = 0;
         foreach (int i in cells) {
-            if (i == 0)
+            if (i == 0) {
                 count++;
+            }
         }
         return count;
     }
@@ -297,210 +304,5 @@ public class scriptGameVS : MonoBehaviour {
         c = mapCellToSum[index, 2];
         return true;
     }
-
-    // ==========================================================================
-    // Turns routines and AI for computer player
-    // turn logic 
-    // ==========================================================================
-
-    // --------------------------------------------------------------------------
-    // Takes some empty cell by random
-    bool turnRandom (int theTurn = 0) {
-        int[] emptyCells = new int[9]; // Every cell of 3x3 board
-        int emptyCellsCount = 0;
-
-        // Get indexes of empty cells
-        for (int i = 0; i < emptyCells.Length; i++) {
-            if (cells[i] == 0) {
-                emptyCells[emptyCellsCount] = i;
-                emptyCellsCount++;
-            }
-        }
-        if (emptyCellsCount < 1)
-            return false;
-
-        // There is no empty cells!!! Todo: stop game here
-
-        // Get some random empty cell and put the turn value into it
-        System.Random rnd = new System.Random ();
-        int randomIndex = rnd.Next (0, emptyCellsCount);
-        cellSetValue (emptyCells[randomIndex], theTurn);
-
-        if (Debug.isDebugBuild) {
-            Debug.Log (string.Format ("We made random turn at {0} cell", emptyCells[randomIndex]));
-        }
-
-        return true;
-    }
-
-    // --------------------------------------------------------------------------
-    // Takes center cell if possible
-    bool turnCenter (int theTurn = 0) {
-        if (cells[4] != 0)
-            return false;
-
-        cellSetValue (4, theTurn);
-
-        if (Debug.isDebugBuild) {
-            Debug.Log (string.Format ("We took center cell"));
-        }
-
-        return true;
-    }
-
-    // --------------------------------------------------------------------------
-    // Takes some corner cell by random
-    bool turnCorner (int theTurn = 0) {
-        int[] emptyCells = new int[4]; // 4 corners
-        int emptyCellsCount = 0;
-
-        // Get indexes of empty cells
-        int[] cornerCells = new int[] { 0, 2, 6, 8 }; // Corner cells for 3x3 board
-        foreach (int i in cornerCells) {
-            if (cells[i] == 0) {
-                emptyCells[emptyCellsCount] = i;
-                emptyCellsCount++;
-            }
-        }
-        if (emptyCellsCount < 1)
-            return false;
-
-        // There is no empty corner cells
-
-        // Get some random corner cell and put the turn value into it
-        System.Random rnd = new System.Random ();
-        int randomIndex = rnd.Next (0, emptyCellsCount);
-        cellSetValue (emptyCells[randomIndex], theTurn);
-
-        if (Debug.isDebugBuild) {
-            Debug.Log (string.Format ("We found empty corner at {0} cell", emptyCells[randomIndex]));
-        }
-
-        return true;
-    }
-
-    // --------------------------------------------------------------------------
-    // Blocks possible winning turn for opposite player
-    bool turnBlock (int theTurn = 0) {
-        if (theTurn == 0)
-            theTurn = turn;
-        // Use global variable if parameter is not set
-
-        int lookFor = -2;
-        if (theTurn < 0)
-            lookFor = 2;
-
-        for (int i = 0; i < sums.Length; i++) {
-            if (sums[i] == lookFor) {
-                int a, b, c;
-                cellBySum (i, out a, out b, out c);
-
-                // Search for empty cell in line ant take it
-                if (cells[a] == 0) {
-                    cellSetValue (a, theTurn);
-                } else if (cells[b] == 0) {
-                    cellSetValue (b, theTurn);
-                } else if (cells[c] == 0) {
-                    cellSetValue (c, theTurn);
-                } else {
-                    Debug.Log (string.Format ("We found blocking line ({0}, {1}, {2}) but cannot make defense move!", a, b, c));
-                    continue;
-                }
-
-                if (Debug.isDebugBuild) {
-                    Debug.Log (string.Format ("We found blocking turn in ({0}, {1}, {2}) line", a, b, c));
-                }
-                return true;
-            }
-        }
-
-        return false; // There is no blocking turn
-    }
-
-    // --------------------------------------------------------------------------
-    // Makes winning turn if possible
-    bool turnWin (int theTurn = 0) {
-        if (theTurn == 0)
-            theTurn = turn;
-        // Use global variable if parameter is not set
-
-        int lookFor = 2;
-        if (theTurn < 0)
-            lookFor = -2;
-
-        for (int i = 0; i < sums.Length; i++) {
-            if (sums[i] == lookFor) {
-                int a, b, c;
-                cellBySum (i, out a, out b, out c);
-
-                cellSetValue (a, theTurn);
-                cellSetValue (b, theTurn);
-                cellSetValue (c, theTurn);
-
-                if (Debug.isDebugBuild) {
-                    Debug.Log (string.Format ("We found winning turn in line ({0}, {1}, {2})", a, b, c));
-                }
-
-                return true; // We made the winning turn
-            }
-        }
-
-        return false; // There is no winning turn
-    }
-
-    // --------------------------------------------------------------------------
-
-    private int levelAI = 5; // 0 - no AI (manual play), from 1 to 5  - easy to hard AI
-
-    void turnByAI (int theTurn = 0) {
-        if (levelAI < 1)
-            return;
-
-        bool isTurnOk = false;
-        switch (levelAI) {
-            case 5:
-                isTurnOk = turnWin (theTurn);
-                if (!isTurnOk)
-                    isTurnOk = turnBlock (theTurn);
-
-                if (isTurnOk)
-                    break;
-
-                goto case 3;
-
-            case 4: // Win -> Center -> Corner -> Random turns
-                isTurnOk = turnWin (theTurn);
-                if (isTurnOk)
-                    break;
-
-                goto case 3;
-
-            case 3: // Center -> Corner -> Random turns
-                isTurnOk = turnCenter (theTurn);
-                if (!isTurnOk)
-                    isTurnOk = turnCorner (theTurn);
-
-                if (isTurnOk)
-                    break;
-
-                goto default;
-
-            case 2: // Center -> Random turns
-                isTurnOk = turnCenter (theTurn);
-                if (isTurnOk)
-                    break;
-
-                goto default;
-
-            default: // Random turn for levelAI == 1
-                isTurnOk = turnRandom (theTurn);
-                break;
-        }
-
-        onTurnComplete (theTurn);
-
-    }
-
-    // --------------------------------------------------------------------------
 
 }
