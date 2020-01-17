@@ -21,7 +21,7 @@ public class DuelConnObj : MonoBehaviour {
         Username = "TestUser",
         Password = "",
         Key = "Uk54398",
-        KeyPemPath = "A:\\Gitrepo\\IDCT-Proj-Unity\\server.pem",
+        KeyPemPath = "server.pem"
     };
     public CfServerSetting Mac_DevTmp = new CfServerSetting {
         Connector = "grpc",

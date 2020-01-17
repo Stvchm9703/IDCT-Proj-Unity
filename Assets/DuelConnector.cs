@@ -22,7 +22,8 @@ namespace PlayCli {
         private RoomStatus.RoomStatusClient client;
 
         public DuelConnector (CfServerSetting s) {
-            var crt = new SslCredentials (File.ReadAllText (s.KeyPemPath));
+            TextAsset ta = Resources.Load<TextAsset>(s.KeyPemPath);
+            var crt = new SslCredentials (ta.text);
             this.channel = new Channel (
                 s.Host + ":" + s.Port,
                 crt);
