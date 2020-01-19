@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+// using System.Net.Http;
+// using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
+// using Grpc.Net.Client;
 using Newtonsoft.Json;
 using PlayCli.ProtoModv2;
 using UnityEngine;
@@ -25,17 +28,17 @@ namespace PlayCli {
 
         public AsyncServerStreamingCall<CellStatusResp> GetOnlyStream;
         public DuelConnectorV2 (CfServerSetting s) {
-            // TextAsset ta = Resources.Load<TextAsset>(s.KeyPemPath);
-            var tt = File.ReadAllText (s.KeyPemPath);
+           
             var crt = new SslCredentials (File.ReadAllText (s.KeyPemPath));
             this.channel = new Channel (
                 s.Host + ":" + s.Port,
-                crt);
+                crt)
+            ;
             this.UserID = s.Username;
             this.Key = s.Key;
             this.client = new RoomStatus.RoomStatusClient (this.channel);
         }
-
+       
         public async Task<Room> CreateRoom () {
             var t = await this.client.CreateRoomAsync (new RoomCreateReq {
                 UserId = this.HostId
