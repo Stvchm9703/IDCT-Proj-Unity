@@ -37,6 +37,7 @@ public class scriptGameVS : MonoBehaviour {
     private DuelConnObjv2 DuelConn;
     public bool IsConnected = false;
     public CancellationTokenSource close_tkn;
+    public int player_sign = 1;
 
     // public DuelConnObjv2 
     // --------------------------------------------------------------------------
@@ -56,6 +57,7 @@ public class scriptGameVS : MonoBehaviour {
             Debug.Log ("close_tkn: " + close_tkn.IsCancellationRequested);
         }
         Debug.Log ("room key:" + this.DuelConn.current_room.Key);
+        player_sign = this.DuelConn.IsHost ? 1 : -1;
     }
     void Awake () {
         GameObject[] objs = GameObject.FindGameObjectsWithTag ("Connector");
@@ -71,7 +73,7 @@ public class scriptGameVS : MonoBehaviour {
     void Update () {
         if (IsConnected) {
             using (var calling = DuelConn.get_only_status_stream) {
-                Debug.Log ("is stream?");
+                // Debug.Log ("is stream?");
                 var task = Task.Run (async () => {
                     while (await calling.ResponseStream.MoveNext (close_tkn.Token)) {
                         Debug.Log ("called");
@@ -83,9 +85,9 @@ public class scriptGameVS : MonoBehaviour {
         if (isGameOver) {
             return;
         }
-        if (turn == -1) {
-            // turnByAI (turn);
-        }
+        // if (turn == -1) {
+        //     // turnByAI (turn);
+        // }
         gameUpdateIndicator ();
     }
 
@@ -113,13 +115,12 @@ public class scriptGameVS : MonoBehaviour {
     }
     public void PlayerCellClick (int cell_num) {
         Debug.Log (cell_num);
-        if (cells[cell_num] == 0 && !isGameOver) {
-            cellSetValue (cell_num, 1);
-
+        if (cells[cell_num] == 0 && !isGameOver && this.DuelConn.able_update) {
+            cellSetValue (cell_num, player_sign);
             DuelConn.UpdateTurn (new CellStatus {
                 Key = this.DuelConn.current_room.Key,
-                    Turn = 1,
-                    CellNum = cell_num + 1,
+                Turn = player_sign ,
+                CellNum = cell_num + 1,
             });
             GUIRenderCell ();
             onTurnComplete (1);

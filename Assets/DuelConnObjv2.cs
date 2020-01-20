@@ -16,7 +16,8 @@ public class DuelConnObjv2 : MonoBehaviour {
     public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
     public bool isBroadcast { get { return is_bc; } }
     bool is_bc = false;
-    bool able_update = false;
+    public bool able_update = false;
+    public bool IsHost = false;
     public CfServerSetting Win_DevTmp = new CfServerSetting {
         Connector = "grpc",
         Host = "192.168.0.112",
@@ -59,6 +60,7 @@ public class DuelConnObjv2 : MonoBehaviour {
         try {
             this.current_room = await this.conn.CreateRoom ();
             this.able_update = true;
+            this.IsHost = true;
             return true;
         } catch (RpcException e) {
             Debug.Log (e);
@@ -73,8 +75,8 @@ public class DuelConnObjv2 : MonoBehaviour {
         try {
             var ri = await this.conn.GetRoomInfo (key);
             current_room = ri.RoomInfo;
-            Debug.Log ("time:" + ri.Timestamp);
             this.able_update = is_player;
+            this.IsHost = false;
             return true;
         } catch (RpcException e) {
             Debug.Log (e);
