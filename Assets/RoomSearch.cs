@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Newtonsoft.Json;
 using PlayCli.ProtoModv2;
@@ -62,15 +63,15 @@ public class RoomSearch : MonoBehaviour {
             await DuelConn.JoinRoom (room.Key, false);
         } else {
             await DuelConn.JoinRoom (room.Key, true);
-            var u =  await DuelConn.UpdateTurn(new CellStatus{
+            Debug.Log("JoinRoom RS");
+            Debug.Log(DuelConn.current_room.Key);
+            var u = await DuelConn.UpdateTurn (new CellStatus {
                 Key = room.Key,
-                Turn = 0,
-                CellNum = -1,
+                    Turn = 0,
+                    CellNum = -1,
             });
+            Debug.Log("UpdataTurn ");
         }
-
-
-        DuelConn.StartGStream ();
         SceneManager.LoadScene ("VSGame", LoadSceneMode.Single);
     }
 

@@ -74,6 +74,7 @@ public class DuelConnObjv2 : MonoBehaviour {
         Debug.Log ("on JoinRoom process - DuelConnObj");
         try {
             var ri = await this.conn.GetRoomInfo (key);
+            Debug.Log(ri);
             current_room = ri.RoomInfo;
             this.able_update = is_player;
             this.IsHost = false;

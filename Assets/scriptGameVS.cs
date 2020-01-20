@@ -56,7 +56,7 @@ public class scriptGameVS : MonoBehaviour {
             close_tkn = new CancellationTokenSource ();
             Debug.Log ("close_tkn: " + close_tkn.IsCancellationRequested);
         }
-        Debug.Log ("room key:" + this.DuelConn.current_room.Key);
+        Debug.Log ("room key:" + this.DuelConn.current_room);
         player_sign = this.DuelConn.IsHost ? 1 : -1;
     }
     void Awake () {
@@ -70,16 +70,15 @@ public class scriptGameVS : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Update everything
-    void Update () {
+    async void Update () {
         if (IsConnected) {
-            using (var calling = DuelConn.get_only_status_stream) {
-                // Debug.Log ("is stream?");
-                var task = Task.Run (async () => {
-                    while (await calling.ResponseStream.MoveNext (close_tkn.Token)) {
-                        Debug.Log ("called");
-                        Debug.Log (calling.ResponseStream.Current);
-                    }
-                });
+            using (var t = DuelConn.StartGStream ()) {
+                Debug.Log ("is stream?");
+                Debug.Log ("close token" + close_tkn.IsCancellationRequested);
+                while (await t.ResponseStream.MoveNext (close_tkn.Token)) {
+                    Debug.Log ("called");
+                    Debug.Log (t.ResponseStream.Current);
+                }
             }
         }
         if (isGameOver) {
@@ -119,8 +118,8 @@ public class scriptGameVS : MonoBehaviour {
             cellSetValue (cell_num, player_sign);
             DuelConn.UpdateTurn (new CellStatus {
                 Key = this.DuelConn.current_room.Key,
-                Turn = player_sign ,
-                CellNum = cell_num + 1,
+                    Turn = player_sign,
+                    CellNum = cell_num + 1,
             });
             GUIRenderCell ();
             onTurnComplete (1);
