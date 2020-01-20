@@ -28,11 +28,10 @@ namespace PlayCli {
 
         public AsyncServerStreamingCall<CellStatusResp> GetOnlyStream;
         public DuelConnectorV2 (CfServerSetting s) {
-
             var crt = new SslCredentials (File.ReadAllText (s.KeyPemPath));
             this.channel = new Channel (
                 s.Host, s.Port,
-                crt);
+                SslCredentials.Insecure);
             this.UserID = s.Username;
             this.Key = s.Key;
             this.client = new RoomStatus.RoomStatusClient (this.channel);
@@ -77,6 +76,7 @@ namespace PlayCli {
                 this.GetOnlyStream = this.client.GetRoomStream (request);
             }
             return this.GetOnlyStream;
+            // return this.client.GetRoomStream (request);
         }
         public async Task<CellStatus> UpdateRoomTurn (CellStatus cs) {
             CellStatusReq tmp = new CellStatusReq {

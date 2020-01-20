@@ -13,7 +13,7 @@ public class DuelConnObjv2 : MonoBehaviour {
     public DuelConnectorV2 conn;
     public Room current_room;
     public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
-    public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream ;
+    public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
     public bool isBroadcast { get { return is_bc; } }
     bool is_bc = false;
     bool able_update = false;
@@ -119,7 +119,7 @@ public class DuelConnObjv2 : MonoBehaviour {
                 this.current_room = null;
             }
         } else {
-            
+
         }
         return status;
     }
@@ -128,28 +128,32 @@ public class DuelConnObjv2 : MonoBehaviour {
         if (current_room != null && stream_status == null) {
             is_bc = true;
             stream_status = this.conn.RoomStream ();
-            
+
             return true;
         }
         return false;
     }
 
-    public bool StartGStream (){
-        if (current_room != null && get_only_status_stream == null){
-            get_only_status_stream = this.conn.GetRoomStream(
-                new CellStatusReq{
+    public AsyncServerStreamingCall<CellStatusResp> StartGStream () {
+        if (get_only_status_stream != null) {
+            return this.get_only_status_stream;
+        }
+        if (current_room != null && get_only_status_stream == null) {
+            get_only_status_stream = this.conn.GetRoomStream (
+                new CellStatusReq {
                     Key = this.current_room.Key,
-                    UserId = this.conn.HostId,
+                        UserId = this.conn.HostId,
                 }
             );
-            return true;
+            return this.get_only_status_stream;
         }
-        return false;
+
+        return null;
     }
     async void Destroy () {
         // this.conn destruct call;
-        if (stream_status !=null){
-            Debug.Log(stream_status);
+        if (stream_status != null) {
+            Debug.Log (stream_status);
             // await stream_status.RequestStream.CompleteAsync();
             // stream_status = null;
         }

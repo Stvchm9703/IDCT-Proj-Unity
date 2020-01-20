@@ -53,6 +53,7 @@ public class scriptGameVS : MonoBehaviour {
         GUIRenderCell ();
         if (close_tkn == null) {
             close_tkn = new CancellationTokenSource ();
+            Debug.Log ("close_tkn: " + close_tkn.IsCancellationRequested);
         }
         Debug.Log ("room key:" + this.DuelConn.current_room.Key);
     }
@@ -69,12 +70,11 @@ public class scriptGameVS : MonoBehaviour {
     // Update everything
     void Update () {
         if (IsConnected) {
-            // var cancel = new CancellationTokenSource ();
-            // cancel.Cancel();
-            Debug.Log (IsConnected);
             using (var calling = DuelConn.get_only_status_stream) {
+                Debug.Log ("is stream?");
                 var task = Task.Run (async () => {
                     while (await calling.ResponseStream.MoveNext (close_tkn.Token)) {
+                        Debug.Log ("called");
                         Debug.Log (calling.ResponseStream.Current);
                     }
                 });
