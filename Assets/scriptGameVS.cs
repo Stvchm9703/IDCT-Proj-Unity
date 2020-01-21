@@ -72,41 +72,13 @@ public class scriptGameVS : MonoBehaviour {
     // Update everything
     async void Update () {
         if (IsConnected) {
-            using (var t = DuelConn.StartGStream ()) {
-                Debug.Log ("is stream?");
-                Debug.Log ("close token" + close_tkn.IsCancellationRequested);
-                while (await t.ResponseStream.MoveNext (close_tkn.Token)) {
-                    Debug.Log ("called");
-                    Debug.Log (t.ResponseStream.Current);
-                }
+            var t = DuelConn.StartGStream ();
+            Debug.Log ("is stream?");
+            Debug.Log ("close token" + close_tkn.IsCancellationRequested);
+            while (await t.ResponseStream.MoveNext (close_tkn.Token)) {
+                Debug.Log ("called");
+                Debug.Log (t.ResponseStream.Current);
             }
-
-            // using (var call = this.DuelConn.StartBroadCast ()) {
-            //     var responseReaderTask = Task.Run (async () => {
-            //         // 逐一取出 response 內容
-            //         while (await call.ResponseStream.MoveNext (close_tkn.Token)) {
-            //             var candidate = call.ResponseStream.Current;
-            //             // result.AddRange (candidate.Candidates_);
-            //             Debug.Log (candidate);
-            //         }
-            //     });
-            //     // 將資料逐一傳送至 server
-            //     foreach (var request in cells) {
-            //         await call.RequestStream.WriteAsync (
-            //             new CellStatusReq {
-            //                 UserId = DuelConn.current_room.HostId,
-            //                 Key = DuelConn.current_room.Key,
-            //                 CellStatus = new CellStatus {
-            //                     Key = this.DuelConn.current_room.Key,
-            //                     Turn = player_sign,
-            //                     CellNum = request + 1,
-            //                 },
-            //             }
-            //         );
-            //     }
-
-                // await call.RequestStream.CompleteAsync ();
-            // }
         }
         if (isGameOver) {
             return;
