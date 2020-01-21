@@ -74,7 +74,7 @@ public class DuelConnObjv2 : MonoBehaviour {
         Debug.Log ("on JoinRoom process - DuelConnObj");
         try {
             var ri = await this.conn.GetRoomInfo (key);
-            Debug.Log(ri);
+            Debug.Log (ri);
             current_room = ri.RoomInfo;
             this.able_update = is_player;
             this.IsHost = false;
@@ -127,14 +127,14 @@ public class DuelConnObjv2 : MonoBehaviour {
         return status;
     }
 
-    public bool StartBroadCast () {
+    public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StartBroadCast () {
+        if (stream_status != null) return this.stream_status;
         if (current_room != null && stream_status == null) {
             is_bc = true;
-            stream_status = this.conn.RoomStream ();
-
-            return true;
+            this.stream_status = this.conn.RoomStream ();
+            return this.stream_status;
         }
-        return false;
+        return null;
     }
 
     public AsyncServerStreamingCall<CellStatusResp> StartGStream () {

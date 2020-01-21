@@ -80,6 +80,33 @@ public class scriptGameVS : MonoBehaviour {
                     Debug.Log (t.ResponseStream.Current);
                 }
             }
+
+            // using (var call = this.DuelConn.StartBroadCast ()) {
+            //     var responseReaderTask = Task.Run (async () => {
+            //         // 逐一取出 response 內容
+            //         while (await call.ResponseStream.MoveNext (close_tkn.Token)) {
+            //             var candidate = call.ResponseStream.Current;
+            //             // result.AddRange (candidate.Candidates_);
+            //             Debug.Log (candidate);
+            //         }
+            //     });
+            //     // 將資料逐一傳送至 server
+            //     foreach (var request in cells) {
+            //         await call.RequestStream.WriteAsync (
+            //             new CellStatusReq {
+            //                 UserId = DuelConn.current_room.HostId,
+            //                 Key = DuelConn.current_room.Key,
+            //                 CellStatus = new CellStatus {
+            //                     Key = this.DuelConn.current_room.Key,
+            //                     Turn = player_sign,
+            //                     CellNum = request + 1,
+            //                 },
+            //             }
+            //         );
+            //     }
+
+                // await call.RequestStream.CompleteAsync ();
+            // }
         }
         if (isGameOver) {
             return;
@@ -87,7 +114,7 @@ public class scriptGameVS : MonoBehaviour {
         // if (turn == -1) {
         //     // turnByAI (turn);
         // }
-        gameUpdateIndicator ();
+        // gameUpdateIndicator ();
     }
 
     // IEnumerator SearchDuelConn () {
