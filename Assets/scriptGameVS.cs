@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
+using Grpc.Core;
 using PlayCli.ProtoModv2;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -75,18 +76,26 @@ public class scriptGameVS : MonoBehaviour {
             var t = DuelConn.StartGStream ();
             Debug.Log ("is stream?");
             Debug.Log ("close token" + close_tkn.IsCancellationRequested);
-            while (await t.ResponseStream.MoveNext (close_tkn.Token)) {
-                Debug.Log ("called");
-                Debug.Log (t.ResponseStream.Current);
+            try {
+                while (await t.ResponseStream.MoveNext (close_tkn.Token)) {
+                    Debug.Log ("called");
+                    Debug.Log (t.ResponseStream.Current);
+                }
+            } catch (RpcException e) {
+                if (e.StatusCode == StatusCode.Cancelled) {
+                    Debug.Log ("Done");
+                } else {
+                    Debug.LogError(e);
+                }
             }
         }
         if (isGameOver) {
             return;
         }
-        // if (turn == -1) {
-        //     // turnByAI (turn);
-        // }
-        // gameUpdateIndicator ();
+    }
+
+    void OnDestroy () {
+        this.close_tkn.Cancel ();
     }
 
     // IEnumerator SearchDuelConn () {
@@ -111,11 +120,11 @@ public class scriptGameVS : MonoBehaviour {
             GameObject.Find ("CellRendBox/cell" + i.ToString ()).GetComponent<Image> ().sprite = sprite;
         }
     }
-    public void PlayerCellClick (int cell_num) {
+    public async void PlayerCellClick (int cell_num) {
         Debug.Log (cell_num);
         if (cells[cell_num] == 0 && !isGameOver && this.DuelConn.able_update) {
             cellSetValue (cell_num, player_sign);
-            DuelConn.UpdateTurn (new CellStatus {
+            await DuelConn.UpdateTurn (new CellStatus {
                 Key = this.DuelConn.current_room.Key,
                     Turn = player_sign,
                     CellNum = cell_num + 1,
