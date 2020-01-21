@@ -74,18 +74,20 @@ public class scriptGameVS : MonoBehaviour {
     async void Update () {
         if (IsConnected) {
             var t = DuelConn.StartGStream ();
-            Debug.Log ("is stream?");
-            Debug.Log ("close token" + close_tkn.IsCancellationRequested);
+            // Debug.Log ("is stream?");
+            // Debug.Log ("close token" + close_tkn.IsCancellationRequested);
             try {
                 while (await t.ResponseStream.MoveNext (close_tkn.Token)) {
-                    Debug.Log ("called");
+                    // Debug.Log ("called");
                     Debug.Log (t.ResponseStream.Current);
+                    var tok = t.ResponseStream.Current.CellStatus;
+                    VsPlayerCellClick (tok.CellNum - 1);
                 }
             } catch (RpcException e) {
                 if (e.StatusCode == StatusCode.Cancelled) {
                     Debug.Log ("Done");
                 } else {
-                    Debug.LogError(e);
+                    Debug.LogError (e);
                 }
             }
         }
@@ -122,18 +124,33 @@ public class scriptGameVS : MonoBehaviour {
     }
     public async void PlayerCellClick (int cell_num) {
         Debug.Log (cell_num);
-        if (cells[cell_num] == 0 && !isGameOver && this.DuelConn.able_update) {
-            cellSetValue (cell_num, player_sign);
+        if (cells[cell_num] == 0 &&
+            !isGameOver &&
+            this.DuelConn.able_update &&
+            this.turn == this.player_sign
+        ) {
+
             await DuelConn.UpdateTurn (new CellStatus {
                 Key = this.DuelConn.current_room.Key,
                     Turn = player_sign,
                     CellNum = cell_num + 1,
             });
+            cellSetValue (cell_num, player_sign);
             GUIRenderCell ();
-            onTurnComplete (1);
+            onTurnComplete (this.player_sign);
         }
     }
 
+    public void VsPlayerCellClick (int cell_num) {
+        Debug.Log (cell_num);
+        if (cells[cell_num] == 0 &&
+            !isGameOver
+        ) {
+            cellSetValue (cell_num, player_sign * -1);
+            GUIRenderCell ();
+            onTurnComplete (this.player_sign * -1);
+        }
+    }
     // @OK 
     public void backToMenu () {
         // GiveUp
@@ -168,8 +185,9 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Called when there is no turn, some player wins, or critical error occurs
     void gameStop (int theTurn) {
-        if (Math.Abs (theTurn) == 1)
+        if (Math.Abs (theTurn) == 1) {
             turn = theTurn;
+        }
         // Override global value if parameter is set
 
         isGameOver = true; // Gaming is disabled
