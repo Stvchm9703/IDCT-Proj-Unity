@@ -111,21 +111,23 @@ namespace PlayCli {
         }
 
         ~DuelConnectorV2 () {
-            var shutdownTkn =  new CancellationTokenSource ();
             if (this.StreamHandler != null) {
-                Debug.Log ("try kill");
-                Debug.Log (this.StreamHandler);
+                var shutdownTkn = new CancellationTokenSource ();
+                // Debug.Log ("try kill");
+                // Debug.Log (this.StreamHandler);
                 this.StreamHandler.RequestStream.CompleteAsync ();
-                this.StreamHandler.ResponseStream.MoveNext(shutdownTkn.Token);
+                this.StreamHandler.ResponseStream.MoveNext (shutdownTkn.Token);
+                shutdownTkn.Cancel();
                 this.StreamHandler = null;
             }
             if (this.GetOnlyStream != null) {
-                Debug.Log ("try kill");
-                Debug.Log (this.GetOnlyStream);
-                this.GetOnlyStream.ResponseStream.MoveNext(shutdownTkn.Token);
+                var shutdownTkn = new CancellationTokenSource ();
+                // Debug.Log ("try kill");
+                // Debug.Log (this.GetOnlyStream);
+                this.GetOnlyStream.ResponseStream.MoveNext (shutdownTkn.Token);
+                shutdownTkn.Cancel();
                 this.GetOnlyStream = null;
             }
-            shutdownTkn.Cancel();
             this.client = null;
             this.channel.ShutdownAsync ().Wait ();
             Debug.Log ("destructor DuelConnector");

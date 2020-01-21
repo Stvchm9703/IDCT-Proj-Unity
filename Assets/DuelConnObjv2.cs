@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
 using PlayCli;
@@ -18,6 +19,7 @@ public class DuelConnObjv2 : MonoBehaviour {
     bool is_bc = false;
     public bool able_update = false;
     public bool IsHost = false;
+    // Temp setting
     public CfServerSetting Win_DevTmp = new CfServerSetting {
         Connector = "grpc",
         Host = "192.168.0.112",
@@ -38,6 +40,7 @@ public class DuelConnObjv2 : MonoBehaviour {
         Key = "",
         KeyPemPath = "",
     };
+    // Debug Scn
     public DebugTestScript DebugScn;
     public string config_file;
     void Awake () {
@@ -48,9 +51,11 @@ public class DuelConnObjv2 : MonoBehaviour {
         } else {
             DontDestroyOnLoad (this.gameObject);
             this.gameObject.tag = "Connector";
-            this.conn = new DuelConnectorV2 (
-                Win_DevTmp
-            );
+            if (this.conn == null) {
+                this.conn = new DuelConnectorV2 (
+                    Win_DevTmp
+                );
+            }
         }
     }
 
@@ -92,9 +97,12 @@ public class DuelConnObjv2 : MonoBehaviour {
 
     public async Task<bool> UpdateTurn (CellStatus cs) {
         try {
-            CellStatus d = await this.conn.UpdateRoomTurn (cs);
-            this.current_room.CellStatus.Add (d);
-            return true;
+            if (able_update) {
+                CellStatus d = await this.conn.UpdateRoomTurn (cs);
+                this.current_room.CellStatus.Add (d);
+                return true;
+            }
+            return false;
         } catch (RpcException e) {
             Debug.Log (e);
             return false;
@@ -105,26 +113,39 @@ public class DuelConnObjv2 : MonoBehaviour {
     public async Task<bool> ExitRoom () {
         bool status = false;
         // Time.Wait
-        if (this.current_room != null) {
-            if (this.current_room.HostId == this.conn.HostId) {
-                var status_r = await this.conn.DeleteRoom (this.current_room.Key);
-                status = true;
-                // } else if (this.current_room.HostId == this.conn.HostId && this.current_room.DuelerId != "") {
-                //     status = await this.conn.QuitRoom ();
-
-            } else if (this.current_room.DuelerId == this.conn.HostId) {
-                status = await this.conn.QuitRoom ();
-            } else {
-                // watcher quit
-                status = true;
-            }
-            if (status) {
-                this.current_room = null;
-            }
-        } else {
-
+        if (stream_status != null) {
+            var shutdownTkn = new CancellationTokenSource ();
+            await stream_status.ResponseStream.MoveNext (shutdownTkn.Token);
+            shutdownTkn.Cancel ();
+            stream_status = null;
         }
+        if (get_only_status_stream != null) {
+            var shutdownTkn = new CancellationTokenSource ();
+            await get_only_status_stream.ResponseStream.MoveNext (shutdownTkn.Token);
+            shutdownTkn.Cancel ();
+            get_only_status_stream = null;
+        }
+
+        if (this.current_room != null) {
+            status = await this.conn.QuitRoom ();
+            status = true;
+            this.current_room = null;
+        }
+
         return status;
+    }
+
+    public async Task<Room> RefreshRoomInfo () {
+        if (this.current_room != null) {
+            var tt = await this.conn.GetRoomInfo (current_room.Key);
+            if (tt.Error == null) {
+                this.current_room = tt.RoomInfo;
+                return this.current_room;
+            }
+            // else case:
+            return null;
+        }
+        return null;
     }
 
     public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StartBroadCast () {
@@ -157,8 +178,6 @@ public class DuelConnObjv2 : MonoBehaviour {
         // this.conn destruct call;
         if (stream_status != null) {
             Debug.Log (stream_status);
-            // await stream_status.RequestStream.CompleteAsync();
-            // stream_status = null;
         }
     }
 }

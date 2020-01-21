@@ -17,6 +17,7 @@ public class RoomSearch : MonoBehaviour {
         // show the loading
         Loading.SetActive (true);
         // wait loading the list
+        Debug.Log (DuelConn);
         try {
             var tmp_list = await DuelConn.GetRoomList ("");
             room_list = tmp_list;
@@ -63,14 +64,14 @@ public class RoomSearch : MonoBehaviour {
             await DuelConn.JoinRoom (room.Key, false);
         } else {
             await DuelConn.JoinRoom (room.Key, true);
-            Debug.Log("JoinRoom RS");
-            Debug.Log(DuelConn.current_room.Key);
+            Debug.Log ("JoinRoom RS");
+            Debug.Log (DuelConn.current_room.Key);
             var u = await DuelConn.UpdateTurn (new CellStatus {
                 Key = room.Key,
                     Turn = 0,
                     CellNum = -1,
             });
-            Debug.Log("UpdataTurn ");
+            Debug.Log ("UpdataTurn ");
         }
         SceneManager.LoadScene ("VSGame", LoadSceneMode.Single);
     }

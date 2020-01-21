@@ -20,6 +20,9 @@ public class scriptGameVS : MonoBehaviour {
     public Image imageIndicator;
     // Control to output the text near the "Indicator" image
     public Text textIndicator;
+    // Player Indicator 
+    public Image plyimgIndicator;
+    public Text plytxtIndicator;
 
     // Swaps between 1 and -1 on each turn. -1 means "o" turn, 1 means "x" turn
     private int turn;
@@ -52,13 +55,14 @@ public class scriptGameVS : MonoBehaviour {
         winnerCells = new ArrayList ();
         ImgBackground.SetActive (false);
         gameReset ();
-        GUIRenderCell ();
         if (close_tkn == null) {
             close_tkn = new CancellationTokenSource ();
             Debug.Log ("close_tkn: " + close_tkn.IsCancellationRequested);
         }
-        Debug.Log ("room key:" + this.DuelConn.current_room);
+        Debug.Log ("room key:" + this.DuelConn.current_room.Key);
         player_sign = this.DuelConn.IsHost ? 1 : -1;
+        InitRoomStatus ();
+        GUIRenderCell ();
     }
     void Awake () {
         GameObject[] objs = GameObject.FindGameObjectsWithTag ("Connector");
@@ -72,6 +76,9 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Update everything
     async void Update () {
+        if (isGameOver) {
+            return;
+        }
         if (IsConnected) {
             var t = DuelConn.StartGStream ();
             // Debug.Log ("is stream?");
@@ -80,8 +87,12 @@ public class scriptGameVS : MonoBehaviour {
                 while (await t.ResponseStream.MoveNext (close_tkn.Token)) {
                     // Debug.Log ("called");
                     Debug.Log (t.ResponseStream.Current);
-                    var tok = t.ResponseStream.Current.CellStatus;
-                    VsPlayerCellClick (tok.CellNum - 1);
+                    var tok = t.ResponseStream.Current;
+                    if (tok.ErrorMsg == null) {
+                        VsPlayerCellClick (tok.CellStatus.CellNum - 1);
+                    } else {
+                        ErrorMsgHandler (tok);
+                    }
                 }
             } catch (RpcException e) {
                 if (e.StatusCode == StatusCode.Cancelled) {
@@ -91,27 +102,64 @@ public class scriptGameVS : MonoBehaviour {
                 }
             }
         }
-        if (isGameOver) {
-            return;
+        gameUpdateIndicator ();
+    }
+
+    async void OnDestroy () {
+        this.close_tkn.Cancel ();
+        await this.DuelConn.ExitRoom ();
+    }
+
+    void ErrorMsgHandler (CellStatusResp em) {
+        Debug.Log (em);
+        switch (em.ErrorMsg.MsgInfo) {
+            case "ConnEnd":
+                if (em.UserId != DuelConn.conn.HostId) {
+                    if (em.UserId == DuelConn.current_room.HostId ||
+                        em.UserId == DuelConn.current_room.DuelerId) {
+                        Debug.Log ("Player quit");
+                    } else if (em.UserId == "RmSvrMgr") {
+                        Debug.Log ("RmSvrMgr");
+                        // show UI alert
+                    } else {
+                        Debug.Log ("watcher!");
+                    }
+                } else {
+                    Debug.Log ("self quit msg?");
+                }
+                break;
+                // case "": 
+            case "RoomClose":
+                // show UI RoomClose alert 
+
+                break;
         }
     }
 
-    void OnDestroy () {
-        this.close_tkn.Cancel ();
+    async void InitRoomStatus () {
+        // if (this.DuelConn.current_room != null){
+        var t = await this.DuelConn.RefreshRoomInfo ();
+        if (t != null) {
+            foreach (var cs in t.CellStatus) {
+                cells[cs.CellNum - 1] = cs.Turn;
+            }
+        }
+        if (plyimgIndicator != null) {
+            if (this.DuelConn.conn.HostId == t.HostId) {
+                plyimgIndicator.sprite = sprites[1];
+            } else if (this.DuelConn.conn.HostId == t.DuelerId) {
+                plyimgIndicator.sprite = sprites[2];
+            }
+        }
+        if (plytxtIndicator != null) {
+            if (!this.DuelConn.able_update) {
+                plytxtIndicator.text = "Watch only";
+            }
+        }
+        return;
+        // }
     }
 
-    // IEnumerator SearchDuelConn () {
-    //     yield return new WaitForSeconds (1);
-    //     var t = GameObject.Find ("DuelConnObj");
-    //     Debug.Log (t);
-    //     if (t != null) {
-    //         DuelConn = t.GetComponent<DuelConnObjv2> ();
-    //         IsConnected = true;
-    //         yield return true;
-    //     } else {
-    //         yield return new WaitForSeconds (1);
-    //     }
-    // }
     void GUIRenderCell () {
         for (int i = 0; i < cells.Length; i++) {
             Sprite sprite = sprites[0];
@@ -286,7 +334,6 @@ public class scriptGameVS : MonoBehaviour {
             turn = theTurn;
         }
         // Override global value if parameter is set
-
         cellSumsUpdate ();
 
         if (cellEmptyCount () < 1) {
@@ -300,6 +347,7 @@ public class scriptGameVS : MonoBehaviour {
         }
 
         turn = turn * -1; // Set turn to opposite value
+
     }
 
     // ==========================================================================
