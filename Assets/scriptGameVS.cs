@@ -45,6 +45,8 @@ public class scriptGameVS : MonoBehaviour {
 
     // public DuelConnObjv2 
     // --------------------------------------------------------------------------
+    public GameObject AlertPanel;
+
     // Initialization
     void Start () {
         //                           0 1 2
@@ -97,6 +99,8 @@ public class scriptGameVS : MonoBehaviour {
             } catch (RpcException e) {
                 if (e.StatusCode == StatusCode.Cancelled) {
                     Debug.Log ("Done");
+                    GameAlertOpen("The Player is quit \n and the game room will be closed after 5 sec");
+                    
                 } else {
                     Debug.LogError (e);
                 }
@@ -140,8 +144,10 @@ public class scriptGameVS : MonoBehaviour {
         // if (this.DuelConn.current_room != null){
         var t = await this.DuelConn.RefreshRoomInfo ();
         if (t != null) {
-            foreach (var cs in t.CellStatus) {
-                cells[cs.CellNum - 1] = cs.Turn;
+            if (t.CellStatus.Count > 0) {
+                foreach (var cs in t.CellStatus) {
+                    cells[cs.CellNum - 1] = cs.Turn;
+                }
             }
         }
         if (plyimgIndicator != null) {
@@ -163,10 +169,12 @@ public class scriptGameVS : MonoBehaviour {
     void GUIRenderCell () {
         for (int i = 0; i < cells.Length; i++) {
             Sprite sprite = sprites[0];
-            if (cells[i] == 1)
+            if (cells[i] == 1) {
                 sprite = sprites[1];
-            if (cells[i] == -1)
+            }
+            if (cells[i] == -1) {
                 sprite = sprites[2];
+            }
             GameObject.Find ("CellRendBox/cell" + i.ToString ()).GetComponent<Image> ().sprite = sprite;
         }
     }
@@ -205,6 +213,16 @@ public class scriptGameVS : MonoBehaviour {
         SceneManager.LoadScene ("RoomSearch", LoadSceneMode.Single);
     }
 
+    public void GameAlertOpen (string msg) {
+
+        if (AlertPanel != null) {
+            this.AlertPanel.SetActiveRecursively(true);
+            this.AlertPanel.transform.Find ("Text").gameObject.GetComponent<Text> ().text = msg;
+        }
+    }
+    public void GameAlertClose () {
+
+    }
     public async void giveUp () {
         Debug.Log ("give up on click");
         await DuelConn.ExitRoom ();

@@ -10,7 +10,7 @@ public class GiveUpRender: MonoBehaviour {
     Vector2 size_bx;
     void Start() {
         if (!this.Controller) {
-            this.Controller = GameObject.FindWithTag("Controller").GetComponent<GiveUpPanel>();
+            this.Controller = this.gameObject.GetComponent<GiveUpPanel>();
         }
         btn_gui = new GUIContent();
         float g = 0;
