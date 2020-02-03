@@ -47,89 +47,95 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     public GameObject AlertPanel;
 
+    void Awake() {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
+        if (objs.Length == 1) {
+            DuelConn = objs[0].GetComponent<DuelConnObj>();
+            IsConnected = true;
+        }
+    }
+
     // Initialization
-    void Start () {
+    void Start() {
         //                           0 1 2
         // Cell array for the board: 3 4 5
         //                           6 7 8
         cells = new int[9];
         sums = new int[8]; // 3 Horizontal, 3 vertical and 2 diagonal
-        winnerCells = new ArrayList ();
-        ImgBackground.SetActive (false);
-        gameReset ();
+        winnerCells = new ArrayList();
+        ImgBackground.SetActive(false);
+        gameReset();
         if (close_tkn == null) {
-            close_tkn = new CancellationTokenSource ();
-            Debug.Log ("close_tkn: " + close_tkn.IsCancellationRequested);
+            close_tkn = new CancellationTokenSource();
+            Debug.Log("close_tkn: " + close_tkn.IsCancellationRequested);
         }
-        Debug.Log ("room key:" + this.DuelConn.current_room.Key);
+        Debug.Log("room key:" + this.DuelConn.current_room.Key);
         player_sign = this.DuelConn.IsHost ? 1 : -1;
-        InitRoomStatus ();
-        GUIRenderCell ();
+        DuelConn.StartGStream();
+
+        InitRoomStatus();
+        GUIRenderCell();
+
+        OnConnecterUpdate();
     }
-    void Awake () {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag ("Connector");
-        if (objs.Length == 1) {
-            DuelConn = objs[0].GetComponent<DuelConnObj> ();
-            IsConnected = true;
-        }
-    }
+
     // void Start()
 
     // --------------------------------------------------------------------------
     // Update everything
-    async void Update () {
+    async void Update() {
         if (isGameOver) {
             return;
         }
-        if (IsConnected) {
-            var t = DuelConn.StartGStream ();
-            // Debug.Log ("is stream?");
-            // Debug.Log ("close token" + close_tkn.IsCancellationRequested);
-            try {
-                while (await t.ResponseStream.MoveNext (close_tkn.Token)) {
-                    // Debug.Log ("called");
-                    Debug.Log (t.ResponseStream.Current);
-                    var tok = t.ResponseStream.Current;
-                    if (tok.ErrorMsg == null) {
-                        VsPlayerCellClick (tok.CellStatus.CellNum - 1);
-                    } else {
-                        ErrorMsgHandler (tok);
-                    }
-                }
-            } catch (RpcException e) {
-                if (e.StatusCode == StatusCode.Cancelled) {
-                    Debug.Log ("Done");
-                    GameAlertOpen("The Player is quit \n and the game room will be closed after 5 sec");
-                    
+        // gameUpdateIndicator();
+    }
+    async void OnConnecterUpdate() {
+        var t = DuelConn.get_only_status_stream;
+        // Debug.Log ("is stream?");
+        // Debug.Log ("close token" + close_tkn.IsCancellationRequested);
+        try {
+            while (await t.ResponseStream.MoveNext(close_tkn.Token)) {
+                // Debug.Log ("called");
+                Debug.Log(t.ResponseStream.Current);
+                var tok = t.ResponseStream.Current;
+                if (tok.ErrorMsg == null) {
+                    VsPlayerCellClick(tok.CellStatus.CellNum - 1);
                 } else {
-                    Debug.LogError (e);
+                    ErrorMsgHandler(tok);
                 }
             }
+            gameUpdateIndicator();
+        } catch (RpcException e) {
+            if (e.StatusCode == StatusCode.Cancelled) {
+                Debug.Log("Done");
+                GameAlertOpen("The Player is quit \n and the game room will be closed after 5 sec");
+
+            } else {
+                Debug.LogError(e);
+            }
         }
-        gameUpdateIndicator ();
+    }
+    async void OnDestroy() {
+        this.close_tkn.Cancel();
+        await this.DuelConn.ExitRoom();
     }
 
-    async void OnDestroy () {
-        this.close_tkn.Cancel ();
-        await this.DuelConn.ExitRoom ();
-    }
-
-    void ErrorMsgHandler (CellStatusResp em) {
-        Debug.Log (em);
+    void ErrorMsgHandler(CellStatusResp em) {
+        Debug.Log(em);
         switch (em.ErrorMsg.MsgInfo) {
             case "ConnEnd":
                 if (em.UserId != DuelConn.conn.HostId) {
                     if (em.UserId == DuelConn.current_room.HostId ||
                         em.UserId == DuelConn.current_room.DuelerId) {
-                        Debug.Log ("Player quit");
+                        Debug.Log("Player quit");
                     } else if (em.UserId == "RmSvrMgr") {
-                        Debug.Log ("RmSvrMgr");
+                        Debug.Log("RmSvrMgr");
                         // show UI alert
                     } else {
-                        Debug.Log ("watcher!");
+                        Debug.Log("watcher!");
                     }
                 } else {
-                    Debug.Log ("self quit msg?");
+                    Debug.Log("self quit msg?");
                 }
                 break;
                 // case "": 
@@ -140,9 +146,9 @@ public class scriptGameVS : MonoBehaviour {
         }
     }
 
-    async void InitRoomStatus () {
+    async void InitRoomStatus() {
         // if (this.DuelConn.current_room != null){
-        var t = await this.DuelConn.RefreshRoomInfo ();
+        var t = await this.DuelConn.RefreshRoomInfo();
         if (t != null) {
             if (t.CellStatus.Count > 0) {
                 foreach (var cs in t.CellStatus) {
@@ -166,7 +172,7 @@ public class scriptGameVS : MonoBehaviour {
         // }
     }
 
-    void GUIRenderCell () {
+    void GUIRenderCell() {
         for (int i = 0; i < cells.Length; i++) {
             Sprite sprite = sprites[0];
             if (cells[i] == 1) {
@@ -175,58 +181,58 @@ public class scriptGameVS : MonoBehaviour {
             if (cells[i] == -1) {
                 sprite = sprites[2];
             }
-            GameObject.Find ("CellRendBox/cell" + i.ToString ()).GetComponent<Image> ().sprite = sprite;
+            GameObject.Find("CellRendBox/cell" + i.ToString()).GetComponent<Image>().sprite = sprite;
         }
     }
-    public async void PlayerCellClick (int cell_num) {
-        Debug.Log (cell_num);
+    public async void PlayerCellClick(int cell_num) {
+        Debug.Log(cell_num);
         if (cells[cell_num] == 0 &&
             !isGameOver &&
             this.DuelConn.able_update &&
             this.turn == this.player_sign
         ) {
 
-            await DuelConn.UpdateTurn (new CellStatus {
+            await DuelConn.UpdateTurn(new CellStatus {
                 Key = this.DuelConn.current_room.Key,
                     Turn = player_sign,
                     CellNum = cell_num + 1,
             });
-            cellSetValue (cell_num, player_sign);
-            GUIRenderCell ();
-            onTurnComplete (this.player_sign);
+            cellSetValue(cell_num, player_sign);
+            GUIRenderCell();
+            onTurnComplete(this.player_sign);
         }
     }
 
-    public void VsPlayerCellClick (int cell_num) {
-        Debug.Log (cell_num);
+    public void VsPlayerCellClick(int cell_num) {
+        Debug.Log(cell_num);
         if (cells[cell_num] == 0 &&
             !isGameOver
         ) {
-            cellSetValue (cell_num, player_sign * -1);
-            GUIRenderCell ();
-            onTurnComplete (this.player_sign * -1);
+            cellSetValue(cell_num, player_sign * -1);
+            GUIRenderCell();
+            onTurnComplete(this.player_sign * -1);
         }
     }
     // @OK 
-    public void backToMenu () {
+    public void backToMenu() {
         // GiveUp
-        SceneManager.LoadScene ("RoomSearch", LoadSceneMode.Single);
+        SceneManager.LoadScene("RoomSearch", LoadSceneMode.Single);
     }
 
-    public void GameAlertOpen (string msg) {
+    public void GameAlertOpen(string msg) {
 
         if (AlertPanel != null) {
             this.AlertPanel.SetActiveRecursively(true);
-            this.AlertPanel.transform.Find ("Text").gameObject.GetComponent<Text> ().text = msg;
+            this.AlertPanel.transform.Find("Text").gameObject.GetComponent<Text>().text = msg;
         }
     }
-    public void GameAlertClose () {
+    public void GameAlertClose() {
 
     }
-    public async void giveUp () {
-        Debug.Log ("give up on click");
-        await DuelConn.ExitRoom ();
-        backToMenu ();
+    public async void giveUp() {
+        Debug.Log("give up on click");
+        await DuelConn.ExitRoom();
+        backToMenu();
     }
     // ==============================================================================
     // Game and states control
@@ -234,7 +240,7 @@ public class scriptGameVS : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Resets cells and set all variables to defaults. Used in Start() and buttonResetGame.onClick.
-    public void gameReset () {
+    public void gameReset() {
         int i;
         for (i = 0; i < cells.Length; i++) {
             cells[i] = 0; // Fill with zeros
@@ -242,7 +248,7 @@ public class scriptGameVS : MonoBehaviour {
         for (i = 0; i < sums.Length; i++) {
             sums[i] = 0; // Fill with zeros
         }
-        winnerCells.Clear ();
+        winnerCells.Clear();
         turn = 1; // "x" turn by default
         isGameOver = false; // Gaming is allowed
         winner = 0; // Draw by default
@@ -250,24 +256,24 @@ public class scriptGameVS : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Called when there is no turn, some player wins, or critical error occurs
-    void gameStop (int theTurn) {
-        if (Math.Abs (theTurn) == 1) {
+    void gameStop(int theTurn) {
+        if (Math.Abs(theTurn) == 1) {
             turn = theTurn;
         }
         // Override global value if parameter is set
 
         isGameOver = true; // Gaming is disabled
-        gameUpdateGameOver ();
-        gameUpdateIndicator ();
+        gameUpdateGameOver();
+        gameUpdateIndicator();
 
         if (Debug.isDebugBuild) {
-            Debug.Log (string.Format ("Call of gameStop({0}) complete", theTurn));
+            Debug.Log(string.Format("Call of gameStop({0}) complete", theTurn));
         }
     }
 
     // --------------------------------------------------------------------------
     // Updates image of turn/winner and text near it
-    void gameUpdateIndicator () { // Output "Indicator" text
+    void gameUpdateIndicator() { // Output "Indicator" text
         if (textIndicator) {
             if (!isGameOver) {
                 textIndicator.text = "Next turn";
@@ -306,10 +312,10 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Returns true if there is some winning line
 
-    bool gameIsThereWinner () {
-        cellSumsUpdate ();
+    bool gameIsThereWinner() {
+        cellSumsUpdate();
         foreach (int i in sums) {
-            if (Math.Abs (i) >= 3) {
+            if (Math.Abs(i) >= 3) {
                 return true;
             }
         }
@@ -319,20 +325,20 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Called when game is over to get winner and winning lines
 
-    void gameUpdateGameOver () {
+    void gameUpdateGameOver() {
         if (!isGameOver)
             return;
 
         // Verify is there winner. Get list of winning cells to blink, mark or something
         winner = 0;
-        winnerCells.Clear ();
+        winnerCells.Clear();
         for (int i = 0; i < sums.Length; i++) {
-            if (Math.Abs (sums[i]) >= 3) {
+            if (Math.Abs(sums[i]) >= 3) {
                 int a, b, c;
-                if (cellBySum (i, out a, out b, out c)) {
-                    winnerCells.Add (a);
-                    winnerCells.Add (b);
-                    winnerCells.Add (c);
+                if (cellBySum(i, out a, out b, out c)) {
+                    winnerCells.Add(a);
+                    winnerCells.Add(b);
+                    winnerCells.Add(c);
                 }
                 // There is some winner
                 if (sums[i] > 0) {
@@ -347,20 +353,20 @@ public class scriptGameVS : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Event is called at the end of every turn.
-    void onTurnComplete (int theTurn = 0) {
-        if (Math.Abs (theTurn) == 1) {
+    void onTurnComplete(int theTurn = 0) {
+        if (Math.Abs(theTurn) == 1) {
             turn = theTurn;
         }
         // Override global value if parameter is set
-        cellSumsUpdate ();
+        cellSumsUpdate();
 
-        if (cellEmptyCount () < 1) {
-            gameStop (turn);
+        if (cellEmptyCount() < 1) {
+            gameStop(turn);
             return; // Stop game right there, there is no cells to make turn. Todo: Verify is it Draw?
         }
 
-        if (gameIsThereWinner ()) {
-            gameStop (turn);
+        if (gameIsThereWinner()) {
+            gameStop(turn);
             return; // Stop game right there, somebody wins
         }
 
@@ -377,14 +383,14 @@ public class scriptGameVS : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Sets value into calls[] array by index. Any changes of cells during the game process should be made using this method!
-    bool cellSetValue (int index, int value = 0) {
+    bool cellSetValue(int index, int value = 0) {
         if (index < 0 || index >= cells.Length) {
-            Debug.Log (string.Format ("Invalid index parameter for setCellValue({0}, {1})", index, value));
+            Debug.Log(string.Format("Invalid index parameter for setCellValue({0}, {1})", index, value));
             return false;
         }
 
-        if (Math.Abs (value) > 1) {
-            Debug.Log (string.Format ("Invalid value parameter for setCellValue({0}, {1})", index, value));
+        if (Math.Abs(value) > 1) {
+            Debug.Log(string.Format("Invalid value parameter for setCellValue({0}, {1})", index, value));
             return false;
         }
 
@@ -394,7 +400,7 @@ public class scriptGameVS : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Returns number of empty cells
-    int cellEmptyCount () {
+    int cellEmptyCount() {
         int count = 0;
         foreach (int i in cells) {
             if (i == 0) {
@@ -406,27 +412,27 @@ public class scriptGameVS : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Calculates sum of 3 cells by its' indexes. Used to verify winning cells and to make good turn. Indexes must be valid!
-    int cellSumOf3 (int a, int b, int c) {
+    int cellSumOf3(int a, int b, int c) {
         return cells[a] + cells[b] + cells[c];
     }
 
-    int cellSumOf3 (int[] values) {
+    int cellSumOf3(int[] values) {
         return values[0] + values[1] + values[2];
     }
 
     // --------------------------------------------------------------------------
     // Updates sum scores for horizontal, vertical and diagonal lines
-    void cellSumsUpdate () {
-        for (int i = 0; i < mapCellToSum.GetLength (0); i++) {
-            sums[i] = cellSumOf3 (mapCellToSum[i, 0], mapCellToSum[i, 1], mapCellToSum[i, 2]);
+    void cellSumsUpdate() {
+        for (int i = 0; i < mapCellToSum.GetLength(0); i++) {
+            sums[i] = cellSumOf3(mapCellToSum[i, 0], mapCellToSum[i, 1], mapCellToSum[i, 2]);
         }
     }
 
     // --------------------------------------------------------------------------
     // Maps index of sums[] to index of cells[]
 
-    bool cellBySum (int index, out int a, out int b, out int c) {
-        if (index < 0 || index >= mapCellToSum.GetLength (0)) {
+    bool cellBySum(int index, out int a, out int b, out int c) {
+        if (index < 0 || index >= mapCellToSum.GetLength(0)) {
             a = -1;
             b = -1;
             c = -1;

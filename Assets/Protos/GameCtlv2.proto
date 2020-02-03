@@ -108,17 +108,3 @@ service RoomStatus {
     rpc QuitRoom(RoomCreateReq) returns(google.protobuf.Empty){}
 }
 
-message CreateCredReq {
-    string Ip =1;
-    string Username = 2;
-    string Password =3;
-}
-
-message Cred{
-    string file = 1;
-}
-
-service CreditsAuth {
-    rpc CreateCred (CreateCredReq) returns (stream Cred) {
-    } 
-}

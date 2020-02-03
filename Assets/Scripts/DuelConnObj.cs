@@ -22,7 +22,7 @@ public class DuelConnObj : MonoBehaviour {
     // Temp setting
     public CfServerSetting Win_DevTmp = new CfServerSetting {
         Connector = "grpc",
-        Host = "192.168.0.112",
+        Host = "192.168.0.102",
         Port = 11000,
         Database = "",
         Username = "TestUser",

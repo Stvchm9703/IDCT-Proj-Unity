@@ -1,0 +1,33 @@
+// # hello.proto
+syntax = "proto3";
+
+package RoomStatus;
+option csharp_namespace = "PlayCli.ProtoMod";
+import "GameCtlv2.proto";
+
+
+
+message CredReq {
+  string Ip           = 1;
+  string Username     = 2;
+  string Password     = 3;
+}
+
+message CreateCredResp{
+  int32 code          = 1;
+  bytes file           = 2;
+  ErrorMsg error_msg  = 3;
+}
+
+message CheckCredResp{
+  int32 response_code = 1; 
+  ErrorMsg error_msg  = 2;
+}
+
+
+
+service CreditsAuth {
+  rpc CheckCred(CredReq) returns (CheckCredResp){}
+  rpc GetCred(CredReq) returns (CreateCredResp){}
+  rpc CreateCred (CredReq) returns (stream CreateCredResp){}
+}

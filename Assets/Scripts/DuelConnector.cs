@@ -24,10 +24,14 @@ namespace PlayCli {
 
         public AsyncServerStreamingCall<CellStatusResp> GetOnlyStream;
         public DuelConnector (CfServerSetting s) {
+            
+            //! issue 
             var crt = new SslCredentials (File.ReadAllText (s.KeyPemPath));
+
+            
             this.channel = new Channel (
                 s.Host, s.Port,
-                SslCredentials.Insecure);
+                crt);
             this.UserID = s.Username;
             this.Key = s.Key;
             this.client = new RoomStatus.RoomStatusClient (this.channel);
