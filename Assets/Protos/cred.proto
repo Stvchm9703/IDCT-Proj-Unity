@@ -29,5 +29,5 @@ message CheckCredResp{
 service CreditsAuth {
   rpc CheckCred(CredReq) returns (CheckCredResp){}
   rpc GetCred(CredReq) returns (CreateCredResp){}
-  rpc CreateCred (CredReq) returns (stream CreateCredResp){}
+  rpc CreateCred (CredReq) returns (CreateCredResp){}
 }

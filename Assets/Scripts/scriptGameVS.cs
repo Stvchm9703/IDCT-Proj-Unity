@@ -75,7 +75,7 @@ public class scriptGameVS : MonoBehaviour {
 
         InitRoomStatus();
         GUIRenderCell();
-
+        // hook event start
         OnConnecterUpdate();
     }
 

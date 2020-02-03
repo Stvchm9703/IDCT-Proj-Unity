@@ -1,0 +1,7 @@
+Connector: ''
+Host: ''
+Database: ''
+Username: ''
+Password: ''
+Key: ''
+KeyPemPath: '%StreamAsset%/key.pem'

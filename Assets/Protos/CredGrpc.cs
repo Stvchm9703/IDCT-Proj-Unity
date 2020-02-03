@@ -33,7 +33,7 @@ namespace PlayCli.ProtoMod {
         __Marshaller_RoomStatus_CreateCredResp);
 
     static readonly grpc::Method<global::PlayCli.ProtoMod.CredReq, global::PlayCli.ProtoMod.CreateCredResp> __Method_CreateCred = new grpc::Method<global::PlayCli.ProtoMod.CredReq, global::PlayCli.ProtoMod.CreateCredResp>(
-        grpc::MethodType.ServerStreaming,
+        grpc::MethodType.Unary,
         __ServiceName,
         "CreateCred",
         __Marshaller_RoomStatus_CredReq,
@@ -59,7 +59,7 @@ namespace PlayCli.ProtoMod {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
-      public virtual global::System.Threading.Tasks.Task CreateCred(global::PlayCli.ProtoMod.CredReq request, grpc::IServerStreamWriter<global::PlayCli.ProtoMod.CreateCredResp> responseStream, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task<global::PlayCli.ProtoMod.CreateCredResp> CreateCred(global::PlayCli.ProtoMod.CredReq request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -121,13 +121,21 @@ namespace PlayCli.ProtoMod {
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetCred, null, options, request);
       }
-      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.CreateCredResp> CreateCred(global::PlayCli.ProtoMod.CredReq request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual global::PlayCli.ProtoMod.CreateCredResp CreateCred(global::PlayCli.ProtoMod.CredReq request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return CreateCred(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
-      public virtual grpc::AsyncServerStreamingCall<global::PlayCli.ProtoMod.CreateCredResp> CreateCred(global::PlayCli.ProtoMod.CredReq request, grpc::CallOptions options)
+      public virtual global::PlayCli.ProtoMod.CreateCredResp CreateCred(global::PlayCli.ProtoMod.CredReq request, grpc::CallOptions options)
       {
-        return CallInvoker.AsyncServerStreamingCall(__Method_CreateCred, null, options, request);
+        return CallInvoker.BlockingUnaryCall(__Method_CreateCred, null, options, request);
+      }
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.CreateCredResp> CreateCredAsync(global::PlayCli.ProtoMod.CredReq request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return CreateCredAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      public virtual grpc::AsyncUnaryCall<global::PlayCli.ProtoMod.CreateCredResp> CreateCredAsync(global::PlayCli.ProtoMod.CredReq request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_CreateCred, null, options, request);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       protected override CreditsAuthClient NewInstance(ClientBaseConfiguration configuration)
@@ -154,7 +162,7 @@ namespace PlayCli.ProtoMod {
     {
       serviceBinder.AddMethod(__Method_CheckCred, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.CredReq, global::PlayCli.ProtoMod.CheckCredResp>(serviceImpl.CheckCred));
       serviceBinder.AddMethod(__Method_GetCred, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.CredReq, global::PlayCli.ProtoMod.CreateCredResp>(serviceImpl.GetCred));
-      serviceBinder.AddMethod(__Method_CreateCred, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::PlayCli.ProtoMod.CredReq, global::PlayCli.ProtoMod.CreateCredResp>(serviceImpl.CreateCred));
+      serviceBinder.AddMethod(__Method_CreateCred, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::PlayCli.ProtoMod.CredReq, global::PlayCli.ProtoMod.CreateCredResp>(serviceImpl.CreateCred));
     }
 
   }

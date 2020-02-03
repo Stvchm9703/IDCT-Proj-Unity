@@ -4,10 +4,10 @@ using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
 public class AC_CreateForm : MonoBehaviour {
-    public string address, username, pw_key;
     public InputField address_f, username_f, pw_key_f;
     public Animator switcher;
     public GameObject LoadingPanel;
+    public AC_CertConn conn;
     void Start() {
         if (address_f == null)
             address_f = this.transform.parent.Find("Canvas/create_part/server_ip").GetComponent<InputField>();
@@ -21,6 +21,7 @@ public class AC_CreateForm : MonoBehaviour {
         if (LoadingPanel == null) {
             LoadingPanel = this.transform.parent.Find("Canvas/LoadingPanel").gameObject;
         }
+
     }
     public void AddressChecking(string input) {
 
@@ -28,7 +29,6 @@ public class AC_CreateForm : MonoBehaviour {
         MatchCollection result = ip.Matches(input);
         if (ip.IsMatch(input)) {
             Debug.Log(result[0]);
-            address = input;
         } else {
             address_f.text = "";
             var text_box = address_f.textComponent.transform.parent.Find("Placeholder").GetComponent<Text>();
@@ -36,6 +36,24 @@ public class AC_CreateForm : MonoBehaviour {
             text_box.color = new Color(0.8f, 0f, 0f, 0.5f);
 
         }
+    }
+
+    public async void CreateAccount() {
+        var try_conn = conn.TryConnectAuthServ(address_f.text, 12000);
+        if (!try_conn) {
+            Debug.LogError("CONNECT FAIL");
+            return;
+        }
+        Debug.Log(username_f.text + ":" + pw_key_f.text);
+
+        var try_create = await conn.CreateAccount(username_f.text, pw_key_f.text);
+        if (!try_create) {
+            Debug.LogError("Create fail");
+            return;
+        }
+        // Save setting
+        conn.SaveAsset();
+
     }
     public void SwitchToLogin() {
         switcher.Play("switch_login");

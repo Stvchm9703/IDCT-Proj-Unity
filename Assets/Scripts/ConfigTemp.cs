@@ -1,19 +1,19 @@
 using System;
 using System.IO;
-using UnityEngine;
-// using UnityEngine.JsonUnity;
 using Newtonsoft.Json;
+using UnityEngine;
 using YamlDotNet.RepresentationModel;
-// using YamlDotNet.Samples.Helpers;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace PlayCli {
+    [System.Serializable]
     public class ConfigTempContainer {
         public string work_dir_path;
         public CfServerSetting remote;
     }
 
+    [System.Serializable]
     public class CfServerSetting {
         public string Connector;
         public string Host;
@@ -27,49 +27,50 @@ namespace PlayCli {
     }
 
     public static class Config {
-        public static ConfigTempContainer LoadCfFile (string work_dir) {
-            var t = new ConfigTempContainer ();
+        public static ConfigTempContainer LoadCfFile(string work_dir) {
+            var t = new ConfigTempContainer();
             t.work_dir_path = work_dir;
             string[] tpath = {
                 work_dir,
                 "config.yaml"
             };
-            var r = Path.Combine (tpath);
-            if (File.Exists (r)) {
+            var r = Path.Combine(tpath);
+            if (File.Exists(r)) {
                 try {
-                    using (var reader = new StreamReader (work_dir)) {
-                        var yaml = new YamlStream ();
-                        yaml.Load (reader);
-                        Debug.Log (yaml);
-                        var mapping = (YamlMappingNode) yaml.Documents[0].RootNode;
+                    using(var reader = new StreamReader(work_dir)) {
+                        var yaml = new YamlStream();
+                        yaml.Load(reader);
+                        Debug.Log(yaml);
+                        var mapping = (YamlMappingNode)yaml.Documents[0].RootNode;
                     }
                 } catch (Exception e) {
-                    Debug.Log (e);
+                    Debug.Log(e);
                 }
             }
             return t;
 
         }
 
-        public static bool CreateCfFile (string out_dir, CfServerSetting setting) {
+        public static bool CreateCfFile(string out_dir, CfServerSetting setting) {
 
-            var serializer = new SerializerBuilder ().Build ();
             // var lin = Helper;
             string[] tpath = {
                 out_dir,
                 "config.yaml"
             };
-            if (!File.Exists (Path.Combine (tpath))) {
-                File.CreateText (Path.Combine (tpath));
+            if (!File.Exists(Path.Combine(tpath))) {
+                File.CreateText(Path.Combine(tpath));
+            }
+        
+            using(StreamWriter file = new System.IO.StreamWriter(Path.Combine(tpath))) {
+                // JsonSerializer serializer = new JsonSerializer();
+                //serialize object directly into file stream
+                // serializer.Serialize(file, _data);
+                var serializer = new SerializerBuilder().Build();
+                serializer.Serialize(file, setting);
             }
 
-            // Note: Debug object 
-            var obj = JsonConvert.SerializeObject (setting);
-            Debug.Log (obj);
-            // 
-
-            string yml = serializer.Serialize (setting);
-            File.AppendAllText (Path.Combine (tpath), yml);
+            // File.AppendAllText(Path.Combine(tpath), yml);
             return true;
         }
     }
