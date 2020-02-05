@@ -63,9 +63,6 @@ namespace PlayCli {
             }
         
             using(StreamWriter file = new System.IO.StreamWriter(Path.Combine(tpath))) {
-                // JsonSerializer serializer = new JsonSerializer();
-                //serialize object directly into file stream
-                // serializer.Serialize(file, _data);
                 var serializer = new SerializerBuilder().Build();
                 serializer.Serialize(file, setting);
             }

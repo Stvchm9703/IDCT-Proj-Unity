@@ -25,9 +25,9 @@ public class DuelConnObj : MonoBehaviour {
         Host = "192.168.0.102",
         Port = 11000,
         Database = "",
-        Username = "TestUser",
-        Password = "",
-        Key = "Uk54398",
+        Username = "user1",
+        Password = "1234",
+        Key = "Uk54398", // Key should be random gen by server
         KeyPemPath = Path.Combine(Application.streamingAssetsPath, "key.pem"),
     };
     public CfServerSetting Mac_DevTmp = new CfServerSetting {
@@ -52,9 +52,7 @@ public class DuelConnObj : MonoBehaviour {
             DontDestroyOnLoad(this.gameObject);
             this.gameObject.tag = "Connector";
             if (this.conn == null) {
-                this.conn = new DuelConnector(
-                    Win_DevTmp
-                );
+                this.conn = new DuelConnector(Win_DevTmp);
             }
         }
     }

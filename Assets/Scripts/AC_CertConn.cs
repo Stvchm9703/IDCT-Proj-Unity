@@ -180,7 +180,6 @@ public class AC_CertConn : MonoBehaviour {
         }
         using(System.IO.StreamWriter filestm =
             new System.IO.StreamWriter(Path.Combine(tpath))) {
-
             filestm.WriteLine(file);
         }
 
