@@ -24,8 +24,8 @@ namespace PlayCli {
 
         private string bearer_key;
         public DuelConnector(CfServerSetting s) {
-
-            var crt = new SslCredentials(File.ReadAllText(s.KeyPemPath));
+            var path = s.KeyPemPath.Replace("%StreamAsset%" , Application.streamingAssetsPath);
+            var crt = new SslCredentials(File.ReadAllText(path));
             Debug.Log(s.Host + ":" + s.Port);
             this.channel = new Channel(
                 s.Host, s.Port,

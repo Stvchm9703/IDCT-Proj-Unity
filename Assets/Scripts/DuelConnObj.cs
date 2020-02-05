@@ -20,26 +20,7 @@ public class DuelConnObj : MonoBehaviour {
     public bool able_update = false;
     public bool IsHost = false;
     // Temp setting
-    public CfServerSetting Win_DevTmp = new CfServerSetting {
-        Connector = "grpc",
-        Host = "192.168.0.102",
-        Port = 11000,
-        Database = "",
-        Username = "user1",
-        Password = "1234",
-        Key = "Uk54398", // Key should be random gen by server
-        KeyPemPath = Path.Combine(Application.streamingAssetsPath, "key.pem"),
-    };
-    public CfServerSetting Mac_DevTmp = new CfServerSetting {
-        Connector = "grpc",
-        Host = "192.168.0.123",
-        Port = 11000,
-        Database = "",
-        Username = "",
-        Password = "",
-        Key = "",
-        KeyPemPath = "",
-    };
+    public CfServerSetting ConfigFile;
     // Debug Scn
     public DebugTestScript DebugScn;
     public string config_file;
@@ -52,7 +33,8 @@ public class DuelConnObj : MonoBehaviour {
             DontDestroyOnLoad(this.gameObject);
             this.gameObject.tag = "Connector";
             if (this.conn == null) {
-                this.conn = new DuelConnector(Win_DevTmp);
+                ConfigFile = Config.LoadCfFile(Application.streamingAssetsPath).remote;
+                this.conn = new DuelConnector(ConfigFile);
             }
         }
     }

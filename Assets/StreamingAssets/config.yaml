@@ -1,7 +1,8 @@
-Connector: ''
-Host: ''
+Connector: 'grpc'
+Host: '192.168.0.102'
+Port: 11000
 Database: ''
-Username: ''
-Password: ''
+Username: 'user1'
+Password: '1234'
 Key: ''
 KeyPemPath: '%StreamAsset%/key.pem'

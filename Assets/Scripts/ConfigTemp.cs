@@ -35,13 +35,14 @@ namespace PlayCli {
                 "config.yaml"
             };
             var r = Path.Combine(tpath);
+            Debug.Log(r);
             if (File.Exists(r)) {
                 try {
-                    using(var reader = new StreamReader(work_dir)) {
-                        var yaml = new YamlStream();
-                        yaml.Load(reader);
-                        Debug.Log(yaml);
-                        var mapping = (YamlMappingNode)yaml.Documents[0].RootNode;
+                    using(StreamReader reader = new StreamReader(r)) {
+                        var deserializer = new DeserializerBuilder()
+                            .Build();
+
+                        t.remote = deserializer.Deserialize<CfServerSetting>(reader);
                     }
                 } catch (Exception e) {
                     Debug.Log(e);
@@ -61,7 +62,7 @@ namespace PlayCli {
             if (!File.Exists(Path.Combine(tpath))) {
                 File.CreateText(Path.Combine(tpath));
             }
-        
+
             using(StreamWriter file = new System.IO.StreamWriter(Path.Combine(tpath))) {
                 var serializer = new SerializerBuilder().Build();
                 serializer.Serialize(file, setting);
