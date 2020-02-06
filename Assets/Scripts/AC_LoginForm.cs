@@ -16,7 +16,7 @@ public class AC_LoginForm : MonoBehaviour {
     //     get
     // }
     void Start() {
-        debug.text = Application.streamingAssetsPath;
+        debug.text = PlayCli.ConfigPath.StreamingAsset;
         if (address_f == null)
             address_f = this.transform.parent.Find("Canvas/login_part/server_ip").GetComponent<InputField>();
         if (username_f == null)

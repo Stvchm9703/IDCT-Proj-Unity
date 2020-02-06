@@ -10,8 +10,8 @@ public class Menu : MonoBehaviour {
         SceneManager.LoadScene("AIGame", LoadSceneMode.Single);
     }
     public void GotoRoomSearch() {
-        if (!File.Exists(Path.Combine(Application.streamingAssetsPath, "config.yaml")) &&
-            !File.Exists(Path.Combine(Application.streamingAssetsPath, "key.pem"))) {
+        if (!File.Exists(Path.Combine(PlayCli.ConfigPath.StreamingAsset, "config.yaml")) &&
+            !File.Exists(Path.Combine(PlayCli.ConfigPath.StreamingAsset, "key.pem"))) {
             WarnPanel.SetActive(true);
         }
         SceneManager.LoadScene("RoomSearch", LoadSceneMode.Single);
@@ -25,8 +25,8 @@ public class Menu : MonoBehaviour {
         }
         WarnPanel.SetActive(false);
         // if (File.Exists())
-        if (!File.Exists(Path.Combine(Application.streamingAssetsPath, "config.yaml")) &&
-            !File.Exists(Path.Combine(Application.streamingAssetsPath, "key.pem"))) {
+        if (!File.Exists(Path.Combine(PlayCli.ConfigPath.StreamingAsset, "config.yaml")) &&
+            !File.Exists(Path.Combine(PlayCli.ConfigPath.StreamingAsset, "key.pem"))) {
             WarnPanel.SetActive(true);
         }
     }

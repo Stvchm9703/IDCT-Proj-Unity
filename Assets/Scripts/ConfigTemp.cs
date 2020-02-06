@@ -1,13 +1,38 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Unity;
 using UnityEngine;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-
 namespace PlayCli {
+    public static class ConfigPath {
+        public static string StreamingAsset {
+            get {
+#if UNITY_EDITOR || UNITY_IOS || UNITY_STANDALONE	
+                return Application.streamingAssetsPath;
+#elif UNITY_ANDROID
+                return Path.Combine(Application.persistentDataPath, "streamingAsset");
+#endif
+            }
+        }
+
+        public static string ReadAsset(string[] path) {
+            var filePath = Path.Combine(path);
+#if UNITY_EDITOR || UNITY_IOS || UNITY_STANDALONE	
+            return File.ReadAllText(filePath);
+#elif UNITY_ANDROID
+            WWW reader = new WWW(filePath);
+            while (!reader.isDone) { }
+            return reader.text;
+#endif
+        }
+
+    }
+
     [System.Serializable]
     public class ConfigTempContainer {
         public string work_dir_path;
@@ -59,11 +84,6 @@ namespace PlayCli {
             var yml = serializer.Serialize(setting);
             string[] tpath = { out_dir, "config.yaml" };
 
-            // if (!File.Exists(Path.Combine(tpath))) {
-            //     File.WriteAllText(Path.Combine(tpath), yml);
-            // } else {
-            //     File.AppendAllText(Path.Combine(tpath), yml);
-            // }
 
             using(var sw = new StreamWriter(Path.Combine(tpath))) {
                 await sw.WriteAsync(yml);

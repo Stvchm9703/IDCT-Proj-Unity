@@ -23,26 +23,26 @@ namespace PlayCli.ProtoMod {
 
     static CredReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
-        string.Concat(
-          "CgpjcmVkLnByb3RvEgpSb29tU3RhdHVzGg9HYW1lQ3RsdjIucHJvdG8iOQoH",
-          "Q3JlZFJlcRIKCgJJcBgBIAEoCRIQCghVc2VybmFtZRgCIAEoCRIQCghQYXNz",
-          "d29yZBgDIAEoCSJVCg5DcmVhdGVDcmVkUmVzcBIMCgRjb2RlGAEgASgFEgwK",
-          "BGZpbGUYAiABKAwSJwoJZXJyb3JfbXNnGAMgASgLMhQuUm9vbVN0YXR1cy5F",
-          "cnJvck1zZyJPCg1DaGVja0NyZWRSZXNwEhUKDXJlc3BvbnNlX2NvZGUYASAB",
-          "KAUSJwoJZXJyb3JfbXNnGAIgASgLMhQuUm9vbVN0YXR1cy5FcnJvck1zZzLL",
-          "AQoLQ3JlZGl0c0F1dGgSPQoJQ2hlY2tDcmVkEhMuUm9vbVN0YXR1cy5DcmVk",
-          "UmVxGhkuUm9vbVN0YXR1cy5DaGVja0NyZWRSZXNwIgASPAoHR2V0Q3JlZBIT",
-          "LlJvb21TdGF0dXMuQ3JlZFJlcRoaLlJvb21TdGF0dXMuQ3JlYXRlQ3JlZFJl",
-          "c3AiABI/CgpDcmVhdGVDcmVkEhMuUm9vbVN0YXR1cy5DcmVkUmVxGhouUm9v",
-          "bVN0YXR1cy5DcmVhdGVDcmVkUmVzcCIAQhOqAhBQbGF5Q2xpLlByb3RvTW9k",
-          "YgZwcm90bzM="));
+          string.Concat(
+            "CgpjcmVkLnByb3RvEgpSb29tU3RhdHVzGg9HYW1lQ3RsdjIucHJvdG8iOQoH",
+            "Q3JlZFJlcRIKCgJJcBgBIAEoCRIQCghVc2VybmFtZRgCIAEoCRIQCghQYXNz",
+            "d29yZBgDIAEoCSJVCg5DcmVhdGVDcmVkUmVzcBIMCgRjb2RlGAEgASgFEgwK",
+            "BGZpbGUYAiABKAwSJwoJZXJyb3JfbXNnGAMgASgLMhQuUm9vbVN0YXR1cy5F",
+            "cnJvck1zZyJPCg1DaGVja0NyZWRSZXNwEhUKDXJlc3BvbnNlX2NvZGUYASAB",
+            "KAUSJwoJZXJyb3JfbXNnGAIgASgLMhQuUm9vbVN0YXR1cy5FcnJvck1zZzLM",
+            "AQoLQ3JlZGl0c0F1dGgSPQoJQ2hlY2tDcmVkEhMuUm9vbVN0YXR1cy5DcmVk",
+            "UmVxGhkuUm9vbVN0YXR1cy5DaGVja0NyZWRSZXNwIgASPgoKQ3JlYXRlQ3Jl",
+            "ZBITLlJvb21TdGF0dXMuQ3JlZFJlcRoZLlJvb21TdGF0dXMuQ2hlY2tDcmVk",
+            "UmVzcCIAEj4KB0dldENyZWQSEy5Sb29tU3RhdHVzLkNyZWRSZXEaGi5Sb29t",
+            "U3RhdHVzLkNyZWF0ZUNyZWRSZXNwIgAwAUITqgIQUGxheUNsaS5Qcm90b01v",
+            "ZGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor, },
-        new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CredReq), global::PlayCli.ProtoMod.CredReq.Parser, new [] { "Ip", "Username", "Password" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CreateCredResp), global::PlayCli.ProtoMod.CreateCredResp.Parser, new [] { "Code", "File", "ErrorMsg" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CheckCredResp), global::PlayCli.ProtoMod.CheckCredResp.Parser, new [] { "ResponseCode", "ErrorMsg" }, null, null, null)
-        }));
+          new pbr::FileDescriptor[] { global::PlayCli.ProtoMod.GameCtlv2Reflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CredReq), global::PlayCli.ProtoMod.CredReq.Parser, new[]{ "Ip", "Username", "Password" }, null, null,  null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CreateCredResp), global::PlayCli.ProtoMod.CreateCredResp.Parser, new[]{ "Code", "File", "ErrorMsg" },  null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CheckCredResp), global::PlayCli.ProtoMod.CheckCredResp.Parser, new[]{ "ResponseCode", "ErrorMsg" },  null, null, null)
+          }));
     }
     #endregion
 
@@ -130,18 +130,18 @@ namespace PlayCli.ProtoMod {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Ip != other.Ip)return false;
-      if (Username != other.Username)return false;
-      if (Password != other.Password)return false;
+      if (Ip != other.Ip) return false;
+      if (Username != other.Username) return false;
+      if (Password != other.Password) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Ip.Length != 0)hash ^= Ip.GetHashCode();
-      if (Username.Length != 0)hash ^= Username.GetHashCode();
-      if (Password.Length != 0)hash ^= Password.GetHashCode();
+      if (Ip.Length != 0) hash ^= Ip.GetHashCode();
+      if (Username.Length != 0) hash ^= Username.GetHashCode();
+      if (Password.Length != 0) hash ^= Password.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -211,24 +211,22 @@ namespace PlayCli.ProtoMod {
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-          break;
-          case 10:
-            {
-              Ip = input.ReadString();
-              break;
-            }
-          case 18:
-            {
-              Username = input.ReadString();
-              break;
-            }
-          case 26:
-            {
-              Password = input.ReadString();
-              break;
-            }
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Ip = input.ReadString();
+            break;
+          }
+          case 18: {
+            Username = input.ReadString();
+            break;
+          }
+          case 26: {
+            Password = input.ReadString();
+            break;
+          }
         }
       }
     }
@@ -317,18 +315,18 @@ namespace PlayCli.ProtoMod {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Code != other.Code)return false;
-      if (File != other.File)return false;
-      if (!object.Equals(ErrorMsg, other.ErrorMsg))return false;
+      if (Code != other.Code) return false;
+      if (File != other.File) return false;
+      if (!object.Equals(ErrorMsg, other.ErrorMsg)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (Code != 0)hash ^= Code.GetHashCode();
-      if (File.Length != 0)hash ^= File.GetHashCode();
-      if (errorMsg_ != null)hash ^= ErrorMsg.GetHashCode();
+      if (Code != 0) hash ^= Code.GetHashCode();
+      if (File.Length != 0) hash ^= File.GetHashCode();
+      if (errorMsg_ != null) hash ^= ErrorMsg.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -401,27 +399,25 @@ namespace PlayCli.ProtoMod {
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-          break;
-          case 8:
-            {
-              Code = input.ReadInt32();
-              break;
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Code = input.ReadInt32();
+            break;
+          }
+          case 18: {
+            File = input.ReadBytes();
+            break;
+          }
+          case 26: {
+            if (errorMsg_ == null) {
+              ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
             }
-          case 18:
-            {
-              File = input.ReadBytes();
-              break;
-            }
-          case 26:
-            {
-              if (errorMsg_ == null) {
-                ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
-              }
-              input.ReadMessage(ErrorMsg);
-              break;
-            }
+            input.ReadMessage(ErrorMsg);
+            break;
+          }
         }
       }
     }
@@ -498,16 +494,16 @@ namespace PlayCli.ProtoMod {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (ResponseCode != other.ResponseCode)return false;
-      if (!object.Equals(ErrorMsg, other.ErrorMsg))return false;
+      if (ResponseCode != other.ResponseCode) return false;
+      if (!object.Equals(ErrorMsg, other.ErrorMsg)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
-      if (ResponseCode != 0)hash ^= ResponseCode.GetHashCode();
-      if (errorMsg_ != null)hash ^= ErrorMsg.GetHashCode();
+      if (ResponseCode != 0) hash ^= ResponseCode.GetHashCode();
+      if (errorMsg_ != null) hash ^= ErrorMsg.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -570,22 +566,21 @@ namespace PlayCli.ProtoMod {
     public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-          break;
-          case 8:
-            {
-              ResponseCode = input.ReadInt32();
-              break;
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            ResponseCode = input.ReadInt32();
+            break;
+          }
+          case 18: {
+            if (errorMsg_ == null) {
+              ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
             }
-          case 18:
-            {
-              if (errorMsg_ == null) {
-                ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
-              }
-              input.ReadMessage(ErrorMsg);
-              break;
-            }
+            input.ReadMessage(ErrorMsg);
+            break;
+          }
         }
       }
     }

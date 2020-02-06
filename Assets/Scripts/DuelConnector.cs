@@ -23,7 +23,7 @@ namespace PlayCli {
 
         private string bearer_key;
         public DuelConnector(CfServerSetting s) {
-            var path = s.KeyPemPath.Replace("%StreamAsset%" , Application.streamingAssetsPath);
+            var path = s.KeyPemPath.Replace("%StreamAsset%", PlayCli.ConfigPath.StreamingAsset);
             var crt = new SslCredentials(File.ReadAllText(path));
             Debug.Log(s.Host + ":" + s.Port);
             this.channel = new Channel(
@@ -37,7 +37,7 @@ namespace PlayCli {
             header_meta = this.refresh_meta(null, s.Username, s.Password);
         }
 
-        private Metadata refresh_meta(Metadata resp, string username = "" , string password = "") {
+        private Metadata refresh_meta(Metadata resp, string username = "", string password = "") {
             var t = new Metadata();
             string bearer = "";
             if (resp != null) {

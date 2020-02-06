@@ -33,7 +33,7 @@ public class DuelConnObj : MonoBehaviour {
             DontDestroyOnLoad(this.gameObject);
             this.gameObject.tag = "Connector";
             if (this.conn == null) {
-                ConfigFile = Config.LoadCfFile(Application.streamingAssetsPath).remote;
+                ConfigFile = Config.LoadCfFile(PlayCli.ConfigPath.StreamingAsset).remote;
                 this.conn = new DuelConnector(ConfigFile);
             }
         }
