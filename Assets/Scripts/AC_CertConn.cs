@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-
 using Grpc.Core;
 using PlayCli;
 using PlayCli.ProtoMod;
@@ -50,9 +49,6 @@ public class AC_CertConn : MonoBehaviour {
             };
             CreateCredResp result = await this.create_auth_cli.CreateCredAsync(req);
             Debug.Log(result);
-            if (result.Code != 200) {
-                return false;
-            }
             file = result.File.ToStringUtf8();
             return true;
 
@@ -79,6 +75,27 @@ public class AC_CertConn : MonoBehaviour {
             }
             ConfigForm.Username = username;
             ConfigForm.Password = password;
+
+            // 
+            return true;
+        } catch (RpcException e) {
+            Debug.LogError(e);
+            return false;
+            throw;
+        }
+    }
+
+    public async Task<bool> GetPemFile() {
+        if (this.create_auth_cli == null) {
+            return false;
+        }
+        try {
+            var req = new CredReq {
+                Ip = Dns.GetHostName(),
+                Username = ConfigForm.Username,
+                Password = ConfigForm.Password,
+            };
+
             CreateCredResp result2 = await this.create_auth_cli.GetCredAsync(req);
             file = result2.File.ToStringUtf8();
             // 
