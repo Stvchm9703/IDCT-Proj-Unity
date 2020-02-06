@@ -9,6 +9,7 @@ public class AC_LoginForm : MonoBehaviour {
     public Animator switcher;
     public GameObject LoadingPanel;
     public AC_CertConn conn;
+    public int mainPort = 11000, authPort = 12000;
     void Start() {
         if (address_f == null)
             address_f = this.transform.parent.Find("Canvas/login_part/server_ip").GetComponent<InputField>();
@@ -41,7 +42,7 @@ public class AC_LoginForm : MonoBehaviour {
     }
     public async void LoginAccount() {
         LoadingPanel.SetActive(true);
-        var try_conn = conn.TryConnectAuthServ(address_f.text, 12000);
+        var try_conn = conn.TryConnectAuthServ(address_f.text, authPort);
         if (!try_conn) {
             Debug.LogError("CONNECT FAIL");
             return;
@@ -56,6 +57,12 @@ public class AC_LoginForm : MonoBehaviour {
 
         // Save setting
         await conn.SaveAsset();
+
+        var test_run = await conn.TryConnectMain(address_f.text, mainPort);
+        if (!test_run) {
+            Debug.LogError("Try login fail");
+            return;
+        }
         Debug.Log("Complete");
         LoadingPanel.SetActive(false);
         SceneManager.LoadScene("Menu", LoadSceneMode.Single);

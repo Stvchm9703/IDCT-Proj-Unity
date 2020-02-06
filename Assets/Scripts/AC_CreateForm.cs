@@ -9,6 +9,7 @@ public class AC_CreateForm : MonoBehaviour {
     public Animator switcher;
     public GameObject LoadingPanel;
     public AC_CertConn conn;
+    public int mainPort = 11000, authPort = 12000;
     void Start() {
         if (address_f == null)
             address_f = this.transform.parent.Find("Canvas/create_part/server_ip").GetComponent<InputField>();
@@ -41,7 +42,7 @@ public class AC_CreateForm : MonoBehaviour {
 
     public async void CreateAccount() {
         LoadingPanel.SetActive(true);
-        var try_conn = conn.TryConnectAuthServ(address_f.text, 12000);
+        var try_conn = conn.TryConnectAuthServ(address_f.text, authPort);
         if (!try_conn) {
             Debug.LogError("CONNECT FAIL");
             return;
@@ -51,10 +52,20 @@ public class AC_CreateForm : MonoBehaviour {
         var try_create = await conn.CreateAccount(username_f.text, pw_key_f.text);
         if (!try_create) {
             Debug.LogError("Create fail");
+            // LoadingPanel.
             return;
         }
+
         // Save setting
         await conn.SaveAsset();
+
+        var test_run = await conn.TryConnectMain(address_f.text, mainPort);
+        if (!test_run) {
+            Debug.LogError("Create fail");
+            return;
+        }
+
+        
         LoadingPanel.SetActive(false);
         SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }

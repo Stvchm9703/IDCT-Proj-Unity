@@ -19,7 +19,6 @@ namespace PlayCli {
         private Metadata header_meta;
 
         public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StreamHandler;
-
         public AsyncServerStreamingCall<CellStatusResp> GetOnlyStream;
 
         private string bearer_key;
@@ -35,10 +34,10 @@ namespace PlayCli {
             this.Key = s.Key;
             this.client = new RoomStatus.RoomStatusClient(this.channel);
 
-            header_meta = this.refresh_meta(null);
+            header_meta = this.refresh_meta(null, s.Username, s.Password);
         }
 
-        private Metadata refresh_meta(Metadata resp) {
+        private Metadata refresh_meta(Metadata resp, string username = "" , string password = "") {
             var t = new Metadata();
             string bearer = "";
             if (resp != null) {
@@ -52,8 +51,8 @@ namespace PlayCli {
             if (bearer != "") {
                 t.Add("authorization", bearer);
             } else {
-                t.Add("username", "user1");
-                t.Add("password", "1234");
+                t.Add("username", username);
+                t.Add("password", password);
             }
             return t;
         }

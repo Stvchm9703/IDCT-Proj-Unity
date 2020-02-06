@@ -23,7 +23,6 @@ namespace PlayCli {
         public string Username;
         public string Password;
         public string Key;
-
         public string KeyPemPath;
     }
 
