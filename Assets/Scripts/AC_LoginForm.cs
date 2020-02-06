@@ -63,32 +63,32 @@ public class AC_LoginForm : MonoBehaviour {
         }
         Debug.Log(username_f.text + ":" + pw_key_f.text);
 
-        var try_login = await conn.TryLogin(username_f.text, pw_key_f.text);
         lp_text.text = "Loading,\nWait for login checking";
+        var try_login = await conn.TryLogin(username_f.text, pw_key_f.text);
         if (!try_login) {
             Debug.LogError("Try login fail");
             lp_text.text = "Login Fail, Please ask for technical help";
             return;
         }
 
-        var try_save_pem = await conn.GetPemFile();
         lp_text.text = "Loading,\nWait for getting pem";
+        var try_save_pem = await conn.GetPemFile();
         if (!try_login) {
             lp_text.text = "Login Fail, Please ask for technical help";
             return;
         }
 
         // Save setting
-        var saving = await conn.SaveAsset();
         lp_text.text = "Loading,\nWait for saving setting";
+        var saving = await conn.SaveAsset();
         if (!saving) {
             Debug.LogError("Save Asset fail");
             lp_text.text = "Saving Asset Fail, Please ask for technical help";
             return;
         }
 
-        var test_run = await conn.TryConnectMain(address_f.text, mainPort);
         lp_text.text = "Loading,\nWait for service testing";
+        var test_run = await conn.TryConnectMain(address_f.text, mainPort);
         if (!test_run) {
             Debug.LogError("Try login fail");
             lp_text.text =

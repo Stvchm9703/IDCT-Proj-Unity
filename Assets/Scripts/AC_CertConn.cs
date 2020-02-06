@@ -95,21 +95,34 @@ public class AC_CertConn : MonoBehaviour {
                 Password = ConfigForm.Password,
             };
             var close_tkn = new CancellationTokenSource();
-            string[] tpath = { PlayCli.ConfigPath.StreamingAsset, "tmp_key.pem" };
+            string[] tpath = { PlayCli.ConfigPath.StreamingAsset, "key.pem" };
 
-            var sw = new StreamWriter(Path.Combine(tpath));
+            if (!Directory.Exists(Path.GetDirectoryName(Path.Combine(tpath)))) {
+                Directory.CreateDirectory(
+                    Path.GetDirectoryName(
+                        Path.Combine(tpath)));
+            }
+
+            StreamWriter sw = (File.Exists(Path.Combine(tpath))) ?
+                File.AppendText(Path.Combine(tpath)) :
+                File.CreateText(Path.Combine(tpath));
+
             using(var result = this.create_auth_cli.GetCred(req)) {
                 while (await result.ResponseStream.MoveNext(close_tkn.Token)) {
                     var resp_tmp = result.ResponseStream.Current;
                     sw.WriteLine(resp_tmp.File.ToStringUtf8());
+                    file += resp_tmp + "\n";
                 }
             }
             sw.Close();
+            Debug.Log(file);
             // try resolve
             var crt = new SslCredentials(Path.Combine(tpath));
             // no error 
+
             file = File.ReadAllText(Path.Combine(tpath));
-            File.Delete(Path.Combine(tpath));
+            ConfigForm.KeyPemPath = "%StreamAsset%/" + "key.pem";
+            // File.Delete(Path.Combine(tpath));
             return true;
         } catch (RpcException e) {
             Debug.LogError(e);
@@ -120,9 +133,10 @@ public class AC_CertConn : MonoBehaviour {
 
     public async Task<bool> TryConnectMain(string ip_address, int port) {
         try {
-            var keyPath = ConfigForm.KeyPemPath.Replace("%StreamAsset%", PlayCli.ConfigPath.StreamingAsset);
+            var keyPath = ConfigForm.KeyPemPath.Replace("%StreamAsset%/", "");
             Debug.Log(keyPath);
-            var crt = new SslCredentials(File.ReadAllText(keyPath));
+
+            var crt = new SslCredentials(Path.Combine(PlayCli.ConfigPath.StreamingAsset, keyPath));
             this.main_room_chan = new Channel(
                 ip_address, port, crt
             );
@@ -166,9 +180,17 @@ public class AC_CertConn : MonoBehaviour {
         Config.CreateCfFile(PlayCli.ConfigPath.StreamingAsset, ConfigForm);
         string[] tpath = { PlayCli.ConfigPath.StreamingAsset, "key.pem" };
 
-        using(var sw = new StreamWriter(Path.Combine(tpath))) {
-            await sw.WriteAsync(file);
-        }
+        // using(StreamWriter sw = (File.Exists(Path.Combine(tpath))) ?
+        //     File.AppendText(Path.Combine(tpath)) :
+        //     File.CreateText(Path.Combine(tpath))
+        // ) {
+        //     sw.WriteLine(Config);
+        // }
+
+        File.WriteAllText(
+            Path.Combine(tpath),
+            file);
+
         return true;
     }
 

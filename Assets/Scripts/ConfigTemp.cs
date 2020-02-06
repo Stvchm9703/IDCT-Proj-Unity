@@ -12,11 +12,11 @@ namespace PlayCli {
     public static class ConfigPath {
         public static string StreamingAsset {
             get {
-#if UNITY_EDITOR || UNITY_IOS || UNITY_STANDALONE	
-                return Application.streamingAssetsPath;
-#elif UNITY_ANDROID
+// #if UNITY_EDITOR || UNITY_STANDALONE	
+                // return Application.streamingAssetsPath;
+// #elif UNITY_ANDROID || UNITY_IOS 
                 return Path.Combine(Application.persistentDataPath, "streamingAsset");
-#endif
+// #endif
             }
         }
 
@@ -83,7 +83,6 @@ namespace PlayCli {
             var serializer = new SerializerBuilder().Build();
             var yml = serializer.Serialize(setting);
             string[] tpath = { out_dir, "config.yaml" };
-
 
             using(var sw = new StreamWriter(Path.Combine(tpath))) {
                 await sw.WriteAsync(yml);
