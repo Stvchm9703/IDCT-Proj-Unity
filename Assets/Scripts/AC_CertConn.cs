@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
 using PlayCli;
@@ -24,9 +21,10 @@ public class AC_CertConn : MonoBehaviour {
                 ip_address, port, ChannelCredentials.Insecure
             );
             this.create_auth_cli = new CreditsAuth.CreditsAuthClient(this.auth_chan);
-            Debug.Log(this.auth_chan);
-            Debug.Log(this.create_auth_cli);
 
+            ConfigForm.Connector = "grpc";
+            ConfigForm.Host = ip_address;
+            ConfigForm.Port = port;
             return true;
         } catch (RpcException e) {
             Debug.LogError(e);
@@ -75,6 +73,8 @@ public class AC_CertConn : MonoBehaviour {
                 Debug.Log(result.ErrorMsg);
                 return false;
             }
+            ConfigForm.Username = username;
+            ConfigForm.Password = password;
             return true;
         } catch (RpcException e) {
             Debug.LogError(e);
@@ -82,44 +82,7 @@ public class AC_CertConn : MonoBehaviour {
             throw;
         }
     }
-    public async Task<bool> LoginGetKey(string username, string password) {
-        if (this.create_auth_cli == null) {
-            return false;
-        }
-        try {
-            var req = new CredReq {
-                Ip = GetLocalIPAddress(),
-                Username = username,
-                Password = password,
-            };
-            CreateCredResp result = await this.create_auth_cli.GetCredAsync(req);
-            if (result.ErrorMsg != null) {
-                Debug.Log(result.ErrorMsg);
-                return false;
-            }
-            if (ConfigForm.Username == "") {
-                ConfigForm.Username = username;
-            }
-            if (ConfigForm.Password == "") {
-                ConfigForm.Password = password;
-            }
-            string[] tpath = {
-                Application.streamingAssetsPath,
-                "key.pem"
-            };
-            if (!File.Exists(Path.Combine(tpath))) {
-                File.CreateText(Path.Combine(tpath));
-            }
-            file = result.File.ToStringUtf8();
-            File.WriteAllText(Path.Combine(tpath), result.File.ToStringUtf8());
-            ConfigForm.KeyPemPath = "%StreamAsset%/" + "key.pem";
-            return true;
-        } catch (RpcException e) {
-            Debug.LogError(e);
-            return false;
-            throw;
-        }
-    }
+  
 
     public async Task<bool> TryConnectMain(string ip_address, int port) {
         try {
@@ -178,17 +141,13 @@ public class AC_CertConn : MonoBehaviour {
         if (!File.Exists(Path.Combine(tpath))) {
             File.CreateText(Path.Combine(tpath));
         }
-        using(System.IO.StreamWriter filestm =
-            new System.IO.StreamWriter(Path.Combine(tpath))) {
+        using(StreamWriter filestm =
+            new StreamWriter(Path.Combine(tpath))) {
             filestm.WriteLine(file);
         }
-
         return;
     }
-    void Start() {
-
-    }
-
+ 
     void Destory() {
         if (test_cli != null) {
             this.test_cli = null;

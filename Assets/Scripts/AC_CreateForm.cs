@@ -53,7 +53,6 @@ public class AC_CreateForm : MonoBehaviour {
         }
         // Save setting
         conn.SaveAsset();
-
     }
     public void SwitchToLogin() {
         switcher.Play("switch_login");

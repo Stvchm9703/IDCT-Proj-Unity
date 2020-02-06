@@ -8,6 +8,7 @@ public class AC_LoginForm : MonoBehaviour {
     public InputField address_f, username_f, pw_key_f;
     public Animator switcher;
     public GameObject LoadingPanel;
+    public AC_CertConn conn;
     void Start() {
         if (address_f == null)
             address_f = this.transform.parent.Find("Canvas/login_part/server_ip").GetComponent<InputField>();
@@ -38,6 +39,23 @@ public class AC_LoginForm : MonoBehaviour {
             text_box.color = new Color(0.8f, 0f, 0f, 0.5f);
 
         }
+    }
+    public async void LoginAccount() {
+        var try_conn = conn.TryConnectAuthServ(address_f.text, 12000);
+        if (!try_conn) {
+            Debug.LogError("CONNECT FAIL");
+            return;
+        }
+        Debug.Log(username_f.text + ":" + pw_key_f.text);
+
+        var try_login = await conn.TryLogin(username_f.text, pw_key_f.text);
+        if (!try_login) {
+            Debug.LogError("Try login fail");
+            return;
+        }
+       
+        // Save setting
+        conn.SaveAsset();
     }
     public void SwitchToCreate() {
         switcher.Play("switch_create");
