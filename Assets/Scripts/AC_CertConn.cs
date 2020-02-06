@@ -40,7 +40,7 @@ public class AC_CertConn : MonoBehaviour {
 
         try {
             var req = new CredReq {
-                Ip = GetLocalIPAddress(),
+                Ip = Dns.GetHostName(),
                 Username = username,
                 Password = password,
             };
@@ -64,7 +64,7 @@ public class AC_CertConn : MonoBehaviour {
         }
         try {
             var req = new CredReq {
-                Ip = GetLocalIPAddress(),
+                Ip = Dns.GetHostName(),
                 Username = username,
                 Password = password,
             };
@@ -75,6 +75,8 @@ public class AC_CertConn : MonoBehaviour {
             }
             ConfigForm.Username = username;
             ConfigForm.Password = password;
+            CreateCredResp result2 = await this.create_auth_cli.GetCredAsync(req);
+            file = result2.File.ToStringUtf8();
             return true;
         } catch (RpcException e) {
             Debug.LogError(e);
@@ -82,7 +84,8 @@ public class AC_CertConn : MonoBehaviour {
             throw;
         }
     }
-  
+
+
 
     public async Task<bool> TryConnectMain(string ip_address, int port) {
         try {
@@ -121,33 +124,23 @@ public class AC_CertConn : MonoBehaviour {
 
     }
 
-    public static string GetLocalIPAddress() {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (var ip in host.AddressList) {
-            if (ip.AddressFamily == AddressFamily.InterNetwork) {
-                return ip.ToString();
-            }
-        }
-        throw new Exception("No network adapters with an IPv4 address in the system!");
-    }
-
-    public void SaveAsset() {
+    public async Task<bool> SaveAsset() {
         ConfigForm.KeyPemPath = "%StreamAsset%/" + "key.pem";
         Config.CreateCfFile(Application.streamingAssetsPath, ConfigForm);
-        string[] tpath = {
-            Application.streamingAssetsPath,
-            "key.pem"
-        };
-        if (!File.Exists(Path.Combine(tpath))) {
-            File.CreateText(Path.Combine(tpath));
+        string[] tpath = { Application.streamingAssetsPath, "key.pem" };
+
+        // if (!File.Exists(Path.Combine(tpath))) {
+        //     File.WriteAllText(Path.Combine(tpath), file);
+        // } else {
+        //     File.AppendAllText(Path.Combine(tpath), file);
+        // }
+
+        using(var sw = new StreamWriter(Path.Combine(tpath))) {
+            await sw.WriteAsync(file);
         }
-        using(StreamWriter filestm =
-            new StreamWriter(Path.Combine(tpath))) {
-            filestm.WriteLine(file);
-        }
-        return;
+        return true;
     }
- 
+
     void Destory() {
         if (test_cli != null) {
             this.test_cli = null;

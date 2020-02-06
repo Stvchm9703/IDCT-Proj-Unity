@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class AC_LoginForm : MonoBehaviour {
-    public string address, username, pw_key;
     public InputField address_f, username_f, pw_key_f;
     public Animator switcher;
     public GameObject LoadingPanel;
@@ -30,7 +30,6 @@ public class AC_LoginForm : MonoBehaviour {
         MatchCollection result = ip.Matches(input);
         if (ip.IsMatch(input)) {
             Debug.Log(result[0]);
-            address = input;
 
         } else {
             address_f.text = "";
@@ -41,6 +40,7 @@ public class AC_LoginForm : MonoBehaviour {
         }
     }
     public async void LoginAccount() {
+        LoadingPanel.SetActive(true);
         var try_conn = conn.TryConnectAuthServ(address_f.text, 12000);
         if (!try_conn) {
             Debug.LogError("CONNECT FAIL");
@@ -53,9 +53,12 @@ public class AC_LoginForm : MonoBehaviour {
             Debug.LogError("Try login fail");
             return;
         }
-       
+
         // Save setting
-        conn.SaveAsset();
+        await conn.SaveAsset();
+        Debug.Log("Complete");
+        LoadingPanel.SetActive(false);
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
     public void SwitchToCreate() {
         switcher.Play("switch_create");

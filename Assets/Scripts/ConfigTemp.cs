@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 using YamlDotNet.RepresentationModel;
@@ -52,22 +53,22 @@ namespace PlayCli {
 
         }
 
-        public static bool CreateCfFile(string out_dir, CfServerSetting setting) {
+        public static async Task<bool> CreateCfFile(string out_dir, CfServerSetting setting) {
 
             // var lin = Helper;
-            string[] tpath = {
-                out_dir,
-                "config.yaml"
-            };
-            if (!File.Exists(Path.Combine(tpath))) {
-                File.CreateText(Path.Combine(tpath));
-            }
+            var serializer = new SerializerBuilder().Build();
+            var yml = serializer.Serialize(setting);
+            string[] tpath = { out_dir, "config.yaml" };
 
-            using(StreamWriter file = new System.IO.StreamWriter(Path.Combine(tpath))) {
-                var serializer = new SerializerBuilder().Build();
-                serializer.Serialize(file, setting);
-            }
+            // if (!File.Exists(Path.Combine(tpath))) {
+            //     File.WriteAllText(Path.Combine(tpath), yml);
+            // } else {
+            //     File.AppendAllText(Path.Combine(tpath), yml);
+            // }
 
+            using(var sw = new StreamWriter(Path.Combine(tpath))) {
+                await sw.WriteAsync(yml);
+            }
             // File.AppendAllText(Path.Combine(tpath), yml);
             return true;
         }

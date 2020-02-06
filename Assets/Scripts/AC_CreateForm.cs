@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class AC_CreateForm : MonoBehaviour {
     public InputField address_f, username_f, pw_key_f;
@@ -39,6 +40,7 @@ public class AC_CreateForm : MonoBehaviour {
     }
 
     public async void CreateAccount() {
+        LoadingPanel.SetActive(true);
         var try_conn = conn.TryConnectAuthServ(address_f.text, 12000);
         if (!try_conn) {
             Debug.LogError("CONNECT FAIL");
@@ -52,7 +54,9 @@ public class AC_CreateForm : MonoBehaviour {
             return;
         }
         // Save setting
-        conn.SaveAsset();
+        await conn.SaveAsset();
+        LoadingPanel.SetActive(false);
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
     public void SwitchToLogin() {
         switcher.Play("switch_login");
