@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
@@ -23,12 +24,10 @@ namespace PlayCli {
 
         private string bearer_key;
         public DuelConnector(CfServerSetting s) {
-            var path = s.KeyPemPath.Replace("%StreamAsset%/", "");
-
-            var crt = new SslCredentials(Path.Combine(PlayCli.ConfigPath.StreamingAsset, path));
-
-            Debug.Log(Path.Combine(PlayCli.ConfigPath.StreamingAsset, path));
-            Debug.Log(s.Host + ":" + s.Port);
+            var path = Regex.Replace(s.KeyPemPath, "%", "");
+            path = path.Replace("StreamAsset/", "");
+            var crt = new SslCredentials(File.ReadAllText(Path.Combine(
+                PlayCli.ConfigPath.StreamingAsset, path)));
 
             this.channel = new Channel(
                 s.Host, s.Port,
@@ -61,15 +60,20 @@ namespace PlayCli {
             return t;
         }
         public async Task<Room> CreateRoom() {
-            var t = this.client.CreateRoomAsync(
-                new RoomCreateReq {
-                    UserId = this.HostId
-                },
-                header_meta);
+            try {
+                var t = this.client.CreateRoomAsync(
+                    new RoomCreateReq {
+                        UserId = this.HostId
+                    },
+                    header_meta);
 
-            header_meta = refresh_meta(await t.ResponseHeadersAsync);
-            var tt = await t.ResponseAsync;
-            return tt.RoomInfo;
+                header_meta = refresh_meta(await t.ResponseHeadersAsync);
+                var tt = await t.ResponseAsync;
+                return tt.RoomInfo;
+            } catch (RpcException e) {
+                Debug.Log("RPC failed " + e);
+                throw;
+            }
         }
         public async Task<List<Room>> GetRoomList(string requirement) {
             try {
@@ -95,13 +99,18 @@ namespace PlayCli {
             }
         }
         public async Task<RoomResp> GetRoomInfo(string key_ref) {
-            var reply = this.client.GetRoomInfoAsync(
-                new RoomReq { Key = key_ref },
-                header_meta
-            );
-            header_meta = refresh_meta(await reply.ResponseHeadersAsync);
+            try {
+                var reply = this.client.GetRoomInfoAsync(
+                    new RoomReq { Key = key_ref },
+                    header_meta
+                );
+                header_meta = refresh_meta(await reply.ResponseHeadersAsync);
 
-            return await reply.ResponseAsync;
+                return await reply.ResponseAsync;
+            } catch (RpcException e) {
+                Debug.Log("RPC failed " + e);
+                throw;
+            }
         }
 
         public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> RoomStream() {
@@ -116,15 +125,20 @@ namespace PlayCli {
             // return this.client.GetRoomStream (request);
         }
         public async Task<CellStatus> UpdateRoomTurn(CellStatus cs) {
-            CellStatusReq tmp = new CellStatusReq {
-                UserId = this.HostId,
-                Key = cs.Key,
-                CellStatus = cs,
-            };
-            var kt = this.client.UpdateRoomAsync(tmp);
-            header_meta = refresh_meta(await kt.ResponseHeadersAsync);
-            var cellst = await kt.ResponseAsync;
-            return cellst.CellStatus;
+            try {
+                CellStatusReq tmp = new CellStatusReq {
+                    UserId = this.HostId,
+                    Key = cs.Key,
+                    CellStatus = cs,
+                };
+                var kt = this.client.UpdateRoomAsync(tmp);
+                header_meta = refresh_meta(await kt.ResponseHeadersAsync);
+                var cellst = await kt.ResponseAsync;
+                return cellst.CellStatus;
+            } catch (RpcException e) {
+                Debug.Log("RPC failed " + e);
+                throw;
+            }
         }
 
         public async Task<RoomResp> DeleteRoom(string room_key) {

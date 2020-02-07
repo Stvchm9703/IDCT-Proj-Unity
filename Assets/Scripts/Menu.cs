@@ -33,8 +33,10 @@ public class Menu : MonoBehaviour {
             WarnPanel.SetActive(true);
         }
 
-        var text = File.ReadAllText(Path.Combine(PlayCli.ConfigPath.StreamingAsset, "config.yaml"));
-
+        var text = "";
+        if (Debug.isDebugBuild) {
+            text = File.ReadAllText(Path.Combine(PlayCli.ConfigPath.StreamingAsset, "config.yaml"));
+        }
         LogPrint.text = text;
     }
 }

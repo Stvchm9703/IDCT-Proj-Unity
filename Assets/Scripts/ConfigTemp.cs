@@ -20,17 +20,6 @@ namespace PlayCli {
             }
         }
 
-        public static string ReadAsset(string[] path) {
-            var filePath = Path.Combine(path);
-#if UNITY_EDITOR || UNITY_IOS || UNITY_STANDALONE	
-            return File.ReadAllText(filePath);
-#elif UNITY_ANDROID
-            WWW reader = new WWW(filePath);
-            while (!reader.isDone) { }
-            return reader.text;
-#endif
-        }
-
     }
 
     [System.Serializable]

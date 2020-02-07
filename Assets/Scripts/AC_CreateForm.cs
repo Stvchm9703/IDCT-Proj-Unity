@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
+using Grpc.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -46,46 +48,39 @@ public class AC_CreateForm : MonoBehaviour {
 
     public async void CreateAccount() {
         LoadingPanel.SetActive(true);
-        var try_conn = conn.TryConnectAuthServ(address_f.text, authPort);
-        lp_text.text = "Loading,\nWait for connecting authorize";
+        try {
+            var try_conn = conn.TryConnectAuthServ(address_f.text, authPort);
+            lp_text.text = "Loading,\nWait for connecting authorize";
 
-        if (!try_conn) {
-            Debug.LogError("CONNECT FAIL");
-            lp_text.text = "Connect Fail, Please ask for technical help";
+            Debug.Log(username_f.text + ":" + pw_key_f.text);
+
+            lp_text.text = "Loading,\nWait for login checking";
+            var try_create = await conn.CreateAccount(username_f.text, pw_key_f.text);
+
+            lp_text.text = "Loading,\nWait for getting pem";
+            var try_save_pem = await conn.GetPemFile();
+
+            
+            lp_text.text = "Loading,\nWait for saving setting";
+            var saving = await conn.SaveAsset();
+
+            // Save setting
+            lp_text.text = "Loading,\nWait for service testing";
+            var test_run = await conn.TryConnectMain(address_f.text, mainPort);
+
+            lp_text.text = "Complete";
             LoadingPanel.SetActive(false);
+            SceneManager.LoadScene("Menu", LoadSceneMode.Single);
+        } catch (RpcException except) {
+            Debug.LogError("Try login fail:" + except.ToString());
+            lp_text.text = except.ToString();
             return;
-        }
-        Debug.Log(username_f.text + ":" + pw_key_f.text);
-
-        var try_create = await conn.CreateAccount(username_f.text, pw_key_f.text);
-        lp_text.text = "Loading,\nWait for login checking";
-
-        if (!try_create) {
-            Debug.LogError("Create fail");
-            // LoadingPanel.
-            lp_text.text = "Create Account Fail, Please ask for technical help";
+        } catch (IOException except) {
+            Debug.LogError("Try login fail:" + except.ToString());
+            lp_text.text = except.ToString();
             return;
         }
 
-        // Save setting
-        var saving = await conn.SaveAsset();
-        lp_text.text = "Loading,\nWait for saving setting";
-        if (!saving) {
-            Debug.LogError("Save Asset fail");
-            lp_text.text = "Saving Asset Fail, Please ask for technical help";
-            return;
-        }
-
-        var test_run = await conn.TryConnectMain(address_f.text, mainPort);
-        lp_text.text = "Loading,\nWait for service testing";
-        if (!test_run) {
-            Debug.LogError("Create fail");
-            lp_text.text = "Connect to Main service Fail, Please ask for technical help";
-            return;
-        }
-        lp_text.text = "Complete";
-        LoadingPanel.SetActive(false);
-        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
     public void SwitchToLogin() {
         switcher.Play("switch_login");
