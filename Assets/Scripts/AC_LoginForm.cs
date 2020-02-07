@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
+using Grpc.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -51,48 +53,58 @@ public class AC_LoginForm : MonoBehaviour {
     }
     public async void LoginAccount() {
         LoadingPanel.SetActive(true);
+        try {
+            var try_conn = conn.TryConnectAuthServ(address_f.text, authPort);
+            lp_text.text = "Loading,\nWait for connecting authorize";
 
-        var try_conn = conn.TryConnectAuthServ(address_f.text, authPort);
-        lp_text.text = "Loading,\nWait for connecting authorize";
+            // if (!try_conn) {
+            //     Debug.LogError("CONNECT FAIL");
+            //     lp_text.text = "Connect Fail, Please ask for technical help";
+            //     LoadingPanel.SetActive(false);
+            //     return;
+            // }
+            Debug.Log(username_f.text + ":" + pw_key_f.text);
 
-        if (!try_conn) {
-            Debug.LogError("CONNECT FAIL");
-            lp_text.text = "Connect Fail, Please ask for technical help";
-            LoadingPanel.SetActive(false);
+            lp_text.text = "Loading,\nWait for login checking";
+            var try_login = await conn.TryLogin(username_f.text, pw_key_f.text);
+            // if (!try_login) {
+            //     Debug.LogError("Try login fail");
+            //     lp_text.text = "Login Fail, Please ask for technical help";
+            //     return;
+            // }
+
+            lp_text.text = "Loading,\nWait for getting pem";
+            var try_save_pem = await conn.GetPemFile();
+            // if (!try_login) {
+            //     lp_text.text = "Login Fail, Please ask for technical help";
+            //     return;
+            // }
+
+            // Save setting
+            lp_text.text = "Loading,\nWait for saving setting";
+            var saving = await conn.SaveAsset();
+            // if (!saving) {
+            //     Debug.LogError("Save Asset fail");
+            //     lp_text.text = "Saving Asset Fail, Please ask for technical help";
+            //     return;
+            // }
+
+            lp_text.text = "Loading,\nWait for service testing";
+
+            var test_run = await conn.TryConnectMain(address_f.text, mainPort);
+            // if (!test_run) {
+            //     Debug.LogError("Try login fail");
+            //     lp_text.text = "Connect to Main service Fail, Please ask for technical help";
+            //     return;
+            // }
+
+        } catch (RpcException except) {
+            Debug.LogError("Try login fail:" + except.ToString());
+            lp_text.text = except.ToString();
             return;
-        }
-        Debug.Log(username_f.text + ":" + pw_key_f.text);
-
-        lp_text.text = "Loading,\nWait for login checking";
-        var try_login = await conn.TryLogin(username_f.text, pw_key_f.text);
-        if (!try_login) {
-            Debug.LogError("Try login fail");
-            lp_text.text = "Login Fail, Please ask for technical help";
-            return;
-        }
-
-        lp_text.text = "Loading,\nWait for getting pem";
-        var try_save_pem = await conn.GetPemFile();
-        if (!try_login) {
-            lp_text.text = "Login Fail, Please ask for technical help";
-            return;
-        }
-
-        // Save setting
-        lp_text.text = "Loading,\nWait for saving setting";
-        var saving = await conn.SaveAsset();
-        if (!saving) {
-            Debug.LogError("Save Asset fail");
-            lp_text.text = "Saving Asset Fail, Please ask for technical help";
-            return;
-        }
-
-        lp_text.text = "Loading,\nWait for service testing";
-        var test_run = await conn.TryConnectMain(address_f.text, mainPort);
-        if (!test_run) {
-            Debug.LogError("Try login fail");
-            lp_text.text =
-                "Connect to Main service Fail, Please ask for technical help";
+        } catch (IOException except) {
+            Debug.LogError("Try login fail:" + except.ToString());
+            lp_text.text = except.ToString();
             return;
         }
         Debug.Log("Complete");

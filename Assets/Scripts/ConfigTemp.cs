@@ -12,11 +12,11 @@ namespace PlayCli {
     public static class ConfigPath {
         public static string StreamingAsset {
             get {
-// #if UNITY_EDITOR || UNITY_STANDALONE	
-                // return Application.streamingAssetsPath;
-// #elif UNITY_ANDROID || UNITY_IOS 
+#if UNITY_EDITOR || UNITY_STANDALONE	
+                return Application.streamingAssetsPath;
+#elif UNITY_ANDROID || UNITY_IOS 
                 return Path.Combine(Application.persistentDataPath, "streamingAsset");
-// #endif
+#endif
             }
         }
 

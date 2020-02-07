@@ -1,8 +1,11 @@
 ﻿using System.IO;
+using PlayCli;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class Menu : MonoBehaviour {
     public GameObject WarnPanel;
+    public Text LogPrint;
     public void GotoACCreate() {
         SceneManager.LoadScene("AccountCreate", LoadSceneMode.Single);
     }
@@ -29,5 +32,9 @@ public class Menu : MonoBehaviour {
             !File.Exists(Path.Combine(PlayCli.ConfigPath.StreamingAsset, "key.pem"))) {
             WarnPanel.SetActive(true);
         }
+
+        var text = File.ReadAllText(Path.Combine(PlayCli.ConfigPath.StreamingAsset, "config.yaml"));
+
+        LogPrint.text = text;
     }
 }

@@ -148,14 +148,11 @@ public class AC_CertConn : MonoBehaviour {
             Metadata mtd = new Metadata();
             mtd.Add("username", ConfigForm.Username);
             mtd.Add("password", ConfigForm.Password);
+
             var d = await this.test_cli.GetRoomListAsync(new RoomListReq {
                 Requirement = "",
             }, mtd);
-
-            if (d.ErrorMsg != null) {
-                Debug.LogError(d.ErrorMsg);
-                return false;
-            }
+            
             if (ConfigForm.Connector == "") {
                 ConfigForm.Connector = "grpc";
             }
@@ -178,18 +175,12 @@ public class AC_CertConn : MonoBehaviour {
     public async Task<bool> SaveAsset() {
         ConfigForm.KeyPemPath = "%StreamAsset%/" + "key.pem";
         Config.CreateCfFile(PlayCli.ConfigPath.StreamingAsset, ConfigForm);
-        string[] tpath = { PlayCli.ConfigPath.StreamingAsset, "key.pem" };
+        // string[] tpath = { PlayCli.ConfigPath.StreamingAsset, "key.pem" };
 
-        // using(StreamWriter sw = (File.Exists(Path.Combine(tpath))) ?
-        //     File.AppendText(Path.Combine(tpath)) :
-        //     File.CreateText(Path.Combine(tpath))
-        // ) {
-        //     sw.WriteLine(Config);
-        // }
-
-        File.WriteAllText(
-            Path.Combine(tpath),
-            file);
+       
+        // File.WriteAllText(
+        //     Path.Combine(tpath),
+        //     file);
 
         return true;
     }
