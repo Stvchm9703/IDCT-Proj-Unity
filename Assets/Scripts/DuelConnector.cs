@@ -23,8 +23,8 @@ namespace PlayCli {
 
         private string bearer_key;
         public DuelConnector(CfServerSetting s) {
-            var path = s.KeyPemPath.Replace("%StreamAsset%", PlayCli.ConfigPath.StreamingAsset);
-            var crt = new SslCredentials(Path.Combine( PlayCli.ConfigPath.StreamingAsset, path ));
+            var path = s.KeyPemPath.Replace("%StreamAsset%/", PlayCli.ConfigPath.StreamingAsset);
+            var crt = new SslCredentials(Path.Combine(PlayCli.ConfigPath.StreamingAsset, path));
             Debug.Log(s.Host + ":" + s.Port);
             this.channel = new Channel(
                 s.Host, s.Port,
