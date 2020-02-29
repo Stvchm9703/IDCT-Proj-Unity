@@ -30,6 +30,7 @@ namespace PlayCli {
 
     [System.Serializable]
     public class CfServerSetting {
+        public string RunMode;
         public string Connector;
         public string Host;
         public int Port;

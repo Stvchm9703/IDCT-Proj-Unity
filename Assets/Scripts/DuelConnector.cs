@@ -131,7 +131,7 @@ namespace PlayCli {
                     Key = cs.Key,
                     CellStatus = cs,
                 };
-                var kt = this.client.UpdateRoomAsync(tmp);
+                var kt = this.client.UpdateRoomAsync(tmp, header_meta);
                 header_meta = refresh_meta(await kt.ResponseHeadersAsync);
                 var cellst = await kt.ResponseAsync;
                 return cellst.CellStatus;
@@ -145,7 +145,7 @@ namespace PlayCli {
             try {
                 var tre = this.client.DeleteRoomAsync(new RoomReq {
                     Key = room_key,
-                });
+                }, header_meta);
                 header_meta = refresh_meta(await tre.ResponseHeadersAsync);
                 return await tre.ResponseAsync;
             } catch (RpcException e) {
@@ -157,7 +157,7 @@ namespace PlayCli {
             try {
                 var tre = this.client.QuitRoomAsync(new RoomCreateReq {
                     UserId = this.HostId,
-                });
+                }, header_meta);
                 header_meta = refresh_meta(await tre.ResponseHeadersAsync);
                 return true;
             } catch (RpcException e) {
