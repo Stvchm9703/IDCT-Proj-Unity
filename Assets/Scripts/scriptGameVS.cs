@@ -72,8 +72,6 @@ public class scriptGameVS : MonoBehaviour {
         Debug.Log("room key:" + this.DuelConn.current_room.Key);
         player_sign = this.DuelConn.IsHost ? 1 : -1;
 
-        DuelConn.StartGStream();
-
         InitRoomStatus();
         GUIRenderCell();
         // hook event start
@@ -89,24 +87,28 @@ public class scriptGameVS : MonoBehaviour {
             return;
         }
         // gameUpdateIndicator();
+        // Debug.Log(DuelConn.get_only_status_stream);
     }
     async void OnConnecterUpdate() {
-        var t = DuelConn.get_only_status_stream;
-        // Debug.Log ("is stream?");
-        // Debug.Log ("close token" + close_tkn.IsCancellationRequested);
+        // var t = DuelConn.get_only_status_stream;
+        Debug.Log("is stream?");
+        Debug.Log("close token" + close_tkn.IsCancellationRequested);
+
         try {
-            while (await t.ResponseStream.MoveNext(close_tkn.Token)) {
-                // Debug.Log ("called");
-                Debug.Log(t.ResponseStream.Current);
-                var tok = t.ResponseStream.Current;
-                if (tok.ErrorMsg == null) {
-                    Debug.Log(tok.CellStatus);
-                    VsPlayerCellClick(tok.CellStatus.CellNum);
-                } else {
-                    ErrorMsgHandler(tok);
+            using(var t = DuelConn.StartGStream()) {
+                while (await t.ResponseStream.MoveNext(close_tkn.Token)) {
+                    // Debug.Log ("called");
+                    Debug.Log(t.ResponseStream.Current);
+                    var tok = t.ResponseStream.Current;
+                    if (tok.ErrorMsg == null) {
+                        Debug.Log(tok.CellStatus);
+                        VsPlayerCellClick(tok.CellStatus.CellNum);
+                    } else {
+                        ErrorMsgHandler(tok);
+                    }
+                    gameUpdateIndicator();
                 }
             }
-            gameUpdateIndicator();
         } catch (RpcException e) {
             if (e.StatusCode == StatusCode.Cancelled) {
                 Debug.Log("Done");
@@ -161,9 +163,9 @@ public class scriptGameVS : MonoBehaviour {
             }
         }
         if (plyimgIndicator != null) {
-            if (this.DuelConn.conn.HostId == t.HostId) {
+            if (this.player_sign == 1) {
                 plyimgIndicator.sprite = sprites[1];
-            } else if (this.DuelConn.conn.HostId == t.DuelerId) {
+            } else if (this.player_sign == -1) {
                 plyimgIndicator.sprite = sprites[2];
             }
         }
@@ -190,6 +192,7 @@ public class scriptGameVS : MonoBehaviour {
     }
     public async void PlayerCellClick(int cell_num) {
         Debug.Log(cell_num);
+        Debug.Log("-----------------Self------------------");
         if (cells[cell_num] == 0 &&
             !isGameOver &&
             this.DuelConn.able_update &&
@@ -206,9 +209,12 @@ public class scriptGameVS : MonoBehaviour {
             GUIRenderCell();
             onTurnComplete(this.player_sign);
         }
+        Debug.Log("-----------------End Self------------------");
+
     }
 
     public void VsPlayerCellClick(int cell_num) {
+        Debug.Log("-----------------VS------------------");
         Debug.Log(cell_num);
         if (cells[cell_num] == 0 &&
             !isGameOver
@@ -217,6 +223,7 @@ public class scriptGameVS : MonoBehaviour {
             GUIRenderCell();
             onTurnComplete(this.player_sign * -1);
         }
+        Debug.Log("-----------------End VS------------------");
     }
     // @OK 
     public void backToMenu() {
