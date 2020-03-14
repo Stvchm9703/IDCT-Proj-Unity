@@ -36,57 +36,57 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Initialization
-    void Start () {
+    void Start() {
         //                           0 1 2
         // Cell array for the board: 3 4 5
         //                           6 7 8
         cells = new int[9];
         sums = new int[8]; // 3 Horizontal, 3 vertical and 2 diagonal
-        winnerCells = new ArrayList ();
-        ImgBackground.SetActive (false);
-        gameReset ();
-        GUIRenderCell ();
+        winnerCells = new ArrayList();
+        ImgBackground.SetActive(false);
+        gameReset();
+        GUIRenderCell();
     }
     // void Start()
 
     // --------------------------------------------------------------------------
     // Update everything
-    void Update () {
+    void Update() {
         if (isGameOver)
             return;
         if (turn == -1)
-            turnByAI (turn);
-        gameUpdateIndicator ();
+            turnByAI(turn);
+        gameUpdateIndicator();
         // if (turn == 1) turnByAI(turn); // AI for "x" player
     }
 
-    void GUIRenderCell () {
+    void GUIRenderCell() {
         for (int i = 0; i < cells.Length; i++) {
             Sprite sprite = sprites[0];
             if (cells[i] == 1)
                 sprite = sprites[1];
             if (cells[i] == -1)
                 sprite = sprites[2];
-            GameObject.Find ("CellRendBox/cell" + i.ToString ()).GetComponent<Image> ().sprite = sprite;
+            GameObject.Find("CellRendBox/cell" + i.ToString()).GetComponent<Image>().sprite = sprite;
         }
     }
-    public void PlayerCellClick (int cell_num) {
+    public void PlayerCellClick(int cell_num) {
         if (cells[cell_num] == 0 && !isGameOver) {
-            cellSetValue (cell_num, 1);
-            GUIRenderCell ();
-            onTurnComplete (1);
+            cellSetValue(cell_num, 1);
+            GUIRenderCell();
+            onTurnComplete(1);
         }
     }
 
     // @OK 
-    public void backToMenu () {
+    public void backToMenu() {
         // GiveUp
-        SceneManager.LoadScene ("Menu", LoadSceneMode.Single);
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
 
-    public void giveUp () {
-        Debug.Log ("give up on click");
-        backToMenu ();
+    public void giveUp() {
+        Debug.Log("give up on click");
+        backToMenu();
     }
     // ==============================================================================
     // Game and states control
@@ -94,7 +94,7 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Resets cells and set all variables to defaults. Used in Start() and buttonResetGame.onClick.
-    public void gameReset () {
+    public void gameReset() {
         int i;
         for (i = 0; i < cells.Length; i++) {
             cells[i] = 0; // Fill with zeros
@@ -102,7 +102,7 @@ public class scriptGame : MonoBehaviour {
         for (i = 0; i < sums.Length; i++) {
             sums[i] = 0; // Fill with zeros
         }
-        winnerCells.Clear ();
+        winnerCells.Clear();
         turn = 1; // "x" turn by default
         isGameOver = false; // Gaming is allowed
         winner = 0; // Draw by default
@@ -110,23 +110,23 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Called when there is no turn, some player wins, or critical error occurs
-    void gameStop (int theTurn) {
-        if (Math.Abs (theTurn) == 1)
+    void gameStop(int theTurn) {
+        if (Math.Abs(theTurn) == 1)
             turn = theTurn;
         // Override global value if parameter is set
 
         isGameOver = true; // Gaming is disabled
-        gameUpdateGameOver ();
-        gameUpdateIndicator ();
+        gameUpdateGameOver();
+        gameUpdateIndicator();
 
         if (Debug.isDebugBuild) {
-            Debug.Log (string.Format ("Call of gameStop({0}) complete", theTurn));
+            Debug.Log(string.Format("Call of gameStop({0}) complete", theTurn));
         }
     }
 
     // --------------------------------------------------------------------------
     // Updates image of turn/winner and text near it
-    void gameUpdateIndicator () { // Output "Indicator" text
+    void gameUpdateIndicator() { // Output "Indicator" text
         if (textIndicator) {
             if (!isGameOver)
                 textIndicator.text = "Next turn";
@@ -165,10 +165,10 @@ public class scriptGame : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Returns true if there is some winning line
 
-    bool gameIsThereWinner () {
-        cellSumsUpdate ();
+    bool gameIsThereWinner() {
+        cellSumsUpdate();
         foreach (int i in sums) {
-            if (Math.Abs (i) >= 3)
+            if (Math.Abs(i) >= 3)
                 return true;
         }
         return false;
@@ -177,20 +177,20 @@ public class scriptGame : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Called when game is over to get winner and winning lines
 
-    void gameUpdateGameOver () {
+    void gameUpdateGameOver() {
         if (!isGameOver)
             return;
 
         // Verify is there winner. Get list of winning cells to blink, mark or something
         winner = 0;
-        winnerCells.Clear ();
+        winnerCells.Clear();
         for (int i = 0; i < sums.Length; i++) {
-            if (Math.Abs (sums[i]) >= 3) {
+            if (Math.Abs(sums[i]) >= 3) {
                 int a, b, c;
-                if (cellBySum (i, out a, out b, out c)) {
-                    winnerCells.Add (a);
-                    winnerCells.Add (b);
-                    winnerCells.Add (c);
+                if (cellBySum(i, out a, out b, out c)) {
+                    winnerCells.Add(a);
+                    winnerCells.Add(b);
+                    winnerCells.Add(c);
                 }
                 // There is some winner
                 if (sums[i] > 0)
@@ -205,20 +205,20 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Event is called at the end of every turn.
-    void onTurnComplete (int theTurn = 0) {
-        if (Math.Abs (theTurn) == 1)
+    void onTurnComplete(int theTurn = 0) {
+        if (Math.Abs(theTurn) == 1)
             turn = theTurn;
         // Override global value if parameter is set
 
-        cellSumsUpdate ();
+        cellSumsUpdate();
 
-        if (cellEmptyCount () < 1) {
-            gameStop (turn);
+        if (cellEmptyCount() < 1) {
+            gameStop(turn);
             return; // Stop game right there, there is no cells to make turn. Todo: Verify is it Draw?
         }
 
-        if (gameIsThereWinner ()) {
-            gameStop (turn);
+        if (gameIsThereWinner()) {
+            gameStop(turn);
             return; // Stop game right there, somebody wins
         }
 
@@ -234,14 +234,14 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Sets value into calls[] array by index. Any changes of cells during the game process should be made using this method!
-    bool cellSetValue (int index, int value = 0) {
+    bool cellSetValue(int index, int value = 0) {
         if (index < 0 || index >= cells.Length) {
-            Debug.Log (string.Format ("Invalid index parameter for setCellValue({0}, {1})", index, value));
+            Debug.Log(string.Format("Invalid index parameter for setCellValue({0}, {1})", index, value));
             return false;
         }
 
-        if (Math.Abs (value) > 1) {
-            Debug.Log (string.Format ("Invalid value parameter for setCellValue({0}, {1})", index, value));
+        if (Math.Abs(value) > 1) {
+            Debug.Log(string.Format("Invalid value parameter for setCellValue({0}, {1})", index, value));
             return false;
         }
 
@@ -251,7 +251,7 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Returns number of empty cells
-    int cellEmptyCount () {
+    int cellEmptyCount() {
         int count = 0;
         foreach (int i in cells) {
             if (i == 0)
@@ -262,27 +262,27 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Calculates sum of 3 cells by its' indexes. Used to verify winning cells and to make good turn. Indexes must be valid!
-    int cellSumOf3 (int a, int b, int c) {
+    int cellSumOf3(int a, int b, int c) {
         return cells[a] + cells[b] + cells[c];
     }
 
-    int cellSumOf3 (int[] values) {
+    int cellSumOf3(int[] values) {
         return values[0] + values[1] + values[2];
     }
 
     // --------------------------------------------------------------------------
     // Updates sum scores for horizontal, vertical and diagonal lines
-    void cellSumsUpdate () {
-        for (int i = 0; i < mapCellToSum.GetLength (0); i++) {
-            sums[i] = cellSumOf3 (mapCellToSum[i, 0], mapCellToSum[i, 1], mapCellToSum[i, 2]);
+    void cellSumsUpdate() {
+        for (int i = 0; i < mapCellToSum.GetLength(0); i++) {
+            sums[i] = cellSumOf3(mapCellToSum[i, 0], mapCellToSum[i, 1], mapCellToSum[i, 2]);
         }
     }
 
     // --------------------------------------------------------------------------
     // Maps index of sums[] to index of cells[]
 
-    bool cellBySum (int index, out int a, out int b, out int c) {
-        if (index < 0 || index >= mapCellToSum.GetLength (0)) {
+    bool cellBySum(int index, out int a, out int b, out int c) {
+        if (index < 0 || index >= mapCellToSum.GetLength(0)) {
             a = -1;
             b = -1;
             c = -1;
@@ -302,7 +302,7 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Takes some empty cell by random
-    bool turnRandom (int theTurn = 0) {
+    bool turnRandom(int theTurn = 0) {
         int[] emptyCells = new int[9]; // Every cell of 3x3 board
         int emptyCellsCount = 0;
 
@@ -319,12 +319,12 @@ public class scriptGame : MonoBehaviour {
         // There is no empty cells!!! Todo: stop game here
 
         // Get some random empty cell and put the turn value into it
-        System.Random rnd = new System.Random ();
-        int randomIndex = rnd.Next (0, emptyCellsCount);
-        cellSetValue (emptyCells[randomIndex], theTurn);
+        System.Random rnd = new System.Random();
+        int randomIndex = rnd.Next(0, emptyCellsCount);
+        cellSetValue(emptyCells[randomIndex], theTurn);
 
         if (Debug.isDebugBuild) {
-            Debug.Log (string.Format ("We made random turn at {0} cell", emptyCells[randomIndex]));
+            Debug.Log(string.Format("We made random turn at {0} cell", emptyCells[randomIndex]));
         }
 
         return true;
@@ -332,14 +332,14 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Takes center cell if possible
-    bool turnCenter (int theTurn = 0) {
+    bool turnCenter(int theTurn = 0) {
         if (cells[4] != 0)
             return false;
 
-        cellSetValue (4, theTurn);
+        cellSetValue(4, theTurn);
 
         if (Debug.isDebugBuild) {
-            Debug.Log (string.Format ("We took center cell"));
+            Debug.Log(string.Format("We took center cell"));
         }
 
         return true;
@@ -347,7 +347,7 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Takes some corner cell by random
-    bool turnCorner (int theTurn = 0) {
+    bool turnCorner(int theTurn = 0) {
         int[] emptyCells = new int[4]; // 4 corners
         int emptyCellsCount = 0;
 
@@ -365,12 +365,12 @@ public class scriptGame : MonoBehaviour {
         // There is no empty corner cells
 
         // Get some random corner cell and put the turn value into it
-        System.Random rnd = new System.Random ();
-        int randomIndex = rnd.Next (0, emptyCellsCount);
-        cellSetValue (emptyCells[randomIndex], theTurn);
+        System.Random rnd = new System.Random();
+        int randomIndex = rnd.Next(0, emptyCellsCount);
+        cellSetValue(emptyCells[randomIndex], theTurn);
 
         if (Debug.isDebugBuild) {
-            Debug.Log (string.Format ("We found empty corner at {0} cell", emptyCells[randomIndex]));
+            Debug.Log(string.Format("We found empty corner at {0} cell", emptyCells[randomIndex]));
         }
 
         return true;
@@ -378,7 +378,7 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Blocks possible winning turn for opposite player
-    bool turnBlock (int theTurn = 0) {
+    bool turnBlock(int theTurn = 0) {
         if (theTurn == 0)
             theTurn = turn;
         // Use global variable if parameter is not set
@@ -390,22 +390,22 @@ public class scriptGame : MonoBehaviour {
         for (int i = 0; i < sums.Length; i++) {
             if (sums[i] == lookFor) {
                 int a, b, c;
-                cellBySum (i, out a, out b, out c);
+                cellBySum(i, out a, out b, out c);
 
                 // Search for empty cell in line ant take it
                 if (cells[a] == 0) {
-                    cellSetValue (a, theTurn);
+                    cellSetValue(a, theTurn);
                 } else if (cells[b] == 0) {
-                    cellSetValue (b, theTurn);
+                    cellSetValue(b, theTurn);
                 } else if (cells[c] == 0) {
-                    cellSetValue (c, theTurn);
+                    cellSetValue(c, theTurn);
                 } else {
-                    Debug.Log (string.Format ("We found blocking line ({0}, {1}, {2}) but cannot make defense move!", a, b, c));
+                    Debug.Log(string.Format("We found blocking line ({0}, {1}, {2}) but cannot make defense move!", a, b, c));
                     continue;
                 }
 
                 if (Debug.isDebugBuild) {
-                    Debug.Log (string.Format ("We found blocking turn in ({0}, {1}, {2}) line", a, b, c));
+                    Debug.Log(string.Format("We found blocking turn in ({0}, {1}, {2}) line", a, b, c));
                 }
                 return true;
             }
@@ -416,7 +416,7 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
     // Makes winning turn if possible
-    bool turnWin (int theTurn = 0) {
+    bool turnWin(int theTurn = 0) {
         if (theTurn == 0)
             theTurn = turn;
         // Use global variable if parameter is not set
@@ -428,14 +428,14 @@ public class scriptGame : MonoBehaviour {
         for (int i = 0; i < sums.Length; i++) {
             if (sums[i] == lookFor) {
                 int a, b, c;
-                cellBySum (i, out a, out b, out c);
+                cellBySum(i, out a, out b, out c);
 
-                cellSetValue (a, theTurn);
-                cellSetValue (b, theTurn);
-                cellSetValue (c, theTurn);
+                cellSetValue(a, theTurn);
+                cellSetValue(b, theTurn);
+                cellSetValue(c, theTurn);
 
                 if (Debug.isDebugBuild) {
-                    Debug.Log (string.Format ("We found winning turn in line ({0}, {1}, {2})", a, b, c));
+                    Debug.Log(string.Format("We found winning turn in line ({0}, {1}, {2})", a, b, c));
                 }
 
                 return true; // We made the winning turn
@@ -449,16 +449,16 @@ public class scriptGame : MonoBehaviour {
 
     private int levelAI = 5; // 0 - no AI (manual play), from 1 to 5  - easy to hard AI
 
-    void turnByAI (int theTurn = 0) {
+    IEnumerator turnByAI(int theTurn = 0) {
         if (levelAI < 1)
-            return;
+            yield return false;
 
         bool isTurnOk = false;
         switch (levelAI) {
             case 5:
-                isTurnOk = turnWin (theTurn);
+                isTurnOk = turnWin(theTurn);
                 if (!isTurnOk)
-                    isTurnOk = turnBlock (theTurn);
+                    isTurnOk = turnBlock(theTurn);
 
                 if (isTurnOk)
                     break;
@@ -466,16 +466,16 @@ public class scriptGame : MonoBehaviour {
                 goto case 3;
 
             case 4: // Win -> Center -> Corner -> Random turns
-                isTurnOk = turnWin (theTurn);
+                isTurnOk = turnWin(theTurn);
                 if (isTurnOk)
                     break;
 
                 goto case 3;
 
             case 3: // Center -> Corner -> Random turns
-                isTurnOk = turnCenter (theTurn);
+                isTurnOk = turnCenter(theTurn);
                 if (!isTurnOk)
-                    isTurnOk = turnCorner (theTurn);
+                    isTurnOk = turnCorner(theTurn);
 
                 if (isTurnOk)
                     break;
@@ -483,18 +483,18 @@ public class scriptGame : MonoBehaviour {
                 goto default;
 
             case 2: // Center -> Random turns
-                isTurnOk = turnCenter (theTurn);
+                isTurnOk = turnCenter(theTurn);
                 if (isTurnOk)
                     break;
 
                 goto default;
 
             default: // Random turn for levelAI == 1
-                isTurnOk = turnRandom (theTurn);
+                isTurnOk = turnRandom(theTurn);
                 break;
         }
 
-        onTurnComplete (theTurn);
+        onTurnComplete(theTurn);
 
     }
 
