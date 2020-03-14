@@ -71,6 +71,7 @@ public class scriptGameVS : MonoBehaviour {
         }
         Debug.Log("room key:" + this.DuelConn.current_room.Key);
         player_sign = this.DuelConn.IsHost ? 1 : -1;
+        
         DuelConn.StartGStream();
 
         InitRoomStatus();
@@ -99,7 +100,8 @@ public class scriptGameVS : MonoBehaviour {
                 Debug.Log(t.ResponseStream.Current);
                 var tok = t.ResponseStream.Current;
                 if (tok.ErrorMsg == null) {
-                    VsPlayerCellClick(tok.CellStatus.CellNum - 1);
+                    Debug.Log(tok.CellStatus);
+                    VsPlayerCellClick(tok.CellStatus.CellNum);
                 } else {
                     ErrorMsgHandler(tok);
                 }
@@ -152,7 +154,9 @@ public class scriptGameVS : MonoBehaviour {
         if (t != null) {
             if (t.CellStatus.Count > 0) {
                 foreach (var cs in t.CellStatus) {
-                    cells[cs.CellNum - 1] = cs.Turn;
+                    Debug.Log(cs);
+                    if (cs.CellNum > -1)
+                        cells[cs.CellNum] = cs.Turn;
                 }
             }
         }
@@ -195,7 +199,7 @@ public class scriptGameVS : MonoBehaviour {
             await DuelConn.UpdateTurn(new CellStatus {
                 Key = this.DuelConn.current_room.Key,
                     Turn = player_sign,
-                    CellNum = cell_num + 1,
+                    CellNum = cell_num,
             });
             cellSetValue(cell_num, player_sign);
             GUIRenderCell();

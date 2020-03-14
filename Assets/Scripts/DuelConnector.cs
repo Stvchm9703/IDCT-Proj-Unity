@@ -100,7 +100,7 @@ namespace PlayCli {
         public async Task<RoomResp> GetRoomInfo(string key_ref) {
             try {
                 var reply = this.client.GetRoomInfoAsync(
-                    new RoomReq { Key = key_ref },
+                    new RoomReq { Key = key_ref }
                     // header_meta
                 );
                 header_meta = refresh_meta(await reply.ResponseHeadersAsync);
