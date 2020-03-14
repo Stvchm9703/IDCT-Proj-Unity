@@ -112,17 +112,6 @@ namespace PlayCli {
             }
         }
 
-        public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> RoomStream() {
-            this.StreamHandler = this.client.RoomStream();
-            return this.StreamHandler;
-        }
-        public AsyncServerStreamingCall<CellStatusResp> GetRoomStream(CellStatusReq request) {
-            if (this.GetOnlyStream == null) {
-                this.GetOnlyStream = this.client.GetRoomStream(request);
-            }
-            return this.GetOnlyStream;
-            // return this.client.GetRoomStream (request);
-        }
         public async Task<CellStatus> UpdateRoomTurn(CellStatus cs) {
             try {
                 CellStatusReq tmp = new CellStatusReq {

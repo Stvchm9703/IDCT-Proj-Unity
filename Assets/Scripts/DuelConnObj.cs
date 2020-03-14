@@ -128,32 +128,7 @@ public class DuelConnObj : MonoBehaviour {
         return null;
     }
 
-    public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StartBroadCast() {
-        if (stream_status != null)return this.stream_status;
-        if (current_room != null && stream_status == null) {
-            is_bc = true;
-            this.stream_status = this.conn.RoomStream();
-            return this.stream_status;
-        }
-        return null;
-    }
-
-    public AsyncServerStreamingCall<CellStatusResp> StartGStream() {
-        if (get_only_status_stream != null) {
-            return this.get_only_status_stream;
-        }
-        if (current_room != null && get_only_status_stream == null) {
-            get_only_status_stream = this.conn.GetRoomStream(
-                new CellStatusReq {
-                    Key = this.current_room.Key,
-                        UserId = this.conn.HostId,
-                }
-            );
-            return this.get_only_status_stream;
-        }
-
-        return null;
-    }
+  
     async void Destroy() {
         // this.conn destruct call;
         if (stream_status != null) {

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
+using Google.Protobuf;
 using PlayCli.ProtoMod;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -94,30 +95,30 @@ public class scriptGameVS : MonoBehaviour {
         Debug.Log("is stream?");
         Debug.Log("close token" + close_tkn.IsCancellationRequested);
 
-        try {
-            using(var t = DuelConn.StartGStream()) {
-                while (await t.ResponseStream.MoveNext(close_tkn.Token)) {
-                    // Debug.Log ("called");
-                    Debug.Log(t.ResponseStream.Current);
-                    var tok = t.ResponseStream.Current;
-                    if (tok.ErrorMsg == null) {
-                        Debug.Log(tok.CellStatus);
-                        VsPlayerCellClick(tok.CellStatus.CellNum);
-                    } else {
-                        ErrorMsgHandler(tok);
-                    }
-                    gameUpdateIndicator();
-                }
-            }
-        } catch (RpcException e) {
-            if (e.StatusCode == StatusCode.Cancelled) {
-                Debug.Log("Done");
-                GameAlertOpen("The Player is quit \n and the game room will be closed after 5 sec");
+        // try {
+        //     using(var t = DuelConn.StartGStream()) {
+        //         while (await t.ResponseStream.MoveNext(close_tkn.Token)) {
+        //             // Debug.Log ("called");
+        //             Debug.Log(t.ResponseStream.Current);
+        //             var tok = t.ResponseStream.Current;
+        //             if (tok.ErrorMsg == null) {
+        //                 Debug.Log(tok.CellStatus);
+        //                 VsPlayerCellClick(tok.CellStatus.CellNum);
+        //             } else {
+        //                 ErrorMsgHandler(tok);
+        //             }
+        //             gameUpdateIndicator();
+        //         }
+        //     }
+        // } catch (RpcException e) {
+        //     if (e.StatusCode == StatusCode.Cancelled) {
+        //         Debug.Log("Done");
+        //         GameAlertOpen("The Player is quit \n and the game room will be closed after 5 sec");
 
-            } else {
-                Debug.LogError(e);
-            }
-        }
+        //     } else {
+        //         Debug.LogError(e);
+        //     }
+        // }
     }
     async void OnDestroy() {
         this.close_tkn.Cancel();
@@ -204,6 +205,7 @@ public class scriptGameVS : MonoBehaviour {
             CellNum = cell_num,
             };
             Debug.Log(tmp);
+            // tmp.ToByteArray();
             try {
                 await DuelConn.UpdateTurn(tmp);
             } catch (RpcException e) {
