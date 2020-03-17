@@ -7,14 +7,15 @@ using Grpc.Core;
 using PlayCli;
 using PlayCli.ProtoMod;
 using UnityEngine;
+using SocketIOClient;
 // using UnityEditor;
 
 public class DuelConnObj : MonoBehaviour {
     // Start is called before the first frame update
     public DuelConnector conn;
     public Room current_room;
-    public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
-    public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
+    // public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
+    // public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
     public bool isBroadcast { get { return is_bc; } }
     bool is_bc = false;
     public bool able_update = false;
@@ -46,6 +47,7 @@ public class DuelConnObj : MonoBehaviour {
             this.current_room = await this.conn.CreateRoom();
             this.able_update = true;
             this.IsHost = true;
+            await this.conn.ConnectToBroadcast();
             return true;
         } catch (RpcException e) {
             Debug.Log(e);
@@ -63,6 +65,7 @@ public class DuelConnObj : MonoBehaviour {
             current_room = ri.RoomInfo;
             this.able_update = is_player;
             this.IsHost = false;
+            await this.conn.ConnectToBroadcast();
             return true;
         } catch (RpcException e) {
             Debug.Log(e);
@@ -90,25 +93,18 @@ public class DuelConnObj : MonoBehaviour {
         }
     }
 
+    public bool AddEventFunc(string eventName, EventHandler func, params EventHandler[] extraFunc) {
+        return this.conn.AddEventFunc(eventName, func, extraFunc);
+    }
+
     public async Task<bool> ExitRoom() {
         bool status = false;
-        // Time.Wait
-        if (stream_status != null) {
-            var shutdownTkn = new CancellationTokenSource();
-            await stream_status.ResponseStream.MoveNext(shutdownTkn.Token);
-            shutdownTkn.Cancel();
-            stream_status = null;
-        }
-        if (get_only_status_stream != null) {
-            var shutdownTkn = new CancellationTokenSource();
-            await get_only_status_stream.ResponseStream.MoveNext(shutdownTkn.Token);
-            shutdownTkn.Cancel();
-            get_only_status_stream = null;
-        }
 
         if (this.current_room != null) {
+            this.conn.DisconnectToBroadcast();
             status = await this.conn.QuitRoom();
             status = true;
+
             this.current_room = null;
         }
 
@@ -128,11 +124,10 @@ public class DuelConnObj : MonoBehaviour {
         return null;
     }
 
-  
     async void Destroy() {
         // this.conn destruct call;
-        if (stream_status != null) {
-            Debug.Log(stream_status);
-        }
+        //      if (stream_status != null) {
+        //          Debug.Log(stream_status);
+        //      }
     }
 }

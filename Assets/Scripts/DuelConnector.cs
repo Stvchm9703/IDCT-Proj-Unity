@@ -1,12 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Google.Protobuf;
 using Grpc.Core;
 using Newtonsoft.Json;
 using PlayCli.ProtoMod;
+using SocketIOClient;
+// using Grpc
 using UnityEngine;
 namespace PlayCli {
 
@@ -18,8 +22,10 @@ namespace PlayCli {
         private Channel channel;
         private RoomStatus.RoomStatusClient client;
         private Metadata header_meta;
-        public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StreamHandler;
-        public AsyncServerStreamingCall<CellStatusResp> GetOnlyStream;
+        // public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StreamHandler;
+        // public AsyncServerStreamingCall<CellStatusResp> GetOnlyStream;
+
+        public SocketIO RoomBroadcast;
 
         private string bearer_key;
         public DuelConnector(CfServerSetting s) {
@@ -104,7 +110,6 @@ namespace PlayCli {
                     // header_meta
                 );
                 header_meta = refresh_meta(await reply.ResponseHeadersAsync);
-
                 return await reply.ResponseAsync;
             } catch (RpcException e) {
                 Debug.Log("RPC failed " + e);
@@ -157,29 +162,49 @@ namespace PlayCli {
             }
         }
 
+        //  --------------------------------------------
+        // Socket-IO
+
+        // public 
+        public async Task<bool> ConnectToBroadcast() {
+            var socket = new SocketIO("http://192.168.0.102:8000/");
+            socket.OnConnected += async() => {
+                Debug.Log("Connected");
+                this.RoomBroadcast = socket;
+            };
+
+            socket.OnError += async(res) => {
+                Debug.LogError(res);
+            };
+            await socket.ConnectAsync();
+            Debug.Log(socket.State);
+            return true;
+        }
+
+        public bool AddEventFunc(string eventName, SocketIOClient.EventHandler func, params SocketIOClient.EventHandler[] extraFunc) {
+            if (this.RoomBroadcast != null) {
+                this.RoomBroadcast.On(eventName, func, extraFunc);
+                return true;
+            }
+            return false;
+        }
+
+        public bool DisconnectToBroadcast() {
+            if (this.RoomBroadcast != null) {
+                this.RoomBroadcast.CloseAsync();
+            }
+            return true;
+        }
+
         ~DuelConnector() {
-            if (this.StreamHandler != null) {
-                var shutdownTkn = new CancellationTokenSource();
-                // Debug.Log ("try kill");
-                // Debug.Log (this.StreamHandler);
-                this.StreamHandler.RequestStream.CompleteAsync();
-                this.StreamHandler.ResponseStream.MoveNext(shutdownTkn.Token);
-                shutdownTkn.Cancel();
-                this.StreamHandler = null;
-            }
-            if (this.GetOnlyStream != null) {
-                var shutdownTkn = new CancellationTokenSource();
-                // Debug.Log ("try kill");
-                // Debug.Log (this.GetOnlyStream);
-                this.GetOnlyStream.ResponseStream.MoveNext(shutdownTkn.Token);
-                shutdownTkn.Cancel();
-                this.GetOnlyStream = null;
-            }
+            this.DisconnectToBroadcast();
             this.client = null;
             this.channel.ShutdownAsync().Wait();
             Debug.Log("destructor DuelConnector");
         }
 
     }
+    // var typ = tmp.ToByteArray();
+    // var tty = CellStatus.Parser.ParseFrom(typ);
 
 }

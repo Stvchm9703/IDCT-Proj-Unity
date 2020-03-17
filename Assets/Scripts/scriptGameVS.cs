@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
-using Grpc.Core;
 using Google.Protobuf;
+using Grpc.Core;
 using PlayCli.ProtoMod;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -205,7 +205,8 @@ public class scriptGameVS : MonoBehaviour {
             CellNum = cell_num,
             };
             Debug.Log(tmp);
-            // tmp.ToByteArray();
+            // var typ = tmp.ToByteArray();
+            // var tty = CellStatus.Parser.ParseFrom(typ);
             try {
                 await DuelConn.UpdateTurn(tmp);
             } catch (RpcException e) {
