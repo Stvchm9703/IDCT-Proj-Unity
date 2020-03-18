@@ -75,7 +75,9 @@ public class scriptGameVS : MonoBehaviour {
         GUIRenderCell();
         // hook event start
         this.DuelConn.AddEventFunc("chat_msg_recv", msgChatMsg);
-        this.DuelConn.AddEventFunc("", msgUpdateStatus);
+        this.DuelConn.AddEventFunc("syst_msg", async(msgPack) => {
+            Debug.Log(msgPack.RawText);
+        });
     }
     // --------------------------------------------------------------------------
     // Update everything
@@ -83,9 +85,9 @@ public class scriptGameVS : MonoBehaviour {
         Debug.Log(msgPack.RawText);
     };
 
-    SocketIOClient.EventHandler msgUpdateStatus = async(msgPack) => {
-        Debug.Log(msgPack.RawText);
-    };
+    // SocketIOClient.EventHandler msgUpdateStatus = async(msgPack) => {
+    //     Debug.Log(msgPack.RawText);
+    // };
 
     async void OnDestroy() {
         await this.DuelConn.ExitRoom();
