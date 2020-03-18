@@ -166,18 +166,26 @@ namespace PlayCli {
         // Socket-IO
 
         // public 
-        public async Task<bool> ConnectToBroadcast() {
-            var socket = new SocketIO("http://192.168.0.102:8000/");
-            socket.OnConnected += async() => {
-                Debug.Log("Connected");
-                this.RoomBroadcast = socket;
+        public async Task<bool> ConnectToBroadcast(CfServerSetting conf = null, Dictionary<string, string> option = null) {
+            var opt = option == null?
+            new Dictionary<string, string> { { "uid", this.UserID },
+                    { "testEng", "Unity" },
+                }:
+                option;
+            var socket = new SocketIO("http://192.168.0.102:8000") {
+                Parameters = opt
             };
 
-            socket.OnError += async(res) => {
+            socket.OnConnected += () => {
+                Debug.Log("Connected");
+            };
+
+            socket.OnError += (res) => {
                 Debug.LogError(res);
             };
+
             await socket.ConnectAsync();
-            Debug.Log(socket.State);
+            this.RoomBroadcast = socket;
             return true;
         }
 
@@ -189,9 +197,9 @@ namespace PlayCli {
             return false;
         }
 
-        public bool DisconnectToBroadcast() {
+        public async Task<bool> DisconnectToBroadcast() {
             if (this.RoomBroadcast != null) {
-                this.RoomBroadcast.CloseAsync();
+                await this.RoomBroadcast.CloseAsync();
             }
             return true;
         }
@@ -204,7 +212,5 @@ namespace PlayCli {
         }
 
     }
-    // var typ = tmp.ToByteArray();
-    // var tty = CellStatus.Parser.ParseFrom(typ);
 
 }

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using PlayCli;
 using PlayCli.ProtoMod;
-using UnityEngine;
 using SocketIOClient;
+using UnityEngine;
 // using UnityEditor;
 
 public class DuelConnObj : MonoBehaviour {
@@ -92,19 +92,34 @@ public class DuelConnObj : MonoBehaviour {
             throw;
         }
     }
-
+    public async Task<bool> ConnectToBroadcast() {
+        var option = new Dictionary<string, string> { 
+            { "uid", this.conn.HostId },
+            { "test_eng", "Unity" },
+            { "room_key", this.current_room.Key },
+        };
+        var conn = await this.conn.ConnectToBroadcast(ConfigFile, option);
+        if (!conn) {
+            return false;
+        }
+        await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
+        return true;
+    }
     public bool AddEventFunc(string eventName, EventHandler func, params EventHandler[] extraFunc) {
         return this.conn.AddEventFunc(eventName, func, extraFunc);
+    }
+
+    public async  Task<bool> DisconnectToBroadcast() {
+        return await this.conn.DisconnectToBroadcast();
     }
 
     public async Task<bool> ExitRoom() {
         bool status = false;
 
         if (this.current_room != null) {
-            this.conn.DisconnectToBroadcast();
+            await this.conn.DisconnectToBroadcast();
             status = await this.conn.QuitRoom();
             status = true;
-
             this.current_room = null;
         }
 
@@ -126,8 +141,5 @@ public class DuelConnObj : MonoBehaviour {
 
     async void Destroy() {
         // this.conn destruct call;
-        //      if (stream_status != null) {
-        //          Debug.Log(stream_status);
-        //      }
     }
 }

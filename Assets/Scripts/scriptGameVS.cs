@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Google.Protobuf;
 using Grpc.Core;
 using PlayCli.ProtoMod;
+using SocketIOClient;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -41,7 +42,7 @@ public class scriptGameVS : MonoBehaviour {
     //  1 == Dueler
     private DuelConnObj DuelConn;
     public bool IsConnected = false;
-    public CancellationTokenSource close_tkn;
+    // public CancellationTokenSource close_tkn;
     public int player_sign = 1;
 
     // public DuelConnObjv2 
@@ -66,62 +67,27 @@ public class scriptGameVS : MonoBehaviour {
         winnerCells = new ArrayList();
         ImgBackground.SetActive(false);
         gameReset();
-        if (close_tkn == null) {
-            close_tkn = new CancellationTokenSource();
-            Debug.Log("close_tkn: " + close_tkn.IsCancellationRequested);
-        }
+
         Debug.Log("room key:" + this.DuelConn.current_room.Key);
         player_sign = this.DuelConn.IsHost ? 1 : -1;
 
         InitRoomStatus();
         GUIRenderCell();
         // hook event start
-        OnConnecterUpdate();
+        this.DuelConn.AddEventFunc("chat_msg_recv", msgChatMsg);
+        this.DuelConn.AddEventFunc("", msgUpdateStatus);
     }
-
-    // void Start()
-
     // --------------------------------------------------------------------------
     // Update everything
-    async void Update() {
-        if (isGameOver) {
-            return;
-        }
-        // gameUpdateIndicator();
-        // Debug.Log(DuelConn.get_only_status_stream);
-    }
-    async void OnConnecterUpdate() {
-        // var t = DuelConn.get_only_status_stream;
-        Debug.Log("is stream?");
-        Debug.Log("close token" + close_tkn.IsCancellationRequested);
+    SocketIOClient.EventHandler msgChatMsg = async(msgPack) => {
+        Debug.Log(msgPack.RawText);
+    };
 
-        // try {
-        //     using(var t = DuelConn.StartGStream()) {
-        //         while (await t.ResponseStream.MoveNext(close_tkn.Token)) {
-        //             // Debug.Log ("called");
-        //             Debug.Log(t.ResponseStream.Current);
-        //             var tok = t.ResponseStream.Current;
-        //             if (tok.ErrorMsg == null) {
-        //                 Debug.Log(tok.CellStatus);
-        //                 VsPlayerCellClick(tok.CellStatus.CellNum);
-        //             } else {
-        //                 ErrorMsgHandler(tok);
-        //             }
-        //             gameUpdateIndicator();
-        //         }
-        //     }
-        // } catch (RpcException e) {
-        //     if (e.StatusCode == StatusCode.Cancelled) {
-        //         Debug.Log("Done");
-        //         GameAlertOpen("The Player is quit \n and the game room will be closed after 5 sec");
+    SocketIOClient.EventHandler msgUpdateStatus = async(msgPack) => {
+        Debug.Log(msgPack.RawText);
+    };
 
-        //     } else {
-        //         Debug.LogError(e);
-        //     }
-        // }
-    }
     async void OnDestroy() {
-        this.close_tkn.Cancel();
         await this.DuelConn.ExitRoom();
     }
 
