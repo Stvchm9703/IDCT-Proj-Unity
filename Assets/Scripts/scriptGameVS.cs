@@ -204,7 +204,11 @@ public class scriptGameVS : MonoBehaviour {
             CellNum = cell_num,
             };
             Debug.Log(tmp);
-            await DuelConn.UpdateTurn(tmp);
+            try {
+                await DuelConn.UpdateTurn(tmp);
+            } catch (RpcException e) {
+                Debug.LogError(e);
+            }
             cellSetValue(cell_num, player_sign);
             GUIRenderCell();
             onTurnComplete(this.player_sign);
