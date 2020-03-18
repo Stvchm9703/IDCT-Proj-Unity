@@ -191,8 +191,8 @@ public class scriptGameVS : MonoBehaviour {
         }
     }
     public async void PlayerCellClick(int cell_num) {
-        Debug.Log(cell_num);
         Debug.Log("-----------------Self------------------");
+        Debug.Log(cell_num);
         if (cells[cell_num] == 0 &&
             !isGameOver &&
             this.DuelConn.able_update &&
@@ -204,7 +204,11 @@ public class scriptGameVS : MonoBehaviour {
             CellNum = cell_num,
             };
             Debug.Log(tmp);
-            await DuelConn.UpdateTurn(tmp);
+            try {
+                await this.DuelConn.UpdateTurn(tmp);
+            } catch (RpcException e) {
+                Debug.LogError(e);
+            }
             cellSetValue(cell_num, player_sign);
             GUIRenderCell();
             onTurnComplete(this.player_sign);
