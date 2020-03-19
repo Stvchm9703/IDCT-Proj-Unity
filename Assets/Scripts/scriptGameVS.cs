@@ -19,7 +19,7 @@ public class scriptGameVS : MonoBehaviour {
 
     public Texture2D cell;
     // List of sprites used in "cells" and other controls
-    public Sprite[] sprites;
+    public List<Sprite> sprites;
     // Control to output the "Indicator" state
     public Image imageIndicator;
     // Control to output the text near the "Indicator" image
@@ -65,7 +65,7 @@ public class scriptGameVS : MonoBehaviour {
         //                           0 1 2
         // Cell array for the board: 3 4 5
         //                           6 7 8
-        cells = new List<int>(9) { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        // cells = new List<int>(9) { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         sums = new List<int>(8) { 0, 0, 0, 0, 0, 0, 0, 0 }; // 3 Horizontal, 3 vertical and 2 diagonal
         winnerCells = new ArrayList();
         ImgBackground.SetActive(false);
@@ -165,20 +165,27 @@ public class scriptGameVS : MonoBehaviour {
         // }
     }
 
-    void GUIRenderCell() {
+    async Task<bool> GUIRenderCell() {
         Debug.Log("GUIRenderCell");
         Debug.Log(cells.Count);
-        for (int i = 0; i < cells.Count; i++) {
+        Debug.Log(this.sprites.Count);
+        int i = 0;
+        for (i = 0; i < cells.Count; i++) {
             Debug.Log("i:" + i.ToString() + ",v:" + cells[i]);
-            Sprite sprite = sprites[0];
+            var imgTrans = this.CellGrid.Find("cell" + i.ToString()).GetComponent<Button>().image.sprite;
+
             if (cells[i] == 1) {
-                sprite = sprites[1];
-            }
-            if (cells[i] == -1) {
-                sprite = sprites[2];
-            }
-            this.CellGrid.Find("cell" + i.ToString()).GetComponent<Image>().sprite = sprite;
+                Debug.Log("in 1");
+                imgTrans = sprites[1];
+            } else if (cells[i] == -1) {
+                Debug.Log("in -1");
+                imgTrans = sprites[2];
+            } else {
+                Debug.Log("in 0");
+                imgTrans = sprites[0];
+            };
         }
+        return true;
     }
     public async void PlayerCellClick(int cell_num) {
         Debug.Log("-----------------Self------------------");
@@ -189,9 +196,9 @@ public class scriptGameVS : MonoBehaviour {
             this.turn == this.player_sign
         ) {
             var tmp = new CellStatus {
-                Key = this.DuelConn.current_room.Key,
-                Turn = player_sign,
-                CellNum = cell_num,
+            Key = this.DuelConn.current_room.Key,
+            Turn = player_sign,
+            CellNum = cell_num,
             };
             Debug.Log(tmp);
             try {
@@ -200,21 +207,21 @@ public class scriptGameVS : MonoBehaviour {
                 Debug.LogError(e);
             }
             cellSetValue(cell_num, player_sign);
-            GUIRenderCell();
+            await GUIRenderCell();
             onTurnComplete(this.player_sign);
         }
         Debug.Log("-----------------End Self------------------");
 
     }
 
-    public void VsPlayerCellClick(int cell_num) {
+    public async void VsPlayerCellClick(int cell_num) {
         Debug.Log("-----------------VS------------------");
         Debug.Log(cell_num);
         if (cells[cell_num] == 0 &&
             !isGameOver
         ) {
             cellSetValue(cell_num, player_sign * -1);
-            GUIRenderCell();
+            await GUIRenderCell();
             onTurnComplete(this.player_sign * -1);
         }
         Debug.Log("-----------------End VS------------------");
