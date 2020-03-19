@@ -75,25 +75,30 @@ public class scriptGameVS : MonoBehaviour {
 
         InitRoomStatus();
         GUIRenderCell();
-        // hook event start
         OnConnectionInit();
     }
     // --------------------------------------------------------------------------
     // Update everything
-    SocketIOClient.EventHandler msgChatMsg = async(msgPack) => {
+    async void msgChatMsg(SocketIOClient.Arguments.ResponseArgs msgPack) {
         Debug.Log(msgPack.RawText);
-    };
+    }
 
-    SocketIOClient.EventHandler msgSystMsg = async(msgPack) => {
+    async void msgSystMsg(SocketIOClient.Arguments.ResponseArgs msgPack) {
         Debug.Log(msgPack.Text);
         var msg = CellStatusResp.Parser.ParseFrom(
-            ByteString.FromBase64(msgPack.Text));
+            ByteString.FromBase64(msgPack.Text.Trim('"')));
         Debug.Log(msg);
-    };
+        if (msg.ErrorMsg == null) {
+            Debug.Log(msg.CellStatus);
+            VsPlayerCellClick(msg.CellStatus.CellNum);
+        } else {
+            ErrorMsgHandler(msg);
+        }
+        gameUpdateIndicator();
+    }
 
     void OnConnectionInit() {
-        Debug.Log("here to start");
-        Debug.Log(this.DuelConn.conn.RoomBroadcast);
+        Debug.Log("start to connect Broadcast");
         var KvMap = new Dictionary<string, SocketIOClient.EventHandler>();
         KvMap.Add("chat_msg_recv", msgChatMsg);
         KvMap.Add("syst_msg", msgSystMsg);
