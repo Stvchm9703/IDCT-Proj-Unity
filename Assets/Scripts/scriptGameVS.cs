@@ -36,6 +36,7 @@ public class scriptGameVS : MonoBehaviour {
     // Winner of game,  1 for "x", -1 for "o", 0 - draw. Valid only if isGameOver and not isDraw
     private ArrayList winnerCells;
     // Array of cells that take line or diagonal or both. Can be used for special effects, like stroke or blinking.
+    public Transform CellGrid;
     public List<int> cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
     private List<int> sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
     // --------------------------------------------------------------------------
@@ -166,8 +167,9 @@ public class scriptGameVS : MonoBehaviour {
 
     void GUIRenderCell() {
         Debug.Log("GUIRenderCell");
-        Debug.Log(cells);
+        Debug.Log(cells.Count);
         for (int i = 0; i < cells.Count; i++) {
+            Debug.Log("i:" + i.ToString() + ",v:" + cells[i]);
             Sprite sprite = sprites[0];
             if (cells[i] == 1) {
                 sprite = sprites[1];
@@ -175,7 +177,7 @@ public class scriptGameVS : MonoBehaviour {
             if (cells[i] == -1) {
                 sprite = sprites[2];
             }
-            GameObject.Find("CellRendBox/cell" + i.ToString()).GetComponent<Image>().sprite = sprite;
+            this.CellGrid.Find("cell" + i.ToString()).GetComponent<Image>().sprite = sprite;
         }
     }
     public async void PlayerCellClick(int cell_num) {
@@ -187,13 +189,11 @@ public class scriptGameVS : MonoBehaviour {
             this.turn == this.player_sign
         ) {
             var tmp = new CellStatus {
-            Key = this.DuelConn.current_room.Key,
-            Turn = player_sign,
-            CellNum = cell_num,
+                Key = this.DuelConn.current_room.Key,
+                Turn = player_sign,
+                CellNum = cell_num,
             };
             Debug.Log(tmp);
-            // var typ = tmp.ToByteArray();
-            // var tty = CellStatus.Parser.ParseFrom(typ);
             try {
                 await DuelConn.UpdateTurn(tmp);
             } catch (RpcException e) {
