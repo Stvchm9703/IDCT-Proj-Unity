@@ -64,12 +64,12 @@ public class scriptGameVS : MonoBehaviour {
         //                           0 1 2
         // Cell array for the board: 3 4 5
         //                           6 7 8
-        cells = new List<int>(9);
-        sums = new List<int>(8); // 3 Horizontal, 3 vertical and 2 diagonal
+        cells = new List<int>(9) { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        sums = new List<int>(8) { 0, 0, 0, 0, 0, 0, 0, 0 }; // 3 Horizontal, 3 vertical and 2 diagonal
         winnerCells = new ArrayList();
         ImgBackground.SetActive(false);
         gameReset();
-
+        // GUIRenderCell();
         Debug.Log("room key:" + this.DuelConn.current_room.Key);
         player_sign = this.DuelConn.IsHost ? 1 : -1;
 
@@ -248,9 +248,11 @@ public class scriptGameVS : MonoBehaviour {
     // Resets cells and set all variables to defaults. Used in Start() and buttonResetGame.onClick.
     public void gameReset() {
         int i;
+        Debug.Log(cells);
         for (i = 0; i < cells.Count; i++) {
             cells[i] = 0; // Fill with zeros
         }
+        Debug.Log(sums);
         for (i = 0; i < sums.Count; i++) {
             sums[i] = 0; // Fill with zeros
         }
