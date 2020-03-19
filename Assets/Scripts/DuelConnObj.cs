@@ -47,7 +47,7 @@ public class DuelConnObj : MonoBehaviour {
             this.current_room = await this.conn.CreateRoom();
             this.able_update = true;
             this.IsHost = true;
-            await this.conn.ConnectToBroadcast();
+            // await this.conn.ConnectToBroadcast();
             return true;
         } catch (RpcException e) {
             Debug.Log(e);
@@ -65,7 +65,7 @@ public class DuelConnObj : MonoBehaviour {
             current_room = ri.RoomInfo;
             this.able_update = is_player;
             this.IsHost = false;
-            await this.conn.ConnectToBroadcast();
+            // await this.conn.ConnectToBroadcast();
             return true;
         } catch (RpcException e) {
             Debug.Log(e);
@@ -92,32 +92,11 @@ public class DuelConnObj : MonoBehaviour {
             throw;
         }
     }
-    public async Task<bool> ConnectToBroadcast() {
-        var option = new Dictionary<string, string> { 
-            { "uid", this.conn.HostId },
-            { "test_eng", "Unity" },
-            { "room_key", this.current_room.Key },
-        };
-        var conn = await this.conn.ConnectToBroadcast(ConfigFile, option);
-        if (!conn) {
-            return false;
-        }
-        await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
-        return true;
-    }
-    public bool AddEventFunc(string eventName, EventHandler func, params EventHandler[] extraFunc) {
-        return this.conn.AddEventFunc(eventName, func, extraFunc);
-    }
-
-    public async  Task<bool> DisconnectToBroadcast() {
-        return await this.conn.DisconnectToBroadcast();
-    }
 
     public async Task<bool> ExitRoom() {
         bool status = false;
 
         if (this.current_room != null) {
-            await this.conn.DisconnectToBroadcast();
             status = await this.conn.QuitRoom();
             status = true;
             this.current_room = null;
@@ -137,6 +116,57 @@ public class DuelConnObj : MonoBehaviour {
             return null;
         }
         return null;
+    }
+
+    public async Task<bool> ConnectToBroadcast() {
+        var option = new Dictionary<string, string> { { "uid", this.conn.HostId },
+                { "test_eng", "Unity" },
+                { "room_key", this.current_room.Key },
+            };
+        Debug.Log("try connect to Broacast");
+        var conn = await this.conn.ConnectToBroadcast(
+            ConfigFile, option);
+
+        if (!conn) {
+            return false;
+        }
+
+        await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
+        return true;
+    }
+
+    public async Task<bool> ConnectToBroadcast(
+        Dictionary<string, string> ConnOption = null,
+        Dictionary<string, SocketIOClient.EventHandler> EventMap = null
+    ) {
+        var option = ConnOption == null?
+        new Dictionary<string, string> { 
+                { "uid", this.conn.HostId },
+                { "test_eng", "Unity" },
+                { "room_key", this.current_room.Key },
+            }:
+            ConnOption;
+
+        Debug.Log("try connect to Broacast");
+        var conn = await this.conn.ConnectToBroadcast(
+            ConfigFile, option);
+        if (!conn) {
+            return false;
+        }
+        foreach (KeyValuePair<string, SocketIOClient.EventHandler> kv in EventMap) {
+            this.conn.AddEventFunc(kv.Key, kv.Value);
+        }
+
+        await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
+
+        return true;
+    }
+    public bool AddEventFunc(string eventName, EventHandler func, params EventHandler[] extraFunc) {
+        return this.conn.AddEventFunc(eventName, func, extraFunc);
+    }
+
+    public async Task<bool> DisconnectToBroadcast() {
+        return await this.conn.DisconnectToBroadcast();
     }
 
     async void Destroy() {

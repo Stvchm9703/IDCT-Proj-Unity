@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf;
@@ -74,10 +76,7 @@ public class scriptGameVS : MonoBehaviour {
         InitRoomStatus();
         GUIRenderCell();
         // hook event start
-        this.DuelConn.AddEventFunc("chat_msg_recv", msgChatMsg);
-        this.DuelConn.AddEventFunc("syst_msg", async(msgPack) => {
-            Debug.Log(msgPack.RawText);
-        });
+        OnConnectionInit();
     }
     // --------------------------------------------------------------------------
     // Update everything
@@ -85,9 +84,22 @@ public class scriptGameVS : MonoBehaviour {
         Debug.Log(msgPack.RawText);
     };
 
-    // SocketIOClient.EventHandler msgUpdateStatus = async(msgPack) => {
-    //     Debug.Log(msgPack.RawText);
-    // };
+    SocketIOClient.EventHandler msgSystMsg = async(msgPack) => {
+        Debug.Log(msgPack.Text);
+        var msg = CellStatusResp.Parser.ParseFrom(
+            ByteString.FromBase64(msgPack.Text));
+        Debug.Log(msg);
+    };
+
+    void OnConnectionInit() {
+        Debug.Log("here to start");
+        Debug.Log(this.DuelConn.conn.RoomBroadcast);
+        var KvMap = new Dictionary<string, SocketIOClient.EventHandler>();
+        KvMap.Add("chat_msg_recv", msgChatMsg);
+        KvMap.Add("syst_msg", msgSystMsg);
+        this.DuelConn.ConnectToBroadcast(null, KvMap);
+
+    }
 
     async void OnDestroy() {
         await this.DuelConn.ExitRoom();
@@ -160,8 +172,8 @@ public class scriptGameVS : MonoBehaviour {
         }
     }
     public async void PlayerCellClick(int cell_num) {
-        Debug.Log(cell_num);
         Debug.Log("-----------------Self------------------");
+        Debug.Log(cell_num);
         if (cells[cell_num] == 0 &&
             !isGameOver &&
             this.DuelConn.able_update &&

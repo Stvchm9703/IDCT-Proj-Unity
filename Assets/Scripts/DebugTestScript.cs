@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Google.Protobuf;
 using Newtonsoft.Json;
 using PlayCli.ProtoMod;
 using UnityEngine;
@@ -15,12 +16,14 @@ public class DebugTestScript : MonoBehaviour {
         PrintLog("Debug Screen", "Start init Debug Screen");
         this.TestObject = gameObject.GetComponent<DuelConnObj>();
         PrintLog("Debug Screen", "End init Debug Screen");
+        PrintLog("hi", "CgZ1c2VyMi0SCVJtNzU3MzFkNho1MjAyMC0wMy0xOSAxOTo1NDoxMC4xNzc2MjAzICswODAwIENTVCBtPSsxMC42Nzk5MjgzMDEgyAEqDQoJUm03NTczMWQ2EAE=");
+        var tmp = CellStatusResp.Parser.ParseFrom(
+            ByteString.FromBase64("CgZ1c2VyMi0SCVJtNzU3MzFkNho1MjAyMC0wMy0xOSAxOTo1NDoxMC4xNzc2MjAzICswODAwIENTVCBtPSsxMC42Nzk5MjgzMDEgyAEqDQoJUm03NTczMWQ2EAE=")
+        );
+        Debug.Log(tmp);
     }
 
     // Update is called once per frame
-    void Update() {
-
-    }
 
     public async void TestCreateRoom() {
         var t = await this.TestObject.CreateRoom();
@@ -62,13 +65,14 @@ public class DebugTestScript : MonoBehaviour {
             PrintLog("create room", "fail");
         }
         Debug.Log(this.TestObject.current_room);
-        // await this.TestObject.ConnectToBroadcast();
-        this.TestObject.AddEventFunc("chat_msg_recv", async(rec) => {
+        var KvMap = new Dictionary<string, SocketIOClient.EventHandler>();
+        KvMap.Add("chat_msg_recv", async(rec) => {
             Debug.Log(rec.RawText);
         });
-        this.TestObject.AddEventFunc("chat_msg", async(rec) => {
+        KvMap.Add("chat_msg", async(rec) => {
             Debug.Log(rec.RawText);
         });
+        await this.TestObject.ConnectToBroadcast(null, KvMap);
 
     }
 

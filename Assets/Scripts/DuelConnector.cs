@@ -167,11 +167,13 @@ namespace PlayCli {
 
         // public 
         public async Task<bool> ConnectToBroadcast(CfServerSetting conf = null, Dictionary<string, string> option = null) {
-            var opt = option == null?
-            new Dictionary<string, string> { { "uid", this.UserID },
+            var opt = option == null ?
+                new Dictionary<string, string> { 
+                    { "uid", this.UserID },
                     { "testEng", "Unity" },
-                }:
+                } :
                 option;
+
             var socket = new SocketIO("http://192.168.0.102:8000") {
                 Parameters = opt
             };
