@@ -36,8 +36,8 @@ public class scriptGameVS : MonoBehaviour {
     // Winner of game,  1 for "x", -1 for "o", 0 - draw. Valid only if isGameOver and not isDraw
     private ArrayList winnerCells;
     // Array of cells that take line or diagonal or both. Can be used for special effects, like stroke or blinking.
-    public int[] cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
-    private int[] sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
+    public List<int> cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
+    private List<int> sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
     // --------------------------------------------------------------------------
     // PlayCli implement 
     //  -1 == Host
@@ -64,8 +64,8 @@ public class scriptGameVS : MonoBehaviour {
         //                           0 1 2
         // Cell array for the board: 3 4 5
         //                           6 7 8
-        cells = new int[9];
-        sums = new int[8]; // 3 Horizontal, 3 vertical and 2 diagonal
+        cells = new List<int>(9);
+        sums = new List<int>(8); // 3 Horizontal, 3 vertical and 2 diagonal
         winnerCells = new ArrayList();
         ImgBackground.SetActive(false);
         gameReset();
@@ -165,7 +165,9 @@ public class scriptGameVS : MonoBehaviour {
     }
 
     void GUIRenderCell() {
-        for (int i = 0; i < cells.Length; i++) {
+        Debug.Log("GUIRenderCell");
+        Debug.Log(cells);
+        for (int i = 0; i < cells.Count; i++) {
             Sprite sprite = sprites[0];
             if (cells[i] == 1) {
                 sprite = sprites[1];
@@ -246,10 +248,10 @@ public class scriptGameVS : MonoBehaviour {
     // Resets cells and set all variables to defaults. Used in Start() and buttonResetGame.onClick.
     public void gameReset() {
         int i;
-        for (i = 0; i < cells.Length; i++) {
+        for (i = 0; i < cells.Count; i++) {
             cells[i] = 0; // Fill with zeros
         }
-        for (i = 0; i < sums.Length; i++) {
+        for (i = 0; i < sums.Count; i++) {
             sums[i] = 0; // Fill with zeros
         }
         winnerCells.Clear();
@@ -336,7 +338,7 @@ public class scriptGameVS : MonoBehaviour {
         // Verify is there winner. Get list of winning cells to blink, mark or something
         winner = 0;
         winnerCells.Clear();
-        for (int i = 0; i < sums.Length; i++) {
+        for (int i = 0; i < sums.Count; i++) {
             if (Math.Abs(sums[i]) >= 3) {
                 int a, b, c;
                 if (cellBySum(i, out a, out b, out c)) {
@@ -358,9 +360,9 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Event is called at the end of every turn.
     void onTurnComplete(int theTurn = 0) {
-        if (Math.Abs(theTurn) == 1) {
-            turn = theTurn;
-        }
+        // if (Math.Abs(theTurn) == 1) {
+        turn = theTurn;
+        // }
         // Override global value if parameter is set
         cellSumsUpdate();
 
@@ -388,7 +390,7 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Sets value into calls[] array by index. Any changes of cells during the game process should be made using this method!
     bool cellSetValue(int index, int value = 0) {
-        if (index < 0 || index >= cells.Length) {
+        if (index < 0 || index >= cells.Count) {
             Debug.Log(string.Format("Invalid index parameter for setCellValue({0}, {1})", index, value));
             return false;
         }
