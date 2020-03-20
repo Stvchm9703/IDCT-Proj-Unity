@@ -169,7 +169,7 @@ public class DuelConnObj : MonoBehaviour {
         return await this.conn.DisconnectToBroadcast();
     }
 
-    async void Destroy() {
+    void Destroy() {
         // this.conn destruct call;
     }
 }

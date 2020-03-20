@@ -12,7 +12,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 // using UnityEngine.UIElements;
 using UnityEngine.UI;
-public class scriptGameVS : MonoBehaviour {
+public class scriptGameVSGUI : MonoBehaviour {
     // Background image from "board.png" asset
     public Texture2D background;
     // Cell image from "cell.png" asset
@@ -21,6 +21,7 @@ public class scriptGameVS : MonoBehaviour {
     public Texture2D cell;
     // List of sprites used in "cells" and other controls
     public List<Sprite> sprites;
+    public List<Texture2D> CellT2D;
     // Control to output the "Indicator" state
     public Image imageIndicator;
     // Control to output the text near the "Indicator" image
@@ -38,18 +39,17 @@ public class scriptGameVS : MonoBehaviour {
     private ArrayList winnerCells;
     // Array of cells that take line or diagonal or both. Can be used for special effects, like stroke or blinking.
     public List<int> cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
-    public List<GameObject> cellButton;
     private List<int> sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
+
+    private float cellWidth, cellSpace; // Space between cel
+    public GameObject CellRendBox;
     // --------------------------------------------------------------------------
     // PlayCli implement 
     //  -1 == Host
     //  1 == Dueler
     private DuelConnObj DuelConn;
     public bool IsConnected = false;
-    // public CancellationTokenSource close_tkn;
     public int player_sign = 1;
-
-    // public DuelConnObjv2 
     // --------------------------------------------------------------------------
     public GameObject AlertPanel;
 
@@ -63,29 +63,56 @@ public class scriptGameVS : MonoBehaviour {
 
     // Initialization
     void Start() {
-        //                           0 1 2
-        // Cell array for the board: 3 4 5
-        //                           6 7 8
-        // cells = new List<int>(9) { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        sums = new List<int>(8) { 0, 0, 0, 0, 0, 0, 0, 0 }; // 3 Horizontal, 3 vertical and 2 diagonal
-        winnerCells = new ArrayList();
-
-        ImgBackground.SetActive(false);
+        EnvSetup();
         gameReset();
         // GUIRenderCell();
         Debug.Log("room key:" + this.DuelConn.current_room.Key);
         player_sign = this.DuelConn.IsHost ? 1 : -1;
 
         InitRoomStatus();
-        GUIRenderCell();
         OnConnectionInit();
     }
     // --------------------------------------------------------------------------
     // Update everything
+
+    private void OnGUI() {
+        if (!AlertPanel.active) {
+            GUIRenderCell();
+        }
+
+        // Draw "Indicator" text and image
+        gameUpdateIndicator();
+    }
+
+    void EnvSetup() {
+        int ScreenHeight = Screen.height - 4;
+        int ScreenWidth = Screen.width - 4;
+        float dwith = ImgBackground.GetComponent<RectTransform>().rect.width;
+
+        //                           0 1 2
+        // Cell array for the board: 3 4 5
+        //                           6 7 8
+        sums = new List<int>(8) { 0, 0, 0, 0, 0, 0, 0, 0 }; // 3 Horizontal, 3 vertical and 2 diagonal
+        winnerCells = new ArrayList();
+
+        // Pixel sizes for Cells
+        cellWidth = (float)(dwith / 3 * 1.1);
+
+        cellSpace = (float)(dwith / 3 * 0.1);
+
+        if (Debug.isDebugBuild) {
+            Debug.Log(string.Format("Cell size is {0}x{1} offsets are: {2}, {3}", cellWidth, cellWidth, cellSpace, cellSpace));
+        }
+        ImgBackground.SetActive(false);
+        for (int i = 0; i < CellT2D.Count; i++) {
+            var newD = ScaleTexture(CellT2D[i], (int)cellWidth, (int)cellWidth);
+            CellT2D[i] = newD;
+        }
+    }
+
     void msgChatMsg(SocketIOClient.Arguments.ResponseArgs msgPack) {
         Debug.Log(msgPack.RawText);
     }
-
     void msgSystMsg(SocketIOClient.Arguments.ResponseArgs msgPack) {
         Debug.Log(msgPack.Text);
         var msg = CellStatusResp.Parser.ParseFrom(
@@ -169,34 +196,29 @@ public class scriptGameVS : MonoBehaviour {
     }
 
     void GUIRenderCell() {
-        // Debug.Log("GUIRenderCell");
-        Debug.Log(cells.Count);
-        Debug.Log(this.sprites.Count);
-        int i = 0;
-        for (i = 0; i < cells.Count; i++) {
-            Debug.Log("i:" + i.ToString() + ",v:" + cells[i]);
-            Debug.Log(sprites[1].texture.name);
-            // Debug.Log(this.cellButton[i].GetComponent<Image>());
-            var tmp = this.cellButton[i];
-            Debug.Log("thia");
-            if (tmp == null) {
-                Debug.Log("thia");
-                tmp = GameObject.Find("cell" + i.ToString()).gameObject;
-                Debug.Log("thia");
+        float x = Screen.width;
+        float y = Screen.height;
 
-            }
-            Debug.Log("tmp[" + i.ToString() + "]" + tmp.name);
-            if (cells[i] == 1) {
-                Debug.Log("in 1");
-                this.cellButton[i].GetComponent<Image>().overrideSprite = sprites[1];
-                // this.cellButton[i].
-            } else if (cells[i] == -1) {
-                Debug.Log("in -1");
-                this.cellButton[i].GetComponent<Image>().overrideSprite = sprites[2];
+        float beginX = (float)(Screen.width / 2 - (cellWidth / 0.98 * 1.5));
+        float beginY = (float)(Screen.height / 2 - (cellWidth / 0.98 * 1.5));
+        for (int i = 0; i < cells.Count; i++) {
+            x = (float)(beginX + (i % 3 * cellWidth) + (i % 3 * cellSpace * 0.5));
+            y = (float)(beginY + (i / 3 * cellWidth) + (i / 3 * cellSpace * 0.5));
+            var r = new Rect(x, y, cellWidth, cellWidth);
+            var td = CellT2D[0];
+            if (cells[i] == 1)
+                td = CellT2D[1];
+            if (cells[i] == -1)
+                td = CellT2D[2];
+            if (GUI.Button(r, td, GUIStyle.none)) {
+                if (cells[i] == 0 && !isGameOver) {
+                    cellSetValue(i, turn);
+                    onTurnComplete(turn);
+                }
             }
         }
-        return;
     }
+
     public async void PlayerCellClick(int cell_num) {
         Debug.Log("-----------------Self------------------");
         Debug.Log(cell_num);
@@ -217,7 +239,7 @@ public class scriptGameVS : MonoBehaviour {
                 Debug.LogError(e);
             }
             cellSetValue(cell_num, player_sign);
-            GUIRenderCell();
+            // GUIRenderCell();
             onTurnComplete(this.player_sign);
         }
         Debug.Log("-----------------End Self------------------");
@@ -231,7 +253,7 @@ public class scriptGameVS : MonoBehaviour {
         //     !isGameOver
         // ) {
         cellSetValue(cell_num, player_sign * -1);
-        GUIRenderCell();
+        // GUIRenderCell();
         onTurnComplete(this.player_sign * -1);
         // }
         Debug.Log("-----------------End VS------------------");
@@ -470,4 +492,16 @@ public class scriptGameVS : MonoBehaviour {
         return true;
     }
 
+    private Texture2D ScaleTexture(Texture2D source, int targetWidth, int targetHeight) {
+        Texture2D result = new Texture2D(targetWidth, targetHeight, source.format, true);
+        Color[] rpixels = result.GetPixels(0);
+        float incX = (1.0f / (float)targetWidth);
+        float incY = (1.0f / (float)targetHeight);
+        for (int px = 0; px < rpixels.Length; px++) {
+            rpixels[px] = source.GetPixelBilinear(incX * ((float)px % targetWidth), incY * ((float)Mathf.Floor(px / targetWidth)));
+        }
+        result.SetPixels(rpixels, 0);
+        result.Apply();
+        return result;
+    }
 }

@@ -73,7 +73,7 @@ public class RoomSearch : MonoBehaviour {
             });
             Debug.Log("UpdataTurn ");
         }
-        SceneManager.LoadScene("VSGame", LoadSceneMode.Single);
+        SceneManager.LoadScene("VSGame1", LoadSceneMode.Single);
     }
 
     public void rendRoomList(List<Room> roomlist) {

@@ -4,7 +4,7 @@ using Google.Protobuf;
 using Newtonsoft.Json;
 using PlayCli.ProtoMod;
 using UnityEngine;
-using UnityEngine.UI;
+// using UnityEngine.UI;
 public class DebugTestScript : MonoBehaviour {
     // Start is called before the first frame update
 
@@ -66,10 +66,10 @@ public class DebugTestScript : MonoBehaviour {
         }
         Debug.Log(this.TestObject.current_room);
         var KvMap = new Dictionary<string, SocketIOClient.EventHandler>();
-        KvMap.Add("chat_msg_recv", async(rec) => {
+        KvMap.Add("chat_msg_recv", (rec) => {
             Debug.Log(rec.RawText);
         });
-        KvMap.Add("chat_msg", async(rec) => {
+        KvMap.Add("chat_msg", (rec) => {
             Debug.Log(rec.RawText);
         });
         await this.TestObject.ConnectToBroadcast(null, KvMap);
@@ -93,7 +93,7 @@ public class DebugTestScript : MonoBehaviour {
     /// <summary>
     /// This function is called when the MonoBehaviour will be destroyed.
     /// </summary>
-    void OnDestroy() {
-        this.TestObject.DisconnectToBroadcast();
+    async void OnDestroy() {
+        await this.TestObject.DisconnectToBroadcast();
     }
 }
