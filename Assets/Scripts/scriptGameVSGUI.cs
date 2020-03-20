@@ -76,7 +76,7 @@ public class scriptGameVSGUI : MonoBehaviour {
     // Update everything
 
     private void OnGUI() {
-        if (!AlertPanel.active) {
+        if (!AlertPanel.activeSelf) {
             GUIRenderCell();
         }
 
@@ -212,8 +212,7 @@ public class scriptGameVSGUI : MonoBehaviour {
                 td = CellT2D[2];
             if (GUI.Button(r, td, GUIStyle.none)) {
                 if (cells[i] == 0 && !isGameOver) {
-                    cellSetValue(i, turn);
-                    onTurnComplete(turn);
+                    PlayerCellClick(i);
                 }
             }
         }
