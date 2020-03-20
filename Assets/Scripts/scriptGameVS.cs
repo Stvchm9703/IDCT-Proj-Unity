@@ -36,7 +36,6 @@ public class scriptGameVS : MonoBehaviour {
     // Winner of game,  1 for "x", -1 for "o", 0 - draw. Valid only if isGameOver and not isDraw
     private ArrayList winnerCells;
     // Array of cells that take line or diagonal or both. Can be used for special effects, like stroke or blinking.
-    public Transform CellGrid;
     public List<int> cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
     public List<GameObject> cellButton;
     private List<int> sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
