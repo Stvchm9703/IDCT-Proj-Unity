@@ -38,6 +38,7 @@ public class scriptGameVS : MonoBehaviour {
     // Array of cells that take line or diagonal or both. Can be used for special effects, like stroke or blinking.
     public Transform CellGrid;
     public List<int> cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
+    public List<GameObject> cellButton;
     private List<int> sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
     // --------------------------------------------------------------------------
     // PlayCli implement 
@@ -68,6 +69,7 @@ public class scriptGameVS : MonoBehaviour {
         // cells = new List<int>(9) { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         sums = new List<int>(8) { 0, 0, 0, 0, 0, 0, 0, 0 }; // 3 Horizontal, 3 vertical and 2 diagonal
         winnerCells = new ArrayList();
+       
         ImgBackground.SetActive(false);
         gameReset();
         // GUIRenderCell();
@@ -172,17 +174,16 @@ public class scriptGameVS : MonoBehaviour {
         int i = 0;
         for (i = 0; i < cells.Count; i++) {
             Debug.Log("i:" + i.ToString() + ",v:" + cells[i]);
-            var imgTrans = this.CellGrid.Find("cell" + i.ToString()).GetComponent<Button>().image.sprite;
 
             if (cells[i] == 1) {
                 Debug.Log("in 1");
-                imgTrans = sprites[1];
+                this.cellButton[i].GetComponent<Image>().sprite = sprites[1];
             } else if (cells[i] == -1) {
                 Debug.Log("in -1");
-                imgTrans = sprites[2];
+                this.cellButton[i].GetComponent<Image>().sprite = sprites[2];
             } else {
                 Debug.Log("in 0");
-                imgTrans = sprites[0];
+                this.cellButton[i].GetComponent<Image>().sprite = sprites[0];
             };
         }
         return true;
