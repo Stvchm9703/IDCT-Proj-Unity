@@ -140,8 +140,7 @@ public class DuelConnObj : MonoBehaviour {
         Dictionary<string, SocketIOClient.EventHandler> EventMap = null
     ) {
         var option = ConnOption == null?
-        new Dictionary<string, string> { 
-                { "uid", this.conn.HostId },
+        new Dictionary<string, string> { { "uid", this.conn.HostId },
                 { "test_eng", "Unity" },
                 { "room_key", this.current_room.Key },
             }:
@@ -156,7 +155,7 @@ public class DuelConnObj : MonoBehaviour {
         foreach (KeyValuePair<string, SocketIOClient.EventHandler> kv in EventMap) {
             this.conn.AddEventFunc(kv.Key, kv.Value);
         }
-
+        StartCoroutine(PingReturn());
         await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
 
         return true;
@@ -168,7 +167,15 @@ public class DuelConnObj : MonoBehaviour {
     public async Task<bool> DisconnectToBroadcast() {
         return await this.conn.DisconnectToBroadcast();
     }
-
+    IEnumerator PingReturn() {
+        yield return new WaitForSeconds(7.5f);
+        var tmp = this.conn.RoomBroadcast.EmitAsync("ping");
+        if (this.isBroadcast) {
+            yield return PingReturn();
+        } else {
+            yield return true;
+        }
+    }
     void Destroy() {
         // this.conn destruct call;
     }
