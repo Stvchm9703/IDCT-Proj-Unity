@@ -87,8 +87,18 @@ public class scriptGameVSGUI : MonoBehaviour {
     void EnvSetup() {
         int ScreenHeight = Screen.height - 4;
         int ScreenWidth = Screen.width - 4;
-        float dwith = ImgBackground.GetComponent<RectTransform>().rect.width;
+        // float dwith = ImgBackground.GetComponent<RectTransform>().rect.width;
+        float DefaultRatio = ImgBackground.GetComponent<RectTransform>().rect.width / ImgBackground.GetComponent<RectTransform>().rect.height;
+        float ScreenRatio = ScreenWidth / ScreenHeight;
+        float wid = 0;
 
+        if (DefaultRatio < ScreenRatio) {
+            wid = ScreenHeight * DefaultRatio;
+        } else if (DefaultRatio > ScreenRatio) {
+            wid = ScreenWidth;
+        } else {
+            wid = ScreenWidth;
+        }
         //                           0 1 2
         // Cell array for the board: 3 4 5
         //                           6 7 8
@@ -96,10 +106,9 @@ public class scriptGameVSGUI : MonoBehaviour {
         winnerCells = new ArrayList();
 
         // Pixel sizes for Cells
-        cellWidth = (float)(dwith / 3 * 1.1);
+        cellWidth = (float)(wid / 3 * 0.9);
 
-        cellSpace = (float)(dwith / 3 * 0.1);
-
+        cellSpace = (float)(wid / 3 * 0.1);
         if (Debug.isDebugBuild) {
             Debug.Log(string.Format("Cell size is {0}x{1} offsets are: {2}, {3}", cellWidth, cellWidth, cellSpace, cellSpace));
         }
@@ -120,7 +129,9 @@ public class scriptGameVSGUI : MonoBehaviour {
         Debug.Log(msg);
         if (msg.ErrorMsg == null) {
             Debug.Log(msg.CellStatus);
-            VsPlayerCellClick(msg.CellStatus.CellNum);
+            if (msg.CellStatus.Turn != this.player_sign) {
+                VsPlayerCellClick(msg.CellStatus.CellNum);
+            }
         } else {
             ErrorMsgHandler(msg);
         }
