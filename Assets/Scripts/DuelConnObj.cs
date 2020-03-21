@@ -155,7 +155,7 @@ public class DuelConnObj : MonoBehaviour {
         foreach (KeyValuePair<string, SocketIOClient.EventHandler> kv in EventMap) {
             this.conn.AddEventFunc(kv.Key, kv.Value);
         }
-        StartCoroutine(PingReturn());
+        // StartCoroutine(PingReturn());
         await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
 
         return true;
