@@ -44,17 +44,13 @@ namespace PlayCli {
         ) {
             var wsclient = new WebSocket($"ws://{conf.Host}:8000/{RoomKey}");
             wsclient.OnOpen += (type, e) => {
-                Debug.Log($"Reconnection happened, type: {type}, url: {wsclient.Url}");
+                Debug.Log($"Connected url: {wsclient.Url}");
             };
             wsclient.OnError += (info, e) => {
                 Debug.LogWarning(info.ToString());
                 Debug.LogWarning(e);
             };
 
-            wsclient.OnMessage += (msg, e) => {
-                Debug.Log($"Message received: {msg}");
-                Debug.Log($"Message : {e.RawData.ToString()}");
-            };
             foreach (var func in MsgHandler) {
                 wsclient.OnMessage += func;
             }

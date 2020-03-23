@@ -15,7 +15,8 @@ public class DuelConnObj : MonoBehaviour {
     // Start is called before the first frame update
     public DuelConnector conn;
     public WSConnect2 wsConnect;
-    List<System.EventHandler<WebSocketSharp.MessageEventArgs>> wscHandler;
+    List<System.EventHandler<WebSocketSharp.MessageEventArgs>> wscHandler 
+        = new List<System.EventHandler<WebSocketSharp.MessageEventArgs>>();
     public Room current_room;
     // public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
     // public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
@@ -85,7 +86,6 @@ public class DuelConnObj : MonoBehaviour {
         try {
             if (able_update) {
                 CellStatus d = await this.conn.UpdateRoomTurn(cs);
-                this.current_room.CellStatus.Add(d);
                 return true;
             }
             return false;
@@ -205,9 +205,6 @@ public class DuelConnObj : MonoBehaviour {
             var msgBlock = CellStatusResp.Parser.ParseFrom(
                 msg.RawData
             );
-            Debug.Log($"msg-string:{msg.Data}");
-            Debug.Log($"msg-raw-dt:{msg.RawData.ToString()}");
-            Debug.Log($"msg-decode:{msgBlock}");
             funcHandler(msgBlock);
         });
         if (this.wsConnect != null) {

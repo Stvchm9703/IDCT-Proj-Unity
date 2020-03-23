@@ -79,7 +79,10 @@ public class scriptGameVSGUI : MonoBehaviour {
         }
 
         // Draw "Indicator" text and image
-        gameUpdateIndicator();
+    }
+
+    void Update() {
+        // gameUpdateIndicator();
     }
 
     void EnvSetup() {
@@ -120,8 +123,12 @@ public class scriptGameVSGUI : MonoBehaviour {
     void msgSystMsg(CellStatusResp msgPack) {
         if (msgPack.ErrorMsg == null) {
             Debug.Log(msgPack.CellStatus);
+            this.DuelConn.current_room.CellStatus.Add(msgPack.CellStatus);
             if (msgPack.CellStatus.Turn != this.player_sign) {
                 VsPlayerCellClick(msgPack.CellStatus.CellNum);
+            }
+            if (DuelConn.current_room.CellStatus.Count == 10) {
+                Debug.Log("Game End?");
             }
         } else {
             ErrorMsgHandler(msgPack);
@@ -302,9 +309,9 @@ public class scriptGameVSGUI : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Called when there is no turn, some player wins, or critical error occurs
     void gameStop(int theTurn) {
-        if (Math.Abs(theTurn) == 1) {
-            turn = theTurn;
-        }
+        // if (Math.Abs(theTurn) == 1) {
+        turn = theTurn;
+        // }
         // Override global value if parameter is set
 
         isGameOver = true; // Gaming is disabled
