@@ -133,7 +133,7 @@ public class scriptGameVSGUI : MonoBehaviour {
     async void OnConnectionInit() {
         Debug.Log("start to connect Broadcast");
         await this.DuelConn.ConnectToBroadcast();
-        this.DuelConn.AddEventFunc(msgSystMsg);
+        this.DuelConn.AddEventFunc((CellStatusResp msgpack) => msgSystMsg(msgpack));
     }
 
     async void OnDestroy() {

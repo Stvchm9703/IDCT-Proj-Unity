@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.WebSockets;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,8 +9,6 @@ using Google.Protobuf;
 using Grpc.Core;
 using Newtonsoft.Json;
 using PlayCli.ProtoMod;
-// using SocketIOClient;
-using Websocket.Client;
 // using Grpc
 using UnityEngine;
 namespace PlayCli {
@@ -26,7 +23,6 @@ namespace PlayCli {
         private Metadata header_meta;
 
         // public SocketIO RoomBroadcast;
-        public WebsocketClient RoomCast;
         private static readonly ManualResetEvent ExitEvent = new ManualResetEvent(false);
         private string bearer_key;
         public DuelConnector(CfServerSetting s) {
@@ -166,92 +162,7 @@ namespace PlayCli {
         //  --------------------------------------------
         // Socket-IO
 
-        // public async Task<bool> ConnectToBroadcast(CfServerSetting conf = null, Dictionary<string, string> option = null) {
-        //     var opt = option == null ?
-        //         new Dictionary<string, string> { 
-        //             { "uid", this.UserID },
-        //             { "testEng", "Unity" },
-        //         } :
-        //         option;
-
-        //     var socket = new SocketIO("http://192.168.0.102:8000") {
-        //         Parameters = opt
-        //     };
-
-        //     socket.OnConnected += () => {
-        //         Debug.Log("Connected");
-        //     };
-
-        //     socket.OnError += (res) => {
-        //         Debug.LogError(res);
-        //     };
-
-        //     await socket.ConnectAsync();
-        //     this.RoomBroadcast = socket;
-        //     return true;
-        // }
-        public async Task<bool> ConnectToBroadcast(string RoomKey, CfServerSetting conf = null) {
-            // ExitEvent.Reset();
-            var factory = new Func<ClientWebSocket>(() => {
-                var client = new ClientWebSocket {
-                Options = {
-                KeepAliveInterval = TimeSpan.FromSeconds(5),
-                }
-                };
-                //client.Options.SetRequestHeader("Origin", "xxx");
-                return client;
-            });
-            var url = new Uri($"ws://{conf.Host}:8000/{RoomKey}");
-
-            var wsclient = new WebsocketClient(url, factory);
-            wsclient.ReconnectTimeout = TimeSpan.FromSeconds(30);
-            wsclient.ErrorReconnectTimeout = TimeSpan.FromSeconds(30);
-            wsclient.ReconnectionHappened.Subscribe(type => {
-                Debug.Log($"Reconnection happened, type: {type}, url: {wsclient.Url}");
-            });
-            wsclient.DisconnectionHappened.Subscribe(info =>
-                Debug.LogWarning($"Disconnection happened, type: {info.Type}"));
-
-            wsclient.MessageReceived.Subscribe(msg => {
-                Debug.Log($"Message received: {msg}");
-            });
-
-            await wsclient.Start();
-            this.RoomCast = wsclient;
-
-            // ExitEvent.WaitOne();
-            return true;
-
-        }
-        // public bool AddEventFunc(string eventName, SocketIOClient.EventHandler func, params SocketIOClient.EventHandler[] extraFunc) {
-        //     if (this.RoomBroadcast != null) {
-        //         this.RoomBroadcast.On(eventName, func, extraFunc);
-        //         return true;
-        //     }
-        //     return false;
-        // }
-
-        public bool AddEventFunc(Action<Websocket.Client.ResponseMessage> func) {
-            if (this.RoomCast != null) {
-                this.RoomCast.MessageReceived.Subscribe(func);
-                return true;
-            }
-            return false;
-        }
-
-        // public async Task<bool> DisconnectToBroadcast() {
-        //     if (this.RoomBroadcast != null) {
-        //         await this.RoomBroadcast.CloseAsync();
-        //     }
-        //     return true;
-        // }
-        public async Task<bool> DisconnectToBroadcast() {
-            if (this.RoomCast != null) {
-                ExitEvent.Set();
-                await this.RoomCast.Stop(WebSocketCloseStatus.NormalClosure, "endOfCast");
-            }
-            return true;
-        }
+      
 
         ~DuelConnector() {
             // this.DisconnectToBroadcast();

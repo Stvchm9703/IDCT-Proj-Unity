@@ -7,13 +7,14 @@ using Google.Protobuf;
 using Grpc.Core;
 using PlayCli;
 using PlayCli.ProtoMod;
-using SocketIOClient;
+// using SocketIOClient;
 using UnityEngine;
 // using UnityEditor;
 
 public class DuelConnObj : MonoBehaviour {
     // Start is called before the first frame update
     public DuelConnector conn;
+    public WSConnect wsConnect;
     public Room current_room;
     // public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
     // public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
@@ -121,7 +122,7 @@ public class DuelConnObj : MonoBehaviour {
 
     public async Task<bool> ConnectToBroadcast() {
         Debug.Log("try connect to Broacast");
-        var conn = await this.conn.ConnectToBroadcast(
+        var conn = await this.wsConnect.ConnectToBroadcast(
             this.current_room.Key, ConfigFile);
         if (!conn) {
             return false;
@@ -165,30 +166,27 @@ public class DuelConnObj : MonoBehaviour {
     //     return this.conn.AddEventFunc(EventHandler);
     // }
 
-    public bool AddEventFunc(System.Action<CellStatusResp> messageEvent) {
-        this.conn.AddEventFunc((msg) => {
+    public bool AddEventFunc(System.Action<Websocket.Client.ResponseMessage> messageEvent) {
+        this.wsConnect.AddEventFunc(messageEvent);
+        return true;
+    }
+
+    public bool AddEventFunc(System.Action<CellStatusResp> func) {
+        this.wsConnect.AddEventFunc((msg) => {
             var MsgBlock = CellStatusResp.Parser.ParseFrom(
                 ByteString.FromBase64(
                     msg.Text.Trim('"')
                 )
             );
-            messageEvent.Invoke(MsgBlock);
+            func(MsgBlock);
         });
         return true;
     }
 
     public async Task<bool> DisconnectToBroadcast() {
-        return await this.conn.DisconnectToBroadcast();
+        return await this.wsConnect.DisconnectToBroadcast();
     }
-    // IEnumerator PingReturn() {
-    //     yield return new WaitForSeconds(7.5f);
-    //     var tmp = this.conn.RoomBroadcast.EmitAsync("ping");
-    //     if (this.isBroadcast) {
-    //         yield return PingReturn();
-    //     } else {
-    //         yield return true;
-    //     }
-    // }
+
     void Destroy() {
         // this.conn destruct call;
     }
