@@ -23,7 +23,6 @@ namespace PlayCli {
         private Metadata header_meta;
 
         // public SocketIO RoomBroadcast;
-        private static readonly ManualResetEvent ExitEvent = new ManualResetEvent(false);
         private string bearer_key;
         public DuelConnector(CfServerSetting s) {
             var path = Regex.Replace(s.KeyPemPath, "%", "");

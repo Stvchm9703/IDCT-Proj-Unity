@@ -14,7 +14,7 @@ using UnityEngine;
 public class DuelConnObj : MonoBehaviour {
     // Start is called before the first frame update
     public DuelConnector conn;
-    public WSConnect wsConnect;
+    public WSConnect2 wsConnect;
     public Room current_room;
     // public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
     // public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
@@ -120,21 +120,6 @@ public class DuelConnObj : MonoBehaviour {
         return null;
     }
 
-    public async Task<bool> ConnectToBroadcast() {
-        Debug.Log("try connect to Broacast");
-        if(this.wsConnect == null){
-            this.wsConnect = new WSConnect();
-        }
-        var conn = await this.wsConnect.ConnectToBroadcast(
-            this.current_room.Key, ConfigFile);
-        if (!conn) {
-            return false;
-        }
-
-        // await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
-        return true;
-    }
-
     // public async Task<bool> ConnectToBroadcast(
     //     Dictionary<string, string> ConnOption = null,
     //     Dictionary<string, SocketIOClient.EventHandler> EventMap = null
@@ -160,30 +145,63 @@ public class DuelConnObj : MonoBehaviour {
 
     //     return true;
     // }
+    public async Task<bool> ConnectToBroadcast() {
+        Debug.Log("try connect to Broacast");
+        if (this.wsConnect == null) {
+            this.wsConnect = new WSConnect2();
+        }
+        var conn = await this.wsConnect.ConnectToBroadcast(
+            this.current_room.Key, ConfigFile);
+        if (!conn) {
+            return false;
+        }
 
+        // await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
+        return true;
+    }
+    ///<method>
+    ///     For Socket-IO-Impl 
+    /// </method>
     // public bool AddEventFunc(string eventName, EventHandler func, params EventHandler[] extraFunc) {
     //     return this.conn.AddEventFunc(eventName, func, extraFunc);
     // }
 
-    // public bool AddEventFunc(System.Action<Websocket.Client.ResponseMessage> EventHandler) {
-    //     return this.conn.AddEventFunc(EventHandler);
+    ///<method>
+    ///     For WebSocket-Impl 
+    /// </method>
+    // public bool AddEventFunc(System.Action<Websocket.Client.ResponseMessage> messageEvent) {
+    //     this.wsConnect.AddEventFunc(messageEvent);
+    //     return true;
     // }
 
-    public bool AddEventFunc(System.Action<Websocket.Client.ResponseMessage> messageEvent) {
-        this.wsConnect.AddEventFunc(messageEvent);
-        return true;
-    }
+    ///<method>
+    ///     For WebSocket-Impl 
+    /// </method>
+    // public bool AddEventFunc(System.Action<CellStatusResp> func) {
+    //     this.wsConnect.AddEventFunc((msg) => {
+    //         var MsgBlock = CellStatusResp.Parser.ParseFrom(
+    //             ByteString.FromBase64(
+    //                 msg.Text.Trim('"')
+    //             )
+    //         );
+    //         func(MsgBlock);
+    //     });
+    //     return true;
+    // }
 
-    public bool AddEventFunc(System.Action<CellStatusResp> func) {
-        this.wsConnect.AddEventFunc((msg) => {
-            var MsgBlock = CellStatusResp.Parser.ParseFrom(
-                ByteString.FromBase64(
-                    msg.Text.Trim('"')
-                )
+    ///<method>
+    ///     For WebSocket-Impl 2
+    /// </method>
+    public bool AddEventFunc(System.EventHandler<WebSocketSharp.MessageEventArgs> funcHandler) {
+        return this.wsConnect.AddEventFunc(funcHandler);
+    }
+    public bool AddEventFunc(System.Action<CellStatusResp> funcHandler) {
+        return this.wsConnect.AddEventFunc((co, msg) => {
+            var msgBlock = CellStatusResp.Parser.ParseFrom(
+                ByteString.FromBase64(msg.Data)
             );
-            func(MsgBlock);
+            funcHandler(msgBlock);
         });
-        return true;
     }
 
     public async Task<bool> DisconnectToBroadcast() {
@@ -191,6 +209,6 @@ public class DuelConnObj : MonoBehaviour {
     }
 
     void Destroy() {
-        // this.conn destruct call;
+        this.DisconnectToBroadcast();
     }
 }
