@@ -201,7 +201,7 @@ public class DuelConnObj : MonoBehaviour {
         return true;
     }
     public bool AddEventFunc(System.Action<CellStatusResp> funcHandler) {
-        System.EventHandler<WebSocketSharp.MessageEventArgs> wrapFunc = (co, msg) => {
+        System.EventHandler<WebSocketSharp.MessageEventArgs> wrapFunc = new System.EventHandler<WebSocketSharp.MessageEventArgs>((co, msg) => {
             var msgBlock = CellStatusResp.Parser.ParseFrom(
                 msg.RawData
             );
@@ -209,7 +209,7 @@ public class DuelConnObj : MonoBehaviour {
             Debug.Log($"msg-raw-dt:{msg.RawData.ToString()}");
             Debug.Log($"msg-decode:{msgBlock}");
             funcHandler(msgBlock);
-        };
+        });
         if (this.wsConnect != null) {
             return this.wsConnect.AddEventFunc(wrapFunc);
         }
