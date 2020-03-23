@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 //using System.Text;
 //using System.Threading;
-using System.Threading.Tasks;
-using Google.Protobuf;
 using Grpc.Core;
 using PlayCli.ProtoMod;
 //using SocketIOClient;
@@ -119,21 +117,14 @@ public class scriptGameVSGUI : MonoBehaviour {
         }
     }
 
-    void msgChatMsg(SocketIOClient.Arguments.ResponseArgs msgPack) {
-        Debug.Log(msgPack.RawText);
-    }
-    void msgSystMsg(SocketIOClient.Arguments.ResponseArgs msgPack) {
-        Debug.Log(msgPack.Text);
-        var msg = CellStatusResp.Parser.ParseFrom(
-            ByteString.FromBase64(msgPack.Text.Trim('"')));
-        Debug.Log(msg);
-        if (msg.ErrorMsg == null) {
-            Debug.Log(msg.CellStatus);
-            if (msg.CellStatus.Turn != this.player_sign) {
-                VsPlayerCellClick(msg.CellStatus.CellNum);
+    void msgSystMsg(CellStatusResp msgPack) {
+        if (msgPack.ErrorMsg == null) {
+            Debug.Log(msgPack.CellStatus);
+            if (msgPack.CellStatus.Turn != this.player_sign) {
+                VsPlayerCellClick(msgPack.CellStatus.CellNum);
             }
         } else {
-            ErrorMsgHandler(msg);
+            ErrorMsgHandler(msgPack);
         }
         gameUpdateIndicator();
         return;
@@ -141,11 +132,8 @@ public class scriptGameVSGUI : MonoBehaviour {
 
     async void OnConnectionInit() {
         Debug.Log("start to connect Broadcast");
-        var KvMap = new Dictionary<string, SocketIOClient.EventHandler>();
-        KvMap.Add("chat_msg_recv", msgChatMsg);
-        KvMap.Add("syst_msg", msgSystMsg);
-        await this.DuelConn.ConnectToBroadcast(null, KvMap);
-
+        await this.DuelConn.ConnectToBroadcast();
+        this.DuelConn.AddEventFunc(msgSystMsg);
     }
 
     async void OnDestroy() {

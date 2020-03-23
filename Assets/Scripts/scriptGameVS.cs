@@ -101,12 +101,12 @@ public class scriptGameVS : MonoBehaviour {
         return;
     }
 
-    async void OnConnectionInit() {
+    void OnConnectionInit() {
         Debug.Log("start to connect Broadcast");
-        var KvMap = new Dictionary<string, SocketIOClient.EventHandler>();
-        KvMap.Add("chat_msg_recv", msgChatMsg);
-        KvMap.Add("syst_msg", msgSystMsg);
-        await this.DuelConn.ConnectToBroadcast(null, KvMap);
+        // var KvMap = new Dictionary<string, SocketIOClient.EventHandler>();
+        // KvMap.Add("chat_msg_recv", msgChatMsg);
+        // KvMap.Add("syst_msg", msgSystMsg);
+        // await this.DuelConn.ConnectToBroadcast(null, KvMap);
 
     }
 

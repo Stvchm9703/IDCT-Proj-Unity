@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Google.Protobuf;
 using Grpc.Core;
 using PlayCli;
 using PlayCli.ProtoMod;
@@ -119,63 +120,75 @@ public class DuelConnObj : MonoBehaviour {
     }
 
     public async Task<bool> ConnectToBroadcast() {
-        var option = new Dictionary<string, string> { { "uid", this.conn.HostId },
-                { "test_eng", "Unity" },
-                { "room_key", this.current_room.Key },
-            };
         Debug.Log("try connect to Broacast");
         var conn = await this.conn.ConnectToBroadcast(
-            ConfigFile, option);
-
+            this.current_room.Key, ConfigFile);
         if (!conn) {
             return false;
         }
 
-        await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
+        // await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
         return true;
     }
 
-    public async Task<bool> ConnectToBroadcast(
-        Dictionary<string, string> ConnOption = null,
-        Dictionary<string, SocketIOClient.EventHandler> EventMap = null
-    ) {
-        var option = ConnOption == null?
-        new Dictionary<string, string> { { "uid", this.conn.HostId },
-                { "test_eng", "Unity" },
-                { "room_key", this.current_room.Key },
-            }:
-            ConnOption;
+    // public async Task<bool> ConnectToBroadcast(
+    //     Dictionary<string, string> ConnOption = null,
+    //     Dictionary<string, SocketIOClient.EventHandler> EventMap = null
+    // ) {
+    //     var option = ConnOption == null?
+    //     new Dictionary<string, string> { { "uid", this.conn.HostId },
+    //             { "test_eng", "Unity" },
+    //             { "room_key", this.current_room.Key },
+    //         }:
+    //         ConnOption;
 
-        Debug.Log("try connect to Broacast");
-        var conn = await this.conn.ConnectToBroadcast(
-            ConfigFile, option);
-        if (!conn) {
-            return false;
-        }
-        foreach (KeyValuePair<string, SocketIOClient.EventHandler> kv in EventMap) {
-            this.conn.AddEventFunc(kv.Key, kv.Value);
-        }
-        // StartCoroutine(PingReturn());
-        await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
+    //     Debug.Log("try connect to Broacast");
+    //     var conn = await this.conn.ConnectToBroadcast(
+    //         ConfigFile, option);
+    //     if (!conn) {
+    //         return false;
+    //     }
+    //     foreach (KeyValuePair<string, SocketIOClient.EventHandler> kv in EventMap) {
+    //         this.conn.AddEventFunc(kv.Key, kv.Value);
+    //     }
+    //     // StartCoroutine(PingReturn());
+    //     await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
 
+    //     return true;
+    // }
+
+    // public bool AddEventFunc(string eventName, EventHandler func, params EventHandler[] extraFunc) {
+    //     return this.conn.AddEventFunc(eventName, func, extraFunc);
+    // }
+
+    // public bool AddEventFunc(System.Action<Websocket.Client.ResponseMessage> EventHandler) {
+    //     return this.conn.AddEventFunc(EventHandler);
+    // }
+
+    public bool AddEventFunc(System.Action<CellStatusResp> messageEvent) {
+        this.conn.AddEventFunc((msg) => {
+            var MsgBlock = CellStatusResp.Parser.ParseFrom(
+                ByteString.FromBase64(
+                    msg.Text.Trim('"')
+                )
+            );
+            messageEvent.Invoke(MsgBlock);
+        });
         return true;
-    }
-    public bool AddEventFunc(string eventName, EventHandler func, params EventHandler[] extraFunc) {
-        return this.conn.AddEventFunc(eventName, func, extraFunc);
     }
 
     public async Task<bool> DisconnectToBroadcast() {
         return await this.conn.DisconnectToBroadcast();
     }
-    IEnumerator PingReturn() {
-        yield return new WaitForSeconds(7.5f);
-        var tmp = this.conn.RoomBroadcast.EmitAsync("ping");
-        if (this.isBroadcast) {
-            yield return PingReturn();
-        } else {
-            yield return true;
-        }
-    }
+    // IEnumerator PingReturn() {
+    //     yield return new WaitForSeconds(7.5f);
+    //     var tmp = this.conn.RoomBroadcast.EmitAsync("ping");
+    //     if (this.isBroadcast) {
+    //         yield return PingReturn();
+    //     } else {
+    //         yield return true;
+    //     }
+    // }
     void Destroy() {
         // this.conn destruct call;
     }
