@@ -122,6 +122,9 @@ public class DuelConnObj : MonoBehaviour {
 
     public async Task<bool> ConnectToBroadcast() {
         Debug.Log("try connect to Broacast");
+        if(this.wsConnect == null){
+            this.wsConnect = new WSConnect();
+        }
         var conn = await this.wsConnect.ConnectToBroadcast(
             this.current_room.Key, ConfigFile);
         if (!conn) {
