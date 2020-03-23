@@ -26,9 +26,38 @@ namespace PlayCli {
 
             wsclient.OnMessage += (msg, e) => {
                 Debug.Log($"Message received: {msg}");
-                Debug.Log($"Message : {e.Data}");
+                Debug.Log($"Message : {e.RawData.ToString()}");
             };
 
+            wsclient.ConnectAsync();
+            this.RoomCast = wsclient;
+            // ExitEvent.WaitOne();
+            this.RoomCast.Ping();
+            return true;
+
+        }
+
+        public async Task<bool> ConnectToBroadcast(
+            string RoomKey,
+            CfServerSetting conf = null,
+            List<EventHandler<MessageEventArgs>> MsgHandler = null
+        ) {
+            var wsclient = new WebSocket($"ws://{conf.Host}:8000/{RoomKey}");
+            wsclient.OnOpen += (type, e) => {
+                Debug.Log($"Reconnection happened, type: {type}, url: {wsclient.Url}");
+            };
+            wsclient.OnError += (info, e) => {
+                Debug.LogWarning(info.ToString());
+                Debug.LogWarning(e);
+            };
+
+            wsclient.OnMessage += (msg, e) => {
+                Debug.Log($"Message received: {msg}");
+                Debug.Log($"Message : {e.RawData.ToString()}");
+            };
+            foreach (var func in MsgHandler) {
+                wsclient.OnMessage += func;
+            }
             wsclient.ConnectAsync();
             this.RoomCast = wsclient;
             // ExitEvent.WaitOne();
@@ -48,6 +77,7 @@ namespace PlayCli {
             if (this.RoomCast != null) {
                 this.RoomCast.CloseAsync();
             }
+            Debug.Log("disconnected");
             return true;
         }
     }

@@ -15,6 +15,7 @@ public class DuelConnObj : MonoBehaviour {
     // Start is called before the first frame update
     public DuelConnector conn;
     public WSConnect2 wsConnect;
+    List<System.EventHandler<WebSocketSharp.MessageEventArgs>> wscHandler;
     public Room current_room;
     // public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
     // public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
@@ -151,7 +152,7 @@ public class DuelConnObj : MonoBehaviour {
             this.wsConnect = new WSConnect2();
         }
         var conn = await this.wsConnect.ConnectToBroadcast(
-            this.current_room.Key, ConfigFile);
+            this.current_room.Key, ConfigFile, wscHandler);
         if (!conn) {
             return false;
         }
@@ -193,15 +194,27 @@ public class DuelConnObj : MonoBehaviour {
     ///     For WebSocket-Impl 2
     /// </method>
     public bool AddEventFunc(System.EventHandler<WebSocketSharp.MessageEventArgs> funcHandler) {
-        return this.wsConnect.AddEventFunc(funcHandler);
+        if (this.wsConnect != null) {
+            this.wsConnect.AddEventFunc(funcHandler);
+        }
+        this.wscHandler.Add(funcHandler);
+        return true;
     }
     public bool AddEventFunc(System.Action<CellStatusResp> funcHandler) {
-        return this.wsConnect.AddEventFunc((co, msg) => {
+        System.EventHandler<WebSocketSharp.MessageEventArgs> wrapFunc = (co, msg) => {
             var msgBlock = CellStatusResp.Parser.ParseFrom(
-                ByteString.FromBase64(msg.Data)
+                msg.RawData
             );
+            Debug.Log($"msg-string:{msg.Data}");
+            Debug.Log($"msg-raw-dt:{msg.RawData.ToString()}");
+            Debug.Log($"msg-decode:{msgBlock}");
             funcHandler(msgBlock);
-        });
+        };
+        if (this.wsConnect != null) {
+            return this.wsConnect.AddEventFunc(wrapFunc);
+        }
+        this.wscHandler.Add(wrapFunc);
+        return true;
     }
 
     public async Task<bool> DisconnectToBroadcast() {
