@@ -122,7 +122,7 @@ public class scriptGameVSGUI : MonoBehaviour {
 
     void msgSystMsg(object caller, CellStatusResp msgPack) {
         Debug.Log(caller.ToString());
-        if (msgPack.ErrorMsg == null) {
+        if (msgPack.ResponseMsgCase == CellStatusResp.ResponseMsgOneofCase.CellStatus) {
             Debug.Log(msgPack.CellStatus);
             this.DuelConn.current_room.CellStatus.Add(msgPack.CellStatus);
             if (msgPack.CellStatus.Turn != this.player_sign &&
