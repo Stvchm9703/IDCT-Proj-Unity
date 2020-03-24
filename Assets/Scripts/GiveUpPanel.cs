@@ -30,7 +30,7 @@ public class GiveUpPanel : MonoBehaviour {
         GivePanelIsOpen = false;
         if (MainCtl != null)MainCtl.giveUp();
         else if (MainCtlvs != null)MainCtlvs.giveUp();
-        else if(MainCtlvsGui != null) MainCtlvsGui.giveUp();
+        else if (MainCtlvsGui != null)MainCtlvsGui.giveUp();
     }
     public void giveupcloseclick() {
         GivePanelIsOpen = false;
@@ -48,6 +48,12 @@ public class GiveUpPanel : MonoBehaviour {
                 this.GivePanelIsOpen = true;
             } else {
                 MainCtlvs.backToMenu(); // OK
+            }
+        } else if (MainCtlvsGui != null) {
+            if (!MainCtlvsGui.isGameOver) {
+                this.GivePanelIsOpen = true;
+            } else {
+                MainCtlvsGui.backToMenu(); // OK
             }
         }
     }
