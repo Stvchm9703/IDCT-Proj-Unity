@@ -73,7 +73,7 @@ public class RoomSearch : MonoBehaviour {
             });
             Debug.Log("UpdataTurn ");
         }
-        SceneManager.LoadScene("VSGame1", LoadSceneMode.Single);
+        SceneManager.LoadScene("VSGame", LoadSceneMode.Single);
     }
 
     public void rendRoomList(List<Room> roomlist) {
@@ -99,8 +99,12 @@ public class RoomSearch : MonoBehaviour {
     }
     void Awake() {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
-        if (objs.Length == 1) {
-            DuelConn = objs[0].GetComponent<DuelConnObj>();
+        if (objs.Length > 1) {
+            foreach (var obj in objs) {
+                if (obj.GetComponent<DuelConnObj>().conn != null)
+                    DuelConn = obj.GetComponent<DuelConnObj>();
+                else Destroy(obj);
+            }
             // IsConnected = true;
         }
     }

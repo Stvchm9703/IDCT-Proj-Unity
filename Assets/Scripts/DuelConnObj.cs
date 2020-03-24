@@ -31,11 +31,7 @@ public class DuelConnObj : MonoBehaviour {
     void Awake() {
         Debug.Log("on Awake process - DuelConnObj");
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
-        if (objs.Length > 1) {
-            if(this.conn == null){
-                Destroy(this.gameObject);
-            }
-        } else {
+        if (objs.Length == 1){
             DontDestroyOnLoad(this.gameObject);
             this.gameObject.tag = "Connector";
             if (this.conn == null) {
