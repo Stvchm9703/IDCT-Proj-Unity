@@ -56,12 +56,12 @@ public class scriptGameVSGUI : MonoBehaviour {
         if (objs.Length == 1) {
             DuelConn = objs[0].GetComponent<DuelConnObj>();
             IsConnected = true;
-        } else if (objs.Length > 1) {
-            foreach (var obj in objs) {
-                if (obj.GetComponent<DuelConnObj>().conn != null)
-                    DuelConn = obj.GetComponent<DuelConnObj>();
-                else Destroy(obj);
-            }
+        // } else if (objs.Length > 1) {
+        //     foreach (var obj in objs) {
+        //         if (obj.GetComponent<DuelConnObj>().conn != null)
+        //             DuelConn = obj.GetComponent<DuelConnObj>();
+        //         else Destroy(obj);
+        //     }
             // IsConnected = true;
         }
     }

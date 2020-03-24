@@ -28,15 +28,22 @@ public class DuelConnObj : MonoBehaviour {
     // Debug Scn
     public DebugTestScript DebugScn;
     public string config_file;
-    // void Awake() {
-    //     Debug.Log("on Awake process - DuelConnObj");
-    //     GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
-    //     if (objs.Length == 1) {
-    //         DontDestroyOnLoad(this.gameObject);
-    //         this.gameObject.tag = "Connector";
-
-    //     }
-    // }
+    void Awake() {
+        Debug.Log("on Awake process - DuelConnObj");
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
+        if (objs.Length > 1) {
+            if (this.conn == null) {
+                Destroy(this.gameObject);
+            }
+        } else {
+            DontDestroyOnLoad(this.gameObject);
+            this.gameObject.tag = "Connector";
+            if (this.conn == null) {
+                ConfigFile = Config.LoadCfFile(PlayCli.ConfigPath.StreamingAsset).remote;
+                this.conn = new DuelConnector(ConfigFile);
+            }
+        }
+    }
 
     public void Init() {
         if (this.conn == null) {

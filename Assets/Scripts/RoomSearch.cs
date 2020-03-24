@@ -99,16 +99,20 @@ public class RoomSearch : MonoBehaviour {
     }
     void Awake() {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
-        if (objs.Length > 1) {
-            foreach (var obj in objs) {
-                if (obj.GetComponent<DuelConnObj>().conn != null)
-                    DuelConn = obj.GetComponent<DuelConnObj>();
-                else Destroy(obj);
-            }
-            // IsConnected = true;
-        } else {
+        // if (objs.Length > 1) {
+        //     foreach (var obj in objs) {
+        //         if (obj.GetComponent<DuelConnObj>().conn != null)
+        //             DuelConn = obj.GetComponent<DuelConnObj>();
+        //         else Destroy(obj);
+        //     }
+        //     // IsConnected = true;
+        // } else {
+        //     DuelConn = objs[0].GetComponent<DuelConnObj>();
+        //     DuelConn.Init();
+        // }
+        if (objs.Length == 1) {
             DuelConn = objs[0].GetComponent<DuelConnObj>();
-            DuelConn.Init();
+            // IsConnected = true;
         }
     }
 }
