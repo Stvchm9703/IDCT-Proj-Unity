@@ -7,27 +7,26 @@ public class GameAlertPanel : MonoBehaviour {
     public GameObject Panel;
     public scriptGameVS MainCtlvs;
     public scriptGame MainCtl;
+    public scriptGameVSGUI MainCtlvsGui;
     public bool GivePanelIsOpen = false;
 
-    void Start () {
-        Debug.Log ("gu panel start");
+    void Start() {
+        Debug.Log("gu panel start");
         if (Panel == null) {
-            Debug.Log ("missing");
-            Panel = this.transform.Find ("GameAlertPanel").gameObject;
-        }
-        if (MainCtl == null) {
-            MainCtl = this.GetComponent<scriptGame> ();
-        }
-        if (MainCtlvs == null) {
-            MainCtlvs = this.GetComponent<scriptGameVS> ();
+            Debug.Log("missing");
+            Panel = this.transform.Find("GameAlertPanel").gameObject;
         }
 
     }
-    void Update () {
-        Panel.SetActive (GivePanelIsOpen);
+    void Update() {
+        Panel.SetActive(GivePanelIsOpen);
     }
-    public void giveupcloseclick () {
-        MainCtlvs.GameAlertClose();
+    public void giveupcloseclick() {
+        if (MainCtlvs != null)
+            MainCtlvs.GameAlertClose();
+        else if (MainCtlvsGui != null)
+            MainCtlvsGui.GameAlertClose();
+
         GivePanelIsOpen = false;
     }
 }

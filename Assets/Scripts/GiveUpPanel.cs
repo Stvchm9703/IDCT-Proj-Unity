@@ -10,6 +10,8 @@ public class GiveUpPanel : MonoBehaviour {
     public GameObject Panel;
     public scriptGameVS MainCtlvs;
     public scriptGame MainCtl;
+
+    public scriptGameVSGUI MainCtlvsGui;
     public bool GivePanelIsOpen = false;
 
     void Start() {
@@ -18,13 +20,6 @@ public class GiveUpPanel : MonoBehaviour {
             Debug.Log("missing");
             Panel = GameObject.Find("GiveupPanel");
         }
-        if (MainCtl == null) {
-            MainCtl = this.GetComponent<scriptGame>();
-        }
-        if (MainCtlvs == null) {
-            MainCtlvs = this.GetComponent<scriptGameVS>();
-        }
-
     }
     void Update() {
         Panel.SetActive(GivePanelIsOpen);
@@ -34,10 +29,10 @@ public class GiveUpPanel : MonoBehaviour {
         Debug.Log("what did you done? Hello?");
         GivePanelIsOpen = false;
         if (MainCtl != null)MainCtl.giveUp();
-        if (MainCtlvs != null)MainCtlvs.giveUp();
+        else if (MainCtlvs != null)MainCtlvs.giveUp();
+        else if(MainCtlvsGui != null) MainCtlvsGui.giveUp();
     }
     public void giveupcloseclick() {
-        Debug.Log("what did you done? Clsoe Hello?");
         GivePanelIsOpen = false;
     }
 
