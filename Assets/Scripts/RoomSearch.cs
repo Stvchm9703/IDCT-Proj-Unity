@@ -106,6 +106,9 @@ public class RoomSearch : MonoBehaviour {
                 else Destroy(obj);
             }
             // IsConnected = true;
+        } else {
+            DuelConn = objs[0].GetComponent<DuelConnObj>();
+            DuelConn.Init();
         }
     }
 }
