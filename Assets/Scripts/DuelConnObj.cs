@@ -32,7 +32,9 @@ public class DuelConnObj : MonoBehaviour {
         Debug.Log("on Awake process - DuelConnObj");
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
         if (objs.Length > 1) {
-            Destroy(this.gameObject);
+            if(this.conn == null){
+                Destroy(this.gameObject);
+            }
         } else {
             DontDestroyOnLoad(this.gameObject);
             this.gameObject.tag = "Connector";
@@ -102,6 +104,10 @@ public class DuelConnObj : MonoBehaviour {
             status = await this.conn.QuitRoom();
             this.current_room = null;
         }
+        if (this.wsConnect != null) {
+            await this.wsConnect.DisconnectToBroadcast();
+            this.wsConnect = null;
+        }
         return status;
     }
 
@@ -153,7 +159,6 @@ public class DuelConnObj : MonoBehaviour {
         if (!conn) {
             return false;
         }
-
         // await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
         return true;
     }

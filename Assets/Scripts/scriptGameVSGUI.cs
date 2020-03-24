@@ -153,7 +153,7 @@ public class scriptGameVSGUI : MonoBehaviour {
     }
 
     void ErrorMsgHandler(CellStatusResp em) {
-        Debug.Log(em);
+        Debug.Log($"ErrorMsgHandler {em}");
         switch (em.ErrorMsg.MsgInfo) {
             case "ConnEnd":
                 if (em.UserId != DuelConn.conn.HostId) {
@@ -173,7 +173,7 @@ public class scriptGameVSGUI : MonoBehaviour {
                 // case "": 
             case "RoomClose":
                 // show UI RoomClose alert 
-
+                Debug.Log("RoomClose");
                 break;
         }
     }

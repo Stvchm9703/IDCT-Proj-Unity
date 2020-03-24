@@ -25,7 +25,7 @@ namespace PlayCli {
             };
 
             wsclient.OnMessage += (msg, e) => {
-                Debug.Log($"Message received: {msg}");
+                Debug.Log($"Message received: {e}");
                 Debug.Log($"Message : {e.RawData.ToString()}");
             };
 

@@ -79,7 +79,7 @@ public class RoomSearch : MonoBehaviour {
     public void rendRoomList(List<Room> roomlist) {
         int counter = 1;
         foreach (var t in roomlist) {
-            GameObject ff = (GameObject) Instantiate(ListItemPF, new Vector3(0, 0, 0), Quaternion.identity);
+            GameObject ff = (GameObject)Instantiate(ListItemPF, new Vector3(0, 0, 0), Quaternion.identity);
             ff.name = "Rm" + t.Key;
             ff.transform.SetParent(ContentGO.transform);
             ff.transform.position = new Vector3(550, 320 * counter, 0);
@@ -95,6 +95,13 @@ public class RoomSearch : MonoBehaviour {
         }
         if (ContentGO == null) {
             ContentGO = this.transform.Find("Scroll View/Viewport/Content").gameObject;
+        }
+    }
+    void Awake() {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
+        if (objs.Length == 1) {
+            DuelConn = objs[0].GetComponent<DuelConnObj>();
+            // IsConnected = true;
         }
     }
 }
