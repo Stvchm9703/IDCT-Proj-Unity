@@ -125,16 +125,10 @@ public class scriptGameVSGUI : MonoBehaviour {
         if (msgPack.ErrorMsg == null) {
             Debug.Log(msgPack.CellStatus);
             this.DuelConn.current_room.CellStatus.Add(msgPack.CellStatus);
-            if (msgPack.CellStatus.Turn != this.player_sign) {
-                if (msgPack.CellStatus.CellNum > -1) {
-                    VsPlayerCellClick(msgPack.CellStatus.CellNum);
-                } else {
-                    // exception case?
-                    if (msgPack.CellStatus.CellNum == -2) {
-                        // Player give up
-
-                    }
-                }
+            if (msgPack.CellStatus.Turn != this.player_sign &&
+                msgPack.CellStatus.CellNum > -1
+            ) {
+                VsPlayerCellClick(msgPack.CellStatus.CellNum);
             }
             if (DuelConn.current_room.CellStatus.Count == 10) {
                 Debug.Log("Game End?");
@@ -267,9 +261,8 @@ public class scriptGameVSGUI : MonoBehaviour {
         Debug.Log("-----------------End VS------------------");
     }
     // @OK 
-    public async void backToMenu() {
+    public void backToMenu() {
         // GiveUp
-        await this.DuelConn.ExitRoom();
         SceneManager.LoadScene("RoomSearch", LoadSceneMode.Single);
     }
 
