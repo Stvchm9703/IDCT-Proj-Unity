@@ -71,7 +71,7 @@ namespace PlayCli {
 
         public async Task<bool> DisconnectToBroadcast() {
             if (this.RoomCast != null) {
-                this.RoomCast.CloseAsync();
+                this.RoomCast.Close(CloseStatusCode.Normal);
             }
             Debug.Log("disconnected");
             return true;
