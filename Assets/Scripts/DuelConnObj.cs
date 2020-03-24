@@ -100,10 +100,8 @@ public class DuelConnObj : MonoBehaviour {
 
         if (this.current_room != null) {
             status = await this.conn.QuitRoom();
-            status = true;
             this.current_room = null;
         }
-
         return status;
     }
 

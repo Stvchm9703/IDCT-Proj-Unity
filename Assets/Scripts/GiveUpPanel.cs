@@ -12,47 +12,47 @@ public class GiveUpPanel : MonoBehaviour {
     public scriptGame MainCtl;
     public bool GivePanelIsOpen = false;
 
-    void Start () {
-        Debug.Log ("gu panel start");
+    void Start() {
+        Debug.Log("gu panel start");
         if (Panel == null) {
-            Debug.Log ("missing");
-            Panel = GameObject.Find ("GiveupPanel");
+            Debug.Log("missing");
+            Panel = GameObject.Find("GiveupPanel");
         }
         if (MainCtl == null) {
-            MainCtl = this.GetComponent<scriptGame> ();
+            MainCtl = this.GetComponent<scriptGame>();
         }
         if (MainCtlvs == null) {
-            MainCtlvs = this.GetComponent<scriptGameVS> ();
+            MainCtlvs = this.GetComponent<scriptGameVS>();
         }
 
     }
-    void Update () {
-        Panel.SetActive (GivePanelIsOpen);
+    void Update() {
+        Panel.SetActive(GivePanelIsOpen);
     }
 
-    public void giveuponclick () {
-        Debug.Log ("what did you done? Hello?");
+    public void giveuponclick() {
+        Debug.Log("what did you done? Hello?");
         GivePanelIsOpen = false;
-        if (MainCtl != null) MainCtl.giveUp ();
-        if (MainCtl != null) MainCtlvs.giveUp ();
+        if (MainCtl != null)MainCtl.giveUp();
+        if (MainCtlvs != null)MainCtlvs.giveUp();
     }
-    public void giveupcloseclick () {
-        Debug.Log ("what did you done? Clsoe Hello?");
+    public void giveupcloseclick() {
+        Debug.Log("what did you done? Clsoe Hello?");
         GivePanelIsOpen = false;
     }
 
-    public void alertOpen () {
+    public void alertOpen() {
         if (MainCtl != null) {
             if (!MainCtl.isGameOver) {
                 this.GivePanelIsOpen = true;
             } else {
-                MainCtl.backToMenu (); // OK
+                MainCtl.backToMenu(); // OK
             }
         } else if (MainCtlvs != null) {
             if (!MainCtlvs.isGameOver) {
                 this.GivePanelIsOpen = true;
             } else {
-                MainCtlvs.backToMenu (); // OK
+                MainCtlvs.backToMenu(); // OK
             }
         }
     }

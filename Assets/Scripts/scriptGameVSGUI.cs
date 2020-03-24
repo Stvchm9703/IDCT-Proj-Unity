@@ -82,7 +82,7 @@ public class scriptGameVSGUI : MonoBehaviour {
     }
 
     void Update() {
-        // gameUpdateIndicator();
+        gameUpdateIndicator();
     }
 
     void EnvSetup() {
@@ -128,7 +128,6 @@ public class scriptGameVSGUI : MonoBehaviour {
             if (msgPack.CellStatus.Turn != this.player_sign) {
                 if (msgPack.CellStatus.CellNum > -1) {
                     VsPlayerCellClick(msgPack.CellStatus.CellNum);
-                    gameUpdateIndicator();
                 } else {
                     // exception case?
                     if (msgPack.CellStatus.CellNum == -2) {
@@ -268,16 +267,16 @@ public class scriptGameVSGUI : MonoBehaviour {
         Debug.Log("-----------------End VS------------------");
     }
     // @OK 
-    public void backToMenu() {
+    public async void backToMenu() {
         // GiveUp
+        await this.DuelConn.ExitRoom();
         SceneManager.LoadScene("RoomSearch", LoadSceneMode.Single);
     }
 
     public void GameAlertOpen(string msg) {
-
         if (AlertPanel != null) {
             this.AlertPanel.SetActive(true);
-            this.AlertPanel.transform.Find("Text").gameObject.GetComponent<Text>().text = msg;
+            this.AlertPanel.transform.Find("Text").GetComponent<Text>().text = msg;
         }
     }
     public void GameAlertClose() {
@@ -323,7 +322,7 @@ public class scriptGameVSGUI : MonoBehaviour {
         gameUpdateIndicator();
 
         if (Debug.isDebugBuild) {
-            Debug.Log(string.Format("Call of gameStop({0}) complete", theTurn));
+            Debug.Log($"Call of gameStop({ theTurn}) complete");
         }
     }
 
