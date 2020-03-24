@@ -48,7 +48,7 @@ namespace PlayCli {
             };
             wsclient.OnError += (info, e) => {
                 Debug.LogWarning(info.ToString());
-                Debug.LogWarning(e);
+                Debug.LogWarning(e.Message);
             };
 
             foreach (var func in MsgHandler) {

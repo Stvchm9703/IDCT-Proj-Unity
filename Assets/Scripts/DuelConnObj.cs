@@ -15,8 +15,7 @@ public class DuelConnObj : MonoBehaviour {
     // Start is called before the first frame update
     public DuelConnector conn;
     public WSConnect2 wsConnect;
-    List<System.EventHandler<WebSocketSharp.MessageEventArgs>> wscHandler 
-        = new List<System.EventHandler<WebSocketSharp.MessageEventArgs>>();
+    List<System.EventHandler<WebSocketSharp.MessageEventArgs>> wscHandler = new List<System.EventHandler<WebSocketSharp.MessageEventArgs>>();
     public Room current_room;
     // public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
     // public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
@@ -194,22 +193,24 @@ public class DuelConnObj : MonoBehaviour {
     ///     For WebSocket-Impl 2
     /// </method>
     public bool AddEventFunc(System.EventHandler<WebSocketSharp.MessageEventArgs> funcHandler) {
-        if (this.wsConnect != null) {
-            this.wsConnect.AddEventFunc(funcHandler);
-        }
+        // if (this.wsConnect != null) {
+        //     this.wsConnect.AddEventFunc(funcHandler);
+        // }
         this.wscHandler.Add(funcHandler);
         return true;
     }
-    public bool AddEventFunc(System.Action<CellStatusResp> funcHandler) {
-        System.EventHandler<WebSocketSharp.MessageEventArgs> wrapFunc = new System.EventHandler<WebSocketSharp.MessageEventArgs>((co, msg) => {
+    public bool AddEventFunc(System.EventHandler<CellStatusResp> funcHandler) {
+        var wrapFunc = new System.EventHandler<WebSocketSharp.MessageEventArgs>((co, msg) => {
+            Debug.Log($"sender:{co.ToString()}");
+            Debug.Log($"Msg :{msg.Type.ToString()}");
             var msgBlock = CellStatusResp.Parser.ParseFrom(
                 msg.RawData
             );
-            funcHandler(msgBlock);
+            funcHandler(co,msgBlock);
         });
-        if (this.wsConnect != null) {
-            return this.wsConnect.AddEventFunc(wrapFunc);
-        }
+        // if (this.wsConnect != null) {
+        //     return this.wsConnect.AddEventFunc(wrapFunc);
+        // }
         this.wscHandler.Add(wrapFunc);
         return true;
     }

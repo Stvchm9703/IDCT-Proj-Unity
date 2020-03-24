@@ -120,12 +120,22 @@ public class scriptGameVSGUI : MonoBehaviour {
         }
     }
 
-    void msgSystMsg(CellStatusResp msgPack) {
+    void msgSystMsg(object caller, CellStatusResp msgPack) {
+        Debug.Log(caller.ToString());
         if (msgPack.ErrorMsg == null) {
             Debug.Log(msgPack.CellStatus);
             this.DuelConn.current_room.CellStatus.Add(msgPack.CellStatus);
             if (msgPack.CellStatus.Turn != this.player_sign) {
-                VsPlayerCellClick(msgPack.CellStatus.CellNum);
+                if (msgPack.CellStatus.CellNum > -1) {
+                    VsPlayerCellClick(msgPack.CellStatus.CellNum);
+                    gameUpdateIndicator();
+                } else {
+                    // exception case?
+                    if (msgPack.CellStatus.CellNum == -2) {
+                        // Player give up
+
+                    }
+                }
             }
             if (DuelConn.current_room.CellStatus.Count == 10) {
                 Debug.Log("Game End?");
@@ -133,13 +143,15 @@ public class scriptGameVSGUI : MonoBehaviour {
         } else {
             ErrorMsgHandler(msgPack);
         }
-        gameUpdateIndicator();
         return;
     }
 
     async void OnConnectionInit() {
         Debug.Log("start to connect Broadcast");
-        this.DuelConn.AddEventFunc((CellStatusResp msgpack) => msgSystMsg(msgpack));
+        this.DuelConn.AddEventFunc(
+            (object caller, CellStatusResp msgpack) =>
+            msgSystMsg(caller, msgpack)
+        );
         await this.DuelConn.ConnectToBroadcast();
     }
 
@@ -217,16 +229,14 @@ public class scriptGameVSGUI : MonoBehaviour {
             if (cells[i] == -1)
                 td = CellT2D[2];
             if (GUI.Button(r, td, GUIStyle.none)) {
-                if (cells[i] == 0 && !isGameOver) {
-                    PlayerCellClick(i);
-                }
+                PlayerCellClick(i);
             }
         }
     }
 
     public async void PlayerCellClick(int cell_num) {
         Debug.Log("-----------------Self------------------");
-        Debug.Log(cell_num);
+        Debug.Log($"User Click {cell_num}");
         if (cells[cell_num] == 0 &&
             !isGameOver &&
             this.DuelConn.able_update &&
@@ -240,12 +250,11 @@ public class scriptGameVSGUI : MonoBehaviour {
             Debug.Log(tmp);
             try {
                 await DuelConn.UpdateTurn(tmp);
+                cellSetValue(cell_num, player_sign);
+                onTurnComplete(this.player_sign);
             } catch (RpcException e) {
                 Debug.LogError(e);
             }
-            cellSetValue(cell_num, player_sign);
-            // GUIRenderCell();
-            onTurnComplete(this.player_sign);
         }
         Debug.Log("-----------------End Self------------------");
 
@@ -253,14 +262,9 @@ public class scriptGameVSGUI : MonoBehaviour {
 
     public void VsPlayerCellClick(int cell_num) {
         Debug.Log("-----------------VS------------------");
-        Debug.Log(cell_num);
-        // if (cells[cell_num] == 0 &&
-        //     !isGameOver
-        // ) {
+        Debug.Log($"Vs Player{cell_num}");
         cellSetValue(cell_num, player_sign * -1);
-        // GUIRenderCell();
         onTurnComplete(this.player_sign * -1);
-        // }
         Debug.Log("-----------------End VS------------------");
     }
     // @OK 
