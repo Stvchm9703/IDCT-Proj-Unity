@@ -77,6 +77,13 @@ public class DuelConnObj : MonoBehaviour {
             current_room = ri.RoomInfo;
             this.able_update = is_player;
             this.IsHost = false;
+            if (is_player) {
+                await this.conn.UpdateRoomTurn(new CellStatus {
+                    Key = key,
+                    Turn = 0,
+                    CellNum = -21
+                });
+            }
             // await this.conn.ConnectToBroadcast();
             return true;
         } catch (RpcException e) {
