@@ -49,19 +49,19 @@ public class scriptGameVSGUI : MonoBehaviour {
     public bool IsConnected = false;
     public int player_sign = 1;
     // --------------------------------------------------------------------------
-    public GameObject AlertPanel;
-
+    public GameAlertPanel AlertPanelObj;
+    public GiveUpPanel GiveUpPanelObj;
     void Awake() {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
         if (objs.Length == 1) {
             DuelConn = objs[0].GetComponent<DuelConnObj>();
             IsConnected = true;
-        // } else if (objs.Length > 1) {
-        //     foreach (var obj in objs) {
-        //         if (obj.GetComponent<DuelConnObj>().conn != null)
-        //             DuelConn = obj.GetComponent<DuelConnObj>();
-        //         else Destroy(obj);
-        //     }
+            // } else if (objs.Length > 1) {
+            //     foreach (var obj in objs) {
+            //         if (obj.GetComponent<DuelConnObj>().conn != null)
+            //             DuelConn = obj.GetComponent<DuelConnObj>();
+            //         else Destroy(obj);
+            //     }
             // IsConnected = true;
         }
     }
@@ -81,7 +81,7 @@ public class scriptGameVSGUI : MonoBehaviour {
     // Update everything
 
     private void OnGUI() {
-        if (!AlertPanel.activeSelf) {
+        if (!AlertPanelObj.IsOpen || !GiveUpPanelObj.IsOpen) {
             GUIRenderCell();
         }
 
@@ -148,7 +148,7 @@ public class scriptGameVSGUI : MonoBehaviour {
 
     async void OnConnectionInit() {
         Debug.Log("start to connect Broadcast");
-        this.DuelConn.AddEventFunc(
+        this.DuelConn.AddPendingEventFunc(
             (object caller, CellStatusResp msgpack) =>
             msgSystMsg(caller, msgpack)
         );
@@ -159,28 +159,36 @@ public class scriptGameVSGUI : MonoBehaviour {
         await this.DuelConn.ExitRoom();
     }
 
-    void ErrorMsgHandler(CellStatusResp em) {
+    async void ErrorMsgHandler(CellStatusResp em) {
         Debug.Log($"ErrorMsgHandler {em}");
         switch (em.ErrorMsg.MsgInfo) {
-            case "ConnEnd":
-                if (em.UserId != DuelConn.conn.HostId) {
-                    if (em.UserId == DuelConn.current_room.HostId ||
-                        em.UserId == DuelConn.current_room.DuelerId) {
-                        Debug.Log("Player quit");
-                    } else if (em.UserId == "RmSvrMgr") {
-                        Debug.Log("RmSvrMgr");
-                        // show UI alert
-                    } else {
-                        Debug.Log("watcher!");
-                    }
-                } else {
-                    Debug.Log("self quit msg?");
-                }
+            case "ConnEnd": // DDP
+                // if (em.UserId != DuelConn.conn.HostId) {
+                //     if (em.UserId == DuelConn.current_room.HostId ||
+                //         em.UserId == DuelConn.current_room.DuelerId) {
+                //         Debug.Log("Player quit");
+                //     } else if (em.UserId == "RmSvrMgr") {
+                //         Debug.Log("RmSvrMgr");
+                //         // show UI alert
+                //     } else {
+                //         Debug.Log("watcher!");
+                //     }
+                // } else {
+                //     Debug.Log("self quit msg?");
+                // }
+                break;
+
+            case "RoomPlayerQuit":
+                Debug.Log($"Player Quit : {em.ErrorMsg.MsgInfo}");
+                StartCoroutine(this.GameAlertOpen(em.ErrorMsg.MsgDesp));
                 break;
                 // case "": 
             case "RoomClose":
                 // show UI RoomClose alert 
+                StartCoroutine(this.GameAlertOpen("Room is going close"));
                 Debug.Log("RoomClose");
+                await this.DuelConn.ExitRoom();
+                backToMenu();
                 break;
         }
     }
@@ -273,15 +281,13 @@ public class scriptGameVSGUI : MonoBehaviour {
         SceneManager.LoadScene("RoomSearch", LoadSceneMode.Single);
     }
 
-    public void GameAlertOpen(string msg) {
-        if (AlertPanel != null) {
-            this.AlertPanel.SetActive(true);
-            this.AlertPanel.transform.Find("Text").GetComponent<Text>().text = msg;
+    public IEnumerator GameAlertOpen(string msg) {
+        if (AlertPanelObj != null) {
+            yield return AlertPanelObj.PopShow(msg);
         }
+        yield return false;
     }
-    public void GameAlertClose() {
 
-    }
     public async void giveUp() {
         Debug.Log("give up on click");
         await DuelConn.ExitRoom();

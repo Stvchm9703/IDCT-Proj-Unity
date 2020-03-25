@@ -80,8 +80,8 @@ public class DuelConnObj : MonoBehaviour {
             if (is_player) {
                 await this.conn.UpdateRoomTurn(new CellStatus {
                     Key = key,
-                    Turn = 0,
-                    CellNum = -21
+                        Turn = 0,
+                        CellNum = -21
                 });
             }
             // await this.conn.ConnectToBroadcast();
@@ -209,14 +209,14 @@ public class DuelConnObj : MonoBehaviour {
     ///<method>
     ///     For WebSocket-Impl 2
     /// </method>
-    public bool AddEventFunc(System.EventHandler<WebSocketSharp.MessageEventArgs> funcHandler) {
+    public bool AddPendingEventFunc(System.EventHandler<WebSocketSharp.MessageEventArgs> funcHandler) {
         // if (this.wsConnect != null) {
         //     this.wsConnect.AddEventFunc(funcHandler);
         // }
         this.wscHandler.Add(funcHandler);
         return true;
     }
-    public bool AddEventFunc(System.EventHandler<CellStatusResp> funcHandler) {
+    public bool AddPendingEventFunc(System.EventHandler<CellStatusResp> funcHandler) {
         var wrapFunc = new System.EventHandler<WebSocketSharp.MessageEventArgs>((co, msg) => {
             Debug.Log($"sender:{co.ToString()}");
             Debug.Log($"Msg :{msg.Type.ToString()}");
