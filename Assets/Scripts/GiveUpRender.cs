@@ -34,14 +34,14 @@ public class GiveUpRender: MonoBehaviour {
             t.text = "Quit Game";
 
             if (GUI.Button(new Rect(position_.x, (float)(position_.y * 0.9), (float)(size_bx.x), (float)(size_bx.y)), t)) {
-                this.Controller.giveuponclick();
+                this.Controller.onclick();
             }
 
             var y = new GUIContent(btn_gui);
             y.text = "Close";
 
             if (GUI.Button(new Rect(position_.x, (float)(position_.y * 0.8), (float)(size_bx.x), (float)(size_bx.y)), y)) {
-                this.Controller.giveupcloseclick();
+                this.Controller.closeclick();
             }
         }
     }

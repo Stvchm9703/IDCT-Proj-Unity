@@ -23,13 +23,13 @@ public class GiveUpPanel : MonoBehaviour {
         Panel.SetActive(IsOpen);
     }
 
-    public void giveuponclick() {
+    public void onclick() {
         Debug.Log("what did you done? Hello?");
         IsOpen = false;
         if (MainCtl != null)MainCtl.giveUp();
         else if (MainCtlvsGui != null)MainCtlvsGui.giveUp();
     }
-    public void giveupcloseclick() {
+    public void closeclick() {
         IsOpen = false;
     }
 
