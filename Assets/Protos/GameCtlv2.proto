@@ -98,12 +98,10 @@ message CellStatusResp {
 }
 
 service RoomStatus {
-    rpc CreateRoom (RoomCreateReq) returns (RoomResp){ };
+    rpc CreateRoom (RoomCreateReq) returns (RoomResp){};
     rpc GetRoomList(RoomListReq) returns (RoomListResp){}; 
-    rpc GetRoomInfo (RoomReq) returns (RoomResp){ };
+    rpc GetRoomInfo (RoomReq) returns (RoomResp){};
     rpc DeleteRoom (RoomReq) returns (RoomResp){};
-    rpc RoomStream (stream CellStatusReq) returns (stream CellStatusResp){};
-    rpc GetRoomStream(CellStatusReq) returns(stream CellStatusResp){};
     rpc UpdateRoom(CellStatusReq) returns (CellStatusResp){};
     rpc QuitRoom(RoomCreateReq) returns(google.protobuf.Empty){}
 }

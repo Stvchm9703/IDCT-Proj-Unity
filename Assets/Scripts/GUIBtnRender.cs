@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using PlayCli.ProtoMod;
 using UnityEngine;
-using UnityEngine.UI;
+// using UnityEngine.UI;
 public class GUIBtnRender : MonoBehaviour {
     public int scn_margin_x;
     public int scn_margin_y;

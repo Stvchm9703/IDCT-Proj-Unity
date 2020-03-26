@@ -1,12 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Google.Protobuf;
 using Grpc.Core;
 using Newtonsoft.Json;
 using PlayCli.ProtoMod;
+// using Grpc
 using UnityEngine;
 namespace PlayCli {
 
@@ -18,9 +21,8 @@ namespace PlayCli {
         private Channel channel;
         private RoomStatus.RoomStatusClient client;
         private Metadata header_meta;
-        public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StreamHandler;
-        public AsyncServerStreamingCall<CellStatusResp> GetOnlyStream;
 
+        // public SocketIO RoomBroadcast;
         private string bearer_key;
         public DuelConnector(CfServerSetting s) {
             var path = Regex.Replace(s.KeyPemPath, "%", "");
@@ -104,7 +106,6 @@ namespace PlayCli {
                     // header_meta
                 );
                 header_meta = refresh_meta(await reply.ResponseHeadersAsync);
-
                 return await reply.ResponseAsync;
             } catch (RpcException e) {
                 Debug.Log("RPC failed " + e);
@@ -112,17 +113,6 @@ namespace PlayCli {
             }
         }
 
-        public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> RoomStream() {
-            this.StreamHandler = this.client.RoomStream();
-            return this.StreamHandler;
-        }
-        public AsyncServerStreamingCall<CellStatusResp> GetRoomStream(CellStatusReq request) {
-            if (this.GetOnlyStream == null) {
-                this.GetOnlyStream = this.client.GetRoomStream(request);
-            }
-            return this.GetOnlyStream;
-            // return this.client.GetRoomStream (request);
-        }
         public async Task<CellStatus> UpdateRoomTurn(CellStatus cs) {
             try {
                 CellStatusReq tmp = new CellStatusReq {
@@ -168,29 +158,17 @@ namespace PlayCli {
             }
         }
 
+        //  --------------------------------------------
+        // Socket-IO
+
+      
+
         ~DuelConnector() {
-            if (this.StreamHandler != null) {
-                var shutdownTkn = new CancellationTokenSource();
-                // Debug.Log ("try kill");
-                // Debug.Log (this.StreamHandler);
-                this.StreamHandler.RequestStream.CompleteAsync();
-                this.StreamHandler.ResponseStream.MoveNext(shutdownTkn.Token);
-                shutdownTkn.Cancel();
-                this.StreamHandler = null;
-            }
-            if (this.GetOnlyStream != null) {
-                var shutdownTkn = new CancellationTokenSource();
-                // Debug.Log ("try kill");
-                // Debug.Log (this.GetOnlyStream);
-                this.GetOnlyStream.ResponseStream.MoveNext(shutdownTkn.Token);
-                shutdownTkn.Cancel();
-                this.GetOnlyStream = null;
-            }
+            // this.DisconnectToBroadcast();
             this.client = null;
             this.channel.ShutdownAsync().Wait();
             Debug.Log("destructor DuelConnector");
         }
 
     }
-
 }

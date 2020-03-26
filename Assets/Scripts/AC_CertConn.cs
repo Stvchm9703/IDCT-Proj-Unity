@@ -174,7 +174,7 @@ public class AC_CertConn : MonoBehaviour {
 
     public async Task<bool> SaveAsset() {
         ConfigForm.KeyPemPath = "%StreamAsset%/" + "key.pem";
-        Config.CreateCfFile(PlayCli.ConfigPath.StreamingAsset, ConfigForm);
+        await Config.CreateCfFile(PlayCli.ConfigPath.StreamingAsset, ConfigForm);
         string[] tpath = { PlayCli.ConfigPath.StreamingAsset, "key.pem" };
 
         File.WriteAllText(

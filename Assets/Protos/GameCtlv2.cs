@@ -21,9 +21,9 @@ namespace PlayCli.ProtoMod {
     }
     private static pbr::FileDescriptor descriptor;
 
-    static GameCtlv2Reflection () {
-      byte[] descriptorData = global::System.Convert.FromBase64String (
-        string.Concat (
+    static GameCtlv2Reflection() {
+      byte[] descriptorData = global::System.Convert.FromBase64String(
+        string.Concat(
           "Cg9HYW1lQ3RsdjIucHJvdG8SClJvb21TdGF0dXMaG2dvb2dsZS9wcm90b2J1",
           "Zi9lbXB0eS5wcm90byIuCghFcnJvck1zZxIQCghtc2dfaW5mbxgBIAEoCRIQ",
           "Cghtc2dfZGVzcBgCIAEoCSIiCgtSb29tTGlzdFJlcRITCgtyZXF1aXJlbWVu",
@@ -51,34 +51,31 @@ namespace PlayCli.ProtoMod {
           "IAEoCRILCgNrZXkYAiABKAkSEQoJdGltZXN0YW1wGAMgASgJEg4KBnN0YXR1",
           "cxgEIAEoBRItCgtjZWxsX3N0YXR1cxgFIAEoCzIWLlJvb21TdGF0dXMuQ2Vs",
           "bFN0YXR1c0gAEikKCWVycm9yX21zZxgGIAEoCzIULlJvb21TdGF0dXMuRXJy",
-          "b3JNc2dIAEIOCgxyZXNwb25zZV9tc2cypwQKClJvb21TdGF0dXMSPwoKQ3Jl",
+          "b3JNc2dIAEIOCgxyZXNwb25zZV9tc2cykAMKClJvb21TdGF0dXMSPwoKQ3Jl",
           "YXRlUm9vbRIZLlJvb21TdGF0dXMuUm9vbUNyZWF0ZVJlcRoULlJvb21TdGF0",
           "dXMuUm9vbVJlc3AiABJCCgtHZXRSb29tTGlzdBIXLlJvb21TdGF0dXMuUm9v",
           "bUxpc3RSZXEaGC5Sb29tU3RhdHVzLlJvb21MaXN0UmVzcCIAEjoKC0dldFJv",
           "b21JbmZvEhMuUm9vbVN0YXR1cy5Sb29tUmVxGhQuUm9vbVN0YXR1cy5Sb29t",
           "UmVzcCIAEjkKCkRlbGV0ZVJvb20SEy5Sb29tU3RhdHVzLlJvb21SZXEaFC5S",
-          "b29tU3RhdHVzLlJvb21SZXNwIgASSQoKUm9vbVN0cmVhbRIZLlJvb21TdGF0",
+          "b29tU3RhdHVzLlJvb21SZXNwIgASRQoKVXBkYXRlUm9vbRIZLlJvb21TdGF0",
           "dXMuQ2VsbFN0YXR1c1JlcRoaLlJvb21TdGF0dXMuQ2VsbFN0YXR1c1Jlc3Ai",
-          "ACgBMAESSgoNR2V0Um9vbVN0cmVhbRIZLlJvb21TdGF0dXMuQ2VsbFN0YXR1",
-          "c1JlcRoaLlJvb21TdGF0dXMuQ2VsbFN0YXR1c1Jlc3AiADABEkUKClVwZGF0",
-          "ZVJvb20SGS5Sb29tU3RhdHVzLkNlbGxTdGF0dXNSZXEaGi5Sb29tU3RhdHVz",
-          "LkNlbGxTdGF0dXNSZXNwIgASPwoIUXVpdFJvb20SGS5Sb29tU3RhdHVzLlJv",
-          "b21DcmVhdGVSZXEaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiAEITqgIQUGxh",
-          "eUNsaS5Qcm90b01vZGIGcHJvdG8z"));
-      descriptor = pbr::FileDescriptor.FromGeneratedCode (descriptorData,
+          "ABI/CghRdWl0Um9vbRIZLlJvb21TdGF0dXMuUm9vbUNyZWF0ZVJlcRoWLmdv",
+          "b2dsZS5wcm90b2J1Zi5FbXB0eSIAQhOqAhBQbGF5Q2xpLlByb3RvTW9kYgZw",
+          "cm90bzM="));
+      descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, },
-        new pbr::GeneratedClrTypeInfo (null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.ErrorMsg), global::PlayCli.ProtoMod.ErrorMsg.Parser, new [] { "MsgInfo", "MsgDesp" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.RoomListReq), global::PlayCli.ProtoMod.RoomListReq.Parser, new [] { "Requirement" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.RoomListResp), global::PlayCli.ProtoMod.RoomListResp.Parser, new [] { "Timestamp", "Result", "ErrorMsg" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.RoomCreateReq), global::PlayCli.ProtoMod.RoomCreateReq.Parser, new [] { "UserId" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.RoomCreateResp), global::PlayCli.ProtoMod.RoomCreateResp.Parser, new [] { "UserId", "Timestamp", "Status", "CellStatus", "ErrorMsg" }, new [] { "ResponseMsg" }, null, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.RoomReq), global::PlayCli.ProtoMod.RoomReq.Parser, new [] { "Key" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.RoomResp), global::PlayCli.ProtoMod.RoomResp.Parser, new [] { "Timestamp", "RoomInfo", "Error" }, new [] { "ResponseMsg" }, null, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.Room), global::PlayCli.ProtoMod.Room.Parser, new [] { "Key", "HostId", "DuelerId", "Status", "Round", "Cell", "CellStatus" }, null, new [] { typeof (global::PlayCli.ProtoMod.Room.Types.Status) }, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.CellStatus), global::PlayCli.ProtoMod.CellStatus.Parser, new [] { "Key", "Turn", "CellNum" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.CellStatusReq), global::PlayCli.ProtoMod.CellStatusReq.Parser, new [] { "UserId", "Key", "IsPlayer", "CellStatus" }, new [] { "Player" }, null, null),
-            new pbr::GeneratedClrTypeInfo (typeof (global::PlayCli.ProtoMod.CellStatusResp), global::PlayCli.ProtoMod.CellStatusResp.Parser, new [] { "UserId", "Key", "Timestamp", "Status", "CellStatus", "ErrorMsg" }, new [] { "ResponseMsg" }, null, null)
+        new pbr::GeneratedClrTypeInfo(null,  new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.ErrorMsg), global::PlayCli.ProtoMod.ErrorMsg.Parser, new [] { "MsgInfo", "MsgDesp" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomListReq), global::PlayCli.ProtoMod.RoomListReq.Parser, new [] { "Requirement" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomListResp), global::PlayCli.ProtoMod.RoomListResp.Parser, new [] { "Timestamp", "Result", "ErrorMsg" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomCreateReq), global::PlayCli.ProtoMod.RoomCreateReq.Parser, new [] { "UserId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomCreateResp), global::PlayCli.ProtoMod.RoomCreateResp.Parser, new [] { "UserId", "Timestamp", "Status", "CellStatus", "ErrorMsg" }, new [] { "ResponseMsg" }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomReq), global::PlayCli.ProtoMod.RoomReq.Parser, new [] { "Key" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.RoomResp), global::PlayCli.ProtoMod.RoomResp.Parser, new [] { "Timestamp", "RoomInfo", "Error" }, new [] { "ResponseMsg" }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.Room), global::PlayCli.ProtoMod.Room.Parser, new [] { "Key", "HostId", "DuelerId", "Status", "Round", "Cell", "CellStatus" }, null, new [] { typeof(global::PlayCli.ProtoMod.Room.Types.Status) }, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CellStatus), global::PlayCli.ProtoMod.CellStatus.Parser, new [] { "Key", "Turn", "CellNum" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CellStatusReq), global::PlayCli.ProtoMod.CellStatusReq.Parser, new [] { "UserId", "Key", "IsPlayer", "CellStatus" }, new [] { "Player" }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::PlayCli.ProtoMod.CellStatusResp), global::PlayCli.ProtoMod.CellStatusResp.Parser, new [] { "UserId", "Key", "Timestamp", "Status", "CellStatus", "ErrorMsg" }, new [] { "ResponseMsg" }, null, null)
         }));
     }
     #endregion
@@ -86,7 +83,7 @@ namespace PlayCli.ProtoMod {
   }
   #region Messages
   public sealed partial class ErrorMsg : pb::IMessage<ErrorMsg> {
-    private static readonly pb::MessageParser<ErrorMsg> _parser = new pb::MessageParser<ErrorMsg> (() => new ErrorMsg ());
+    private static readonly pb::MessageParser<ErrorMsg> _parser = new pb::MessageParser<ErrorMsg>(() => new ErrorMsg());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<ErrorMsg> Parser { get { return _parser; } }
@@ -102,22 +99,22 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ErrorMsg () {
-      OnConstruction ();
+    public ErrorMsg() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ErrorMsg (ErrorMsg other) : this () {
+    public ErrorMsg(ErrorMsg other) : this() {
       msgInfo_ = other.msgInfo_;
       msgDesp_ = other.msgDesp_;
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ErrorMsg Clone () {
-      return new ErrorMsg (this);
+    public ErrorMsg Clone() {
+      return new ErrorMsg(this);
     }
 
     /// <summary>Field number for the "msg_info" field.</summary>
@@ -127,7 +124,7 @@ namespace PlayCli.ProtoMod {
     public string MsgInfo {
       get { return msgInfo_; }
       set {
-        msgInfo_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        msgInfo_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -138,76 +135,76 @@ namespace PlayCli.ProtoMod {
     public string MsgDesp {
       get { return msgDesp_; }
       set {
-        msgDesp_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        msgDesp_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as ErrorMsg);
+    public override bool Equals(object other) {
+      return Equals(other as ErrorMsg);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (ErrorMsg other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(ErrorMsg other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (MsgInfo != other.MsgInfo) return false;
-      if (MsgDesp != other.MsgDesp) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (MsgInfo != other.MsgInfo)return false;
+      if (MsgDesp != other.MsgDesp)return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (MsgInfo.Length != 0) hash ^= MsgInfo.GetHashCode ();
-      if (MsgDesp.Length != 0) hash ^= MsgDesp.GetHashCode ();
+      if (MsgInfo.Length != 0)hash ^= MsgInfo.GetHashCode();
+      if (MsgDesp.Length != 0)hash ^= MsgDesp.GetHashCode();
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (MsgInfo.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (MsgInfo);
+        output.WriteRawTag(10);
+        output.WriteString(MsgInfo);
       }
       if (MsgDesp.Length != 0) {
-        output.WriteRawTag (18);
-        output.WriteString (MsgDesp);
+        output.WriteRawTag(18);
+        output.WriteString(MsgDesp);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (MsgInfo.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (MsgInfo);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(MsgInfo);
       }
       if (MsgDesp.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (MsgDesp);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(MsgDesp);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (ErrorMsg other) {
+    public void MergeFrom(ErrorMsg other) {
       if (other == null) {
         return;
       }
@@ -217,24 +214,24 @@ namespace PlayCli.ProtoMod {
       if (other.MsgDesp.Length != 0) {
         MsgDesp = other.MsgDesp;
       }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              MsgInfo = input.ReadString ();
+              MsgInfo = input.ReadString();
               break;
             }
           case 18:
             {
-              MsgDesp = input.ReadString ();
+              MsgDesp = input.ReadString();
               break;
             }
         }
@@ -244,7 +241,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class RoomListReq : pb::IMessage<RoomListReq> {
-    private static readonly pb::MessageParser<RoomListReq> _parser = new pb::MessageParser<RoomListReq> (() => new RoomListReq ());
+    private static readonly pb::MessageParser<RoomListReq> _parser = new pb::MessageParser<RoomListReq>(() => new RoomListReq());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<RoomListReq> Parser { get { return _parser; } }
@@ -260,21 +257,21 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomListReq () {
-      OnConstruction ();
+    public RoomListReq() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomListReq (RoomListReq other) : this () {
+    public RoomListReq(RoomListReq other) : this() {
       requirement_ = other.requirement_;
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomListReq Clone () {
-      return new RoomListReq (this);
+    public RoomListReq Clone() {
+      return new RoomListReq(this);
     }
 
     /// <summary>Field number for the "requirement" field.</summary>
@@ -284,86 +281,86 @@ namespace PlayCli.ProtoMod {
     public string Requirement {
       get { return requirement_; }
       set {
-        requirement_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        requirement_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as RoomListReq);
+    public override bool Equals(object other) {
+      return Equals(other as RoomListReq);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (RoomListReq other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(RoomListReq other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Requirement != other.Requirement) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (Requirement != other.Requirement)return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (Requirement.Length != 0) hash ^= Requirement.GetHashCode ();
+      if (Requirement.Length != 0)hash ^= Requirement.GetHashCode();
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (Requirement.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (Requirement);
+        output.WriteRawTag(10);
+        output.WriteString(Requirement);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (Requirement.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Requirement);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Requirement);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (RoomListReq other) {
+    public void MergeFrom(RoomListReq other) {
       if (other == null) {
         return;
       }
       if (other.Requirement.Length != 0) {
         Requirement = other.Requirement;
       }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              Requirement = input.ReadString ();
+              Requirement = input.ReadString();
               break;
             }
         }
@@ -373,7 +370,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class RoomListResp : pb::IMessage<RoomListResp> {
-    private static readonly pb::MessageParser<RoomListResp> _parser = new pb::MessageParser<RoomListResp> (() => new RoomListResp ());
+    private static readonly pb::MessageParser<RoomListResp> _parser = new pb::MessageParser<RoomListResp>(() => new RoomListResp());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<RoomListResp> Parser { get { return _parser; } }
@@ -389,23 +386,23 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomListResp () {
-      OnConstruction ();
+    public RoomListResp() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomListResp (RoomListResp other) : this () {
+    public RoomListResp(RoomListResp other) : this() {
       timestamp_ = other.timestamp_;
-      result_ = other.result_.Clone ();
-      errorMsg_ = other.errorMsg_ != null ? other.errorMsg_.Clone () : null;
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      result_ = other.result_.Clone();
+      errorMsg_ = other.errorMsg_ != null ? other.errorMsg_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomListResp Clone () {
-      return new RoomListResp (this);
+    public RoomListResp Clone() {
+      return new RoomListResp(this);
     }
 
     /// <summary>Field number for the "timestamp" field.</summary>
@@ -415,14 +412,14 @@ namespace PlayCli.ProtoMod {
     public string Timestamp {
       get { return timestamp_; }
       set {
-        timestamp_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        timestamp_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     /// <summary>Field number for the "result" field.</summary>
     public const int ResultFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::PlayCli.ProtoMod.Room> _repeated_result_codec = pb::FieldCodec.ForMessage (18, global::PlayCli.ProtoMod.Room.Parser);
-    private readonly pbc::RepeatedField<global::PlayCli.ProtoMod.Room> result_ = new pbc::RepeatedField<global::PlayCli.ProtoMod.Room> ();
+    private static readonly pb::FieldCodec<global::PlayCli.ProtoMod.Room> _repeated_result_codec = pb::FieldCodec.ForMessage(18, global::PlayCli.ProtoMod.Room.Parser);
+    private readonly pbc::RepeatedField<global::PlayCli.ProtoMod.Room> result_ = new pbc::RepeatedField<global::PlayCli.ProtoMod.Room>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::PlayCli.ProtoMod.Room> Result {
       get { return result_; }
@@ -440,114 +437,114 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as RoomListResp);
+    public override bool Equals(object other) {
+      return Equals(other as RoomListResp);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (RoomListResp other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(RoomListResp other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Timestamp != other.Timestamp) return false;
-      if (!result_.Equals (other.result_)) return false;
-      if (!object.Equals (ErrorMsg, other.ErrorMsg)) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (Timestamp != other.Timestamp)return false;
+      if (!result_.Equals(other.result_))return false;
+      if (!object.Equals(ErrorMsg, other.ErrorMsg))return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (Timestamp.Length != 0) hash ^= Timestamp.GetHashCode ();
-      hash ^= result_.GetHashCode ();
-      if (errorMsg_ != null) hash ^= ErrorMsg.GetHashCode ();
+      if (Timestamp.Length != 0)hash ^= Timestamp.GetHashCode();
+      hash ^= result_.GetHashCode();
+      if (errorMsg_ != null)hash ^= ErrorMsg.GetHashCode();
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (Timestamp.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (Timestamp);
+        output.WriteRawTag(10);
+        output.WriteString(Timestamp);
       }
-      result_.WriteTo (output, _repeated_result_codec);
+      result_.WriteTo(output, _repeated_result_codec);
       if (errorMsg_ != null) {
-        output.WriteRawTag (26);
-        output.WriteMessage (ErrorMsg);
+        output.WriteRawTag(26);
+        output.WriteMessage(ErrorMsg);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (Timestamp.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Timestamp);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Timestamp);
       }
-      size += result_.CalculateSize (_repeated_result_codec);
+      size += result_.CalculateSize(_repeated_result_codec);
       if (errorMsg_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize (ErrorMsg);
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ErrorMsg);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (RoomListResp other) {
+    public void MergeFrom(RoomListResp other) {
       if (other == null) {
         return;
       }
       if (other.Timestamp.Length != 0) {
         Timestamp = other.Timestamp;
       }
-      result_.Add (other.result_);
+      result_.Add(other.result_);
       if (other.errorMsg_ != null) {
         if (errorMsg_ == null) {
-          ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg ();
+          ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
         }
-        ErrorMsg.MergeFrom (other.ErrorMsg);
+        ErrorMsg.MergeFrom(other.ErrorMsg);
       }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              Timestamp = input.ReadString ();
+              Timestamp = input.ReadString();
               break;
             }
           case 18:
             {
-              result_.AddEntriesFrom (input, _repeated_result_codec);
+              result_.AddEntriesFrom(input, _repeated_result_codec);
               break;
             }
           case 26:
             {
               if (errorMsg_ == null) {
-                ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg ();
+                ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
               }
-              input.ReadMessage (ErrorMsg);
+              input.ReadMessage(ErrorMsg);
               break;
             }
         }
@@ -557,7 +554,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class RoomCreateReq : pb::IMessage<RoomCreateReq> {
-    private static readonly pb::MessageParser<RoomCreateReq> _parser = new pb::MessageParser<RoomCreateReq> (() => new RoomCreateReq ());
+    private static readonly pb::MessageParser<RoomCreateReq> _parser = new pb::MessageParser<RoomCreateReq>(() => new RoomCreateReq());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<RoomCreateReq> Parser { get { return _parser; } }
@@ -573,21 +570,21 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomCreateReq () {
-      OnConstruction ();
+    public RoomCreateReq() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomCreateReq (RoomCreateReq other) : this () {
+    public RoomCreateReq(RoomCreateReq other) : this() {
       userId_ = other.userId_;
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomCreateReq Clone () {
-      return new RoomCreateReq (this);
+    public RoomCreateReq Clone() {
+      return new RoomCreateReq(this);
     }
 
     /// <summary>Field number for the "user_id" field.</summary>
@@ -597,86 +594,86 @@ namespace PlayCli.ProtoMod {
     public string UserId {
       get { return userId_; }
       set {
-        userId_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        userId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as RoomCreateReq);
+    public override bool Equals(object other) {
+      return Equals(other as RoomCreateReq);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (RoomCreateReq other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(RoomCreateReq other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (UserId != other.UserId) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (UserId != other.UserId)return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (UserId.Length != 0) hash ^= UserId.GetHashCode ();
+      if (UserId.Length != 0)hash ^= UserId.GetHashCode();
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (UserId.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (UserId);
+        output.WriteRawTag(10);
+        output.WriteString(UserId);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (UserId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (UserId);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserId);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (RoomCreateReq other) {
+    public void MergeFrom(RoomCreateReq other) {
       if (other == null) {
         return;
       }
       if (other.UserId.Length != 0) {
         UserId = other.UserId;
       }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              UserId = input.ReadString ();
+              UserId = input.ReadString();
               break;
             }
         }
@@ -686,7 +683,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class RoomCreateResp : pb::IMessage<RoomCreateResp> {
-    private static readonly pb::MessageParser<RoomCreateResp> _parser = new pb::MessageParser<RoomCreateResp> (() => new RoomCreateResp ());
+    private static readonly pb::MessageParser<RoomCreateResp> _parser = new pb::MessageParser<RoomCreateResp>(() => new RoomCreateResp());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<RoomCreateResp> Parser { get { return _parser; } }
@@ -702,32 +699,32 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomCreateResp () {
-      OnConstruction ();
+    public RoomCreateResp() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomCreateResp (RoomCreateResp other) : this () {
+    public RoomCreateResp(RoomCreateResp other) : this() {
       userId_ = other.userId_;
       timestamp_ = other.timestamp_;
       status_ = other.status_;
       switch (other.ResponseMsgCase) {
         case ResponseMsgOneofCase.CellStatus:
-          CellStatus = other.CellStatus.Clone ();
+          CellStatus = other.CellStatus.Clone();
           break;
         case ResponseMsgOneofCase.ErrorMsg:
-          ErrorMsg = other.ErrorMsg.Clone ();
+          ErrorMsg = other.ErrorMsg.Clone();
           break;
       }
 
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomCreateResp Clone () {
-      return new RoomCreateResp (this);
+    public RoomCreateResp Clone() {
+      return new RoomCreateResp(this);
     }
 
     /// <summary>Field number for the "user_id" field.</summary>
@@ -737,7 +734,7 @@ namespace PlayCli.ProtoMod {
     public string UserId {
       get { return userId_; }
       set {
-        userId_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        userId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -748,7 +745,7 @@ namespace PlayCli.ProtoMod {
     public string Timestamp {
       get { return timestamp_; }
       set {
-        timestamp_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        timestamp_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -767,7 +764,7 @@ namespace PlayCli.ProtoMod {
     public const int CellStatusFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::PlayCli.ProtoMod.Room CellStatus {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.CellStatus ? (global::PlayCli.ProtoMod.Room) responseMsg_ : null; }
+      get { return responseMsgCase_ == ResponseMsgOneofCase.CellStatus ? (global::PlayCli.ProtoMod.Room)responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.CellStatus;
@@ -778,7 +775,7 @@ namespace PlayCli.ProtoMod {
     public const int ErrorMsgFieldNumber = 5;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::PlayCli.ProtoMod.ErrorMsg ErrorMsg {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg ? (global::PlayCli.ProtoMod.ErrorMsg) responseMsg_ : null; }
+      get { return responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg ? (global::PlayCli.ProtoMod.ErrorMsg)responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.ErrorMsg;
@@ -799,106 +796,106 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void ClearResponseMsg () {
+    public void ClearResponseMsg() {
       responseMsgCase_ = ResponseMsgOneofCase.None;
       responseMsg_ = null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as RoomCreateResp);
+    public override bool Equals(object other) {
+      return Equals(other as RoomCreateResp);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (RoomCreateResp other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(RoomCreateResp other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (UserId != other.UserId) return false;
-      if (Timestamp != other.Timestamp) return false;
-      if (Status != other.Status) return false;
-      if (!object.Equals (CellStatus, other.CellStatus)) return false;
-      if (!object.Equals (ErrorMsg, other.ErrorMsg)) return false;
-      if (ResponseMsgCase != other.ResponseMsgCase) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (UserId != other.UserId)return false;
+      if (Timestamp != other.Timestamp)return false;
+      if (Status != other.Status)return false;
+      if (!object.Equals(CellStatus, other.CellStatus))return false;
+      if (!object.Equals(ErrorMsg, other.ErrorMsg))return false;
+      if (ResponseMsgCase != other.ResponseMsgCase)return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (UserId.Length != 0) hash ^= UserId.GetHashCode ();
-      if (Timestamp.Length != 0) hash ^= Timestamp.GetHashCode ();
-      if (Status != 0) hash ^= Status.GetHashCode ();
-      if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) hash ^= CellStatus.GetHashCode ();
-      if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) hash ^= ErrorMsg.GetHashCode ();
-      hash ^= (int) responseMsgCase_;
+      if (UserId.Length != 0)hash ^= UserId.GetHashCode();
+      if (Timestamp.Length != 0)hash ^= Timestamp.GetHashCode();
+      if (Status != 0)hash ^= Status.GetHashCode();
+      if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus)hash ^= CellStatus.GetHashCode();
+      if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg)hash ^= ErrorMsg.GetHashCode();
+      hash ^= (int)responseMsgCase_;
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (UserId.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (UserId);
+        output.WriteRawTag(10);
+        output.WriteString(UserId);
       }
       if (Timestamp.Length != 0) {
-        output.WriteRawTag (18);
-        output.WriteString (Timestamp);
+        output.WriteRawTag(18);
+        output.WriteString(Timestamp);
       }
       if (Status != 0) {
-        output.WriteRawTag (24);
-        output.WriteInt32 (Status);
+        output.WriteRawTag(24);
+        output.WriteInt32(Status);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) {
-        output.WriteRawTag (34);
-        output.WriteMessage (CellStatus);
+        output.WriteRawTag(34);
+        output.WriteMessage(CellStatus);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) {
-        output.WriteRawTag (42);
-        output.WriteMessage (ErrorMsg);
+        output.WriteRawTag(42);
+        output.WriteMessage(ErrorMsg);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (UserId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (UserId);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserId);
       }
       if (Timestamp.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Timestamp);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Timestamp);
       }
       if (Status != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size (Status);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Status);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize (CellStatus);
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(CellStatus);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize (ErrorMsg);
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ErrorMsg);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (RoomCreateResp other) {
+    public void MergeFrom(RoomCreateResp other) {
       if (other == null) {
         return;
       }
@@ -914,60 +911,60 @@ namespace PlayCli.ProtoMod {
       switch (other.ResponseMsgCase) {
         case ResponseMsgOneofCase.CellStatus:
           if (CellStatus == null) {
-            CellStatus = new global::PlayCli.ProtoMod.Room ();
+            CellStatus = new global::PlayCli.ProtoMod.Room();
           }
-          CellStatus.MergeFrom (other.CellStatus);
+          CellStatus.MergeFrom(other.CellStatus);
           break;
         case ResponseMsgOneofCase.ErrorMsg:
           if (ErrorMsg == null) {
-            ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg ();
+            ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
           }
-          ErrorMsg.MergeFrom (other.ErrorMsg);
+          ErrorMsg.MergeFrom(other.ErrorMsg);
           break;
       }
 
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              UserId = input.ReadString ();
+              UserId = input.ReadString();
               break;
             }
           case 18:
             {
-              Timestamp = input.ReadString ();
+              Timestamp = input.ReadString();
               break;
             }
           case 24:
             {
-              Status = input.ReadInt32 ();
+              Status = input.ReadInt32();
               break;
             }
           case 34:
             {
-              global::PlayCli.ProtoMod.Room subBuilder = new global::PlayCli.ProtoMod.Room ();
+              global::PlayCli.ProtoMod.Room subBuilder = new global::PlayCli.ProtoMod.Room();
               if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) {
-                subBuilder.MergeFrom (CellStatus);
+                subBuilder.MergeFrom(CellStatus);
               }
-              input.ReadMessage (subBuilder);
+              input.ReadMessage(subBuilder);
               CellStatus = subBuilder;
               break;
             }
           case 42:
             {
-              global::PlayCli.ProtoMod.ErrorMsg subBuilder = new global::PlayCli.ProtoMod.ErrorMsg ();
+              global::PlayCli.ProtoMod.ErrorMsg subBuilder = new global::PlayCli.ProtoMod.ErrorMsg();
               if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) {
-                subBuilder.MergeFrom (ErrorMsg);
+                subBuilder.MergeFrom(ErrorMsg);
               }
-              input.ReadMessage (subBuilder);
+              input.ReadMessage(subBuilder);
               ErrorMsg = subBuilder;
               break;
             }
@@ -978,7 +975,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class RoomReq : pb::IMessage<RoomReq> {
-    private static readonly pb::MessageParser<RoomReq> _parser = new pb::MessageParser<RoomReq> (() => new RoomReq ());
+    private static readonly pb::MessageParser<RoomReq> _parser = new pb::MessageParser<RoomReq>(() => new RoomReq());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<RoomReq> Parser { get { return _parser; } }
@@ -994,21 +991,21 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomReq () {
-      OnConstruction ();
+    public RoomReq() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomReq (RoomReq other) : this () {
+    public RoomReq(RoomReq other) : this() {
       key_ = other.key_;
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomReq Clone () {
-      return new RoomReq (this);
+    public RoomReq Clone() {
+      return new RoomReq(this);
     }
 
     /// <summary>Field number for the "key" field.</summary>
@@ -1018,86 +1015,86 @@ namespace PlayCli.ProtoMod {
     public string Key {
       get { return key_; }
       set {
-        key_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        key_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as RoomReq);
+    public override bool Equals(object other) {
+      return Equals(other as RoomReq);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (RoomReq other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(RoomReq other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Key != other.Key) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (Key != other.Key)return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (Key.Length != 0) hash ^= Key.GetHashCode ();
+      if (Key.Length != 0)hash ^= Key.GetHashCode();
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (Key.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (Key);
+        output.WriteRawTag(10);
+        output.WriteString(Key);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (Key.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Key);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Key);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (RoomReq other) {
+    public void MergeFrom(RoomReq other) {
       if (other == null) {
         return;
       }
       if (other.Key.Length != 0) {
         Key = other.Key;
       }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              Key = input.ReadString ();
+              Key = input.ReadString();
               break;
             }
         }
@@ -1107,7 +1104,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class RoomResp : pb::IMessage<RoomResp> {
-    private static readonly pb::MessageParser<RoomResp> _parser = new pb::MessageParser<RoomResp> (() => new RoomResp ());
+    private static readonly pb::MessageParser<RoomResp> _parser = new pb::MessageParser<RoomResp>(() => new RoomResp());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<RoomResp> Parser { get { return _parser; } }
@@ -1123,30 +1120,30 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomResp () {
-      OnConstruction ();
+    public RoomResp() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomResp (RoomResp other) : this () {
+    public RoomResp(RoomResp other) : this() {
       timestamp_ = other.timestamp_;
       switch (other.ResponseMsgCase) {
         case ResponseMsgOneofCase.RoomInfo:
-          RoomInfo = other.RoomInfo.Clone ();
+          RoomInfo = other.RoomInfo.Clone();
           break;
         case ResponseMsgOneofCase.Error:
-          Error = other.Error.Clone ();
+          Error = other.Error.Clone();
           break;
       }
 
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public RoomResp Clone () {
-      return new RoomResp (this);
+    public RoomResp Clone() {
+      return new RoomResp(this);
     }
 
     /// <summary>Field number for the "timestamp" field.</summary>
@@ -1156,7 +1153,7 @@ namespace PlayCli.ProtoMod {
     public string Timestamp {
       get { return timestamp_; }
       set {
-        timestamp_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        timestamp_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -1164,7 +1161,7 @@ namespace PlayCli.ProtoMod {
     public const int RoomInfoFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::PlayCli.ProtoMod.Room RoomInfo {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.RoomInfo ? (global::PlayCli.ProtoMod.Room) responseMsg_ : null; }
+      get { return responseMsgCase_ == ResponseMsgOneofCase.RoomInfo ? (global::PlayCli.ProtoMod.Room)responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.RoomInfo;
@@ -1175,7 +1172,7 @@ namespace PlayCli.ProtoMod {
     public const int ErrorFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::PlayCli.ProtoMod.ErrorMsg Error {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.Error ? (global::PlayCli.ProtoMod.ErrorMsg) responseMsg_ : null; }
+      get { return responseMsgCase_ == ResponseMsgOneofCase.Error ? (global::PlayCli.ProtoMod.ErrorMsg)responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.Error;
@@ -1196,88 +1193,88 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void ClearResponseMsg () {
+    public void ClearResponseMsg() {
       responseMsgCase_ = ResponseMsgOneofCase.None;
       responseMsg_ = null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as RoomResp);
+    public override bool Equals(object other) {
+      return Equals(other as RoomResp);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (RoomResp other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(RoomResp other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Timestamp != other.Timestamp) return false;
-      if (!object.Equals (RoomInfo, other.RoomInfo)) return false;
-      if (!object.Equals (Error, other.Error)) return false;
-      if (ResponseMsgCase != other.ResponseMsgCase) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (Timestamp != other.Timestamp)return false;
+      if (!object.Equals(RoomInfo, other.RoomInfo))return false;
+      if (!object.Equals(Error, other.Error))return false;
+      if (ResponseMsgCase != other.ResponseMsgCase)return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (Timestamp.Length != 0) hash ^= Timestamp.GetHashCode ();
-      if (responseMsgCase_ == ResponseMsgOneofCase.RoomInfo) hash ^= RoomInfo.GetHashCode ();
-      if (responseMsgCase_ == ResponseMsgOneofCase.Error) hash ^= Error.GetHashCode ();
-      hash ^= (int) responseMsgCase_;
+      if (Timestamp.Length != 0)hash ^= Timestamp.GetHashCode();
+      if (responseMsgCase_ == ResponseMsgOneofCase.RoomInfo)hash ^= RoomInfo.GetHashCode();
+      if (responseMsgCase_ == ResponseMsgOneofCase.Error)hash ^= Error.GetHashCode();
+      hash ^= (int)responseMsgCase_;
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (Timestamp.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (Timestamp);
+        output.WriteRawTag(10);
+        output.WriteString(Timestamp);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.RoomInfo) {
-        output.WriteRawTag (18);
-        output.WriteMessage (RoomInfo);
+        output.WriteRawTag(18);
+        output.WriteMessage(RoomInfo);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.Error) {
-        output.WriteRawTag (26);
-        output.WriteMessage (Error);
+        output.WriteRawTag(26);
+        output.WriteMessage(Error);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (Timestamp.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Timestamp);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Timestamp);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.RoomInfo) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize (RoomInfo);
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(RoomInfo);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.Error) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize (Error);
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Error);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (RoomResp other) {
+    public void MergeFrom(RoomResp other) {
       if (other == null) {
         return;
       }
@@ -1287,50 +1284,50 @@ namespace PlayCli.ProtoMod {
       switch (other.ResponseMsgCase) {
         case ResponseMsgOneofCase.RoomInfo:
           if (RoomInfo == null) {
-            RoomInfo = new global::PlayCli.ProtoMod.Room ();
+            RoomInfo = new global::PlayCli.ProtoMod.Room();
           }
-          RoomInfo.MergeFrom (other.RoomInfo);
+          RoomInfo.MergeFrom(other.RoomInfo);
           break;
         case ResponseMsgOneofCase.Error:
           if (Error == null) {
-            Error = new global::PlayCli.ProtoMod.ErrorMsg ();
+            Error = new global::PlayCli.ProtoMod.ErrorMsg();
           }
-          Error.MergeFrom (other.Error);
+          Error.MergeFrom(other.Error);
           break;
       }
 
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              Timestamp = input.ReadString ();
+              Timestamp = input.ReadString();
               break;
             }
           case 18:
             {
-              global::PlayCli.ProtoMod.Room subBuilder = new global::PlayCli.ProtoMod.Room ();
+              global::PlayCli.ProtoMod.Room subBuilder = new global::PlayCli.ProtoMod.Room();
               if (responseMsgCase_ == ResponseMsgOneofCase.RoomInfo) {
-                subBuilder.MergeFrom (RoomInfo);
+                subBuilder.MergeFrom(RoomInfo);
               }
-              input.ReadMessage (subBuilder);
+              input.ReadMessage(subBuilder);
               RoomInfo = subBuilder;
               break;
             }
           case 26:
             {
-              global::PlayCli.ProtoMod.ErrorMsg subBuilder = new global::PlayCli.ProtoMod.ErrorMsg ();
+              global::PlayCli.ProtoMod.ErrorMsg subBuilder = new global::PlayCli.ProtoMod.ErrorMsg();
               if (responseMsgCase_ == ResponseMsgOneofCase.Error) {
-                subBuilder.MergeFrom (Error);
+                subBuilder.MergeFrom(Error);
               }
-              input.ReadMessage (subBuilder);
+              input.ReadMessage(subBuilder);
               Error = subBuilder;
               break;
             }
@@ -1341,7 +1338,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class Room : pb::IMessage<Room> {
-    private static readonly pb::MessageParser<Room> _parser = new pb::MessageParser<Room> (() => new Room ());
+    private static readonly pb::MessageParser<Room> _parser = new pb::MessageParser<Room>(() => new Room());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<Room> Parser { get { return _parser; } }
@@ -1357,27 +1354,27 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Room () {
-      OnConstruction ();
+    public Room() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Room (Room other) : this () {
+    public Room(Room other) : this() {
       key_ = other.key_;
       hostId_ = other.hostId_;
       duelerId_ = other.duelerId_;
       status_ = other.status_;
       round_ = other.round_;
       cell_ = other.cell_;
-      cellStatus_ = other.cellStatus_.Clone ();
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      cellStatus_ = other.cellStatus_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public Room Clone () {
-      return new Room (this);
+    public Room Clone() {
+      return new Room(this);
     }
 
     /// <summary>Field number for the "key" field.</summary>
@@ -1387,7 +1384,7 @@ namespace PlayCli.ProtoMod {
     public string Key {
       get { return key_; }
       set {
-        key_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        key_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -1398,7 +1395,7 @@ namespace PlayCli.ProtoMod {
     public string HostId {
       get { return hostId_; }
       set {
-        hostId_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        hostId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -1409,7 +1406,7 @@ namespace PlayCli.ProtoMod {
     public string DuelerId {
       get { return duelerId_; }
       set {
-        duelerId_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        duelerId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -1448,119 +1445,119 @@ namespace PlayCli.ProtoMod {
 
     /// <summary>Field number for the "cell_status" field.</summary>
     public const int CellStatusFieldNumber = 7;
-    private static readonly pb::FieldCodec<global::PlayCli.ProtoMod.CellStatus> _repeated_cellStatus_codec = pb::FieldCodec.ForMessage (58, global::PlayCli.ProtoMod.CellStatus.Parser);
-    private readonly pbc::RepeatedField<global::PlayCli.ProtoMod.CellStatus> cellStatus_ = new pbc::RepeatedField<global::PlayCli.ProtoMod.CellStatus> ();
+    private static readonly pb::FieldCodec<global::PlayCli.ProtoMod.CellStatus> _repeated_cellStatus_codec = pb::FieldCodec.ForMessage(58, global::PlayCli.ProtoMod.CellStatus.Parser);
+    private readonly pbc::RepeatedField<global::PlayCli.ProtoMod.CellStatus> cellStatus_ = new pbc::RepeatedField<global::PlayCli.ProtoMod.CellStatus>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::PlayCli.ProtoMod.CellStatus> CellStatus {
       get { return cellStatus_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as Room);
+    public override bool Equals(object other) {
+      return Equals(other as Room);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (Room other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(Room other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Key != other.Key) return false;
-      if (HostId != other.HostId) return false;
-      if (DuelerId != other.DuelerId) return false;
-      if (Status != other.Status) return false;
-      if (Round != other.Round) return false;
-      if (Cell != other.Cell) return false;
-      if (!cellStatus_.Equals (other.cellStatus_)) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (Key != other.Key)return false;
+      if (HostId != other.HostId)return false;
+      if (DuelerId != other.DuelerId)return false;
+      if (Status != other.Status)return false;
+      if (Round != other.Round)return false;
+      if (Cell != other.Cell)return false;
+      if (!cellStatus_.Equals(other.cellStatus_))return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (Key.Length != 0) hash ^= Key.GetHashCode ();
-      if (HostId.Length != 0) hash ^= HostId.GetHashCode ();
-      if (DuelerId.Length != 0) hash ^= DuelerId.GetHashCode ();
-      if (Status != global::PlayCli.ProtoMod.Room.Types.Status.OnStart) hash ^= Status.GetHashCode ();
-      if (Round != 0) hash ^= Round.GetHashCode ();
-      if (Cell != 0) hash ^= Cell.GetHashCode ();
-      hash ^= cellStatus_.GetHashCode ();
+      if (Key.Length != 0)hash ^= Key.GetHashCode();
+      if (HostId.Length != 0)hash ^= HostId.GetHashCode();
+      if (DuelerId.Length != 0)hash ^= DuelerId.GetHashCode();
+      if (Status != global::PlayCli.ProtoMod.Room.Types.Status.OnStart)hash ^= Status.GetHashCode();
+      if (Round != 0)hash ^= Round.GetHashCode();
+      if (Cell != 0)hash ^= Cell.GetHashCode();
+      hash ^= cellStatus_.GetHashCode();
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (Key.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (Key);
+        output.WriteRawTag(10);
+        output.WriteString(Key);
       }
       if (HostId.Length != 0) {
-        output.WriteRawTag (18);
-        output.WriteString (HostId);
+        output.WriteRawTag(18);
+        output.WriteString(HostId);
       }
       if (DuelerId.Length != 0) {
-        output.WriteRawTag (26);
-        output.WriteString (DuelerId);
+        output.WriteRawTag(26);
+        output.WriteString(DuelerId);
       }
       if (Status != global::PlayCli.ProtoMod.Room.Types.Status.OnStart) {
-        output.WriteRawTag (32);
-        output.WriteEnum ((int) Status);
+        output.WriteRawTag(32);
+        output.WriteEnum((int)Status);
       }
       if (Round != 0) {
-        output.WriteRawTag (40);
-        output.WriteInt32 (Round);
+        output.WriteRawTag(40);
+        output.WriteInt32(Round);
       }
       if (Cell != 0) {
-        output.WriteRawTag (48);
-        output.WriteInt32 (Cell);
+        output.WriteRawTag(48);
+        output.WriteInt32(Cell);
       }
-      cellStatus_.WriteTo (output, _repeated_cellStatus_codec);
+      cellStatus_.WriteTo(output, _repeated_cellStatus_codec);
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (Key.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Key);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Key);
       }
       if (HostId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (HostId);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(HostId);
       }
       if (DuelerId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (DuelerId);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(DuelerId);
       }
       if (Status != global::PlayCli.ProtoMod.Room.Types.Status.OnStart) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize ((int) Status);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)Status);
       }
       if (Round != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size (Round);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Round);
       }
       if (Cell != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size (Cell);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Cell);
       }
-      size += cellStatus_.CalculateSize (_repeated_cellStatus_codec);
+      size += cellStatus_.CalculateSize(_repeated_cellStatus_codec);
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (Room other) {
+    public void MergeFrom(Room other) {
       if (other == null) {
         return;
       }
@@ -1582,50 +1579,50 @@ namespace PlayCli.ProtoMod {
       if (other.Cell != 0) {
         Cell = other.Cell;
       }
-      cellStatus_.Add (other.cellStatus_);
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      cellStatus_.Add(other.cellStatus_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              Key = input.ReadString ();
+              Key = input.ReadString();
               break;
             }
           case 18:
             {
-              HostId = input.ReadString ();
+              HostId = input.ReadString();
               break;
             }
           case 26:
             {
-              DuelerId = input.ReadString ();
+              DuelerId = input.ReadString();
               break;
             }
           case 32:
             {
-              Status = (global::PlayCli.ProtoMod.Room.Types.Status) input.ReadEnum ();
+              Status = (global::PlayCli.ProtoMod.Room.Types.Status)input.ReadEnum();
               break;
             }
           case 40:
             {
-              Round = input.ReadInt32 ();
+              Round = input.ReadInt32();
               break;
             }
           case 48:
             {
-              Cell = input.ReadInt32 ();
+              Cell = input.ReadInt32();
               break;
             }
           case 58:
             {
-              cellStatus_.AddEntriesFrom (input, _repeated_cellStatus_codec);
+              cellStatus_.AddEntriesFrom(input, _repeated_cellStatus_codec);
               break;
             }
         }
@@ -1637,7 +1634,7 @@ namespace PlayCli.ProtoMod {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static partial class Types {
       public enum Status {
-        [pbr::OriginalName ("ON_START")] OnStart = 0, [pbr::OriginalName ("ON_WAIT")] OnWait = 1, [pbr::OriginalName ("ON_HOST_TURN")] OnHostTurn = 2, [pbr::OriginalName ("ON_DUEL_TURN")] OnDuelTurn = 3, [pbr::OriginalName ("ON_END")] OnEnd = 4,
+        [pbr::OriginalName("ON_START")] OnStart = 0, [pbr::OriginalName("ON_WAIT")] OnWait = 1, [pbr::OriginalName("ON_HOST_TURN")] OnHostTurn = 2, [pbr::OriginalName("ON_DUEL_TURN")] OnDuelTurn = 3, [pbr::OriginalName("ON_END")] OnEnd = 4,
       }
 
     }
@@ -1646,7 +1643,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class CellStatus : pb::IMessage<CellStatus> {
-    private static readonly pb::MessageParser<CellStatus> _parser = new pb::MessageParser<CellStatus> (() => new CellStatus ());
+    private static readonly pb::MessageParser<CellStatus> _parser = new pb::MessageParser<CellStatus>(() => new CellStatus());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<CellStatus> Parser { get { return _parser; } }
@@ -1662,23 +1659,23 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public CellStatus () {
-      OnConstruction ();
+    public CellStatus() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public CellStatus (CellStatus other) : this () {
+    public CellStatus(CellStatus other) : this() {
       key_ = other.key_;
       turn_ = other.turn_;
       cellNum_ = other.cellNum_;
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public CellStatus Clone () {
-      return new CellStatus (this);
+    public CellStatus Clone() {
+      return new CellStatus(this);
     }
 
     /// <summary>Field number for the "key" field.</summary>
@@ -1688,7 +1685,7 @@ namespace PlayCli.ProtoMod {
     public string Key {
       get { return key_; }
       set {
-        key_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        key_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -1718,80 +1715,80 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as CellStatus);
+    public override bool Equals(object other) {
+      return Equals(other as CellStatus);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (CellStatus other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(CellStatus other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Key != other.Key) return false;
-      if (Turn != other.Turn) return false;
-      if (CellNum != other.CellNum) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (Key != other.Key)return false;
+      if (Turn != other.Turn)return false;
+      if (CellNum != other.CellNum)return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (Key.Length != 0) hash ^= Key.GetHashCode ();
-      if (Turn != 0) hash ^= Turn.GetHashCode ();
-      if (CellNum != 0) hash ^= CellNum.GetHashCode ();
+      if (Key.Length != 0)hash ^= Key.GetHashCode();
+      if (Turn != 0)hash ^= Turn.GetHashCode();
+      if (CellNum != 0)hash ^= CellNum.GetHashCode();
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (Key.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (Key);
+        output.WriteRawTag(10);
+        output.WriteString(Key);
       }
       if (Turn != 0) {
-        output.WriteRawTag (16);
-        output.WriteInt32 (Turn);
+        output.WriteRawTag(16);
+        output.WriteInt32(Turn);
       }
       if (CellNum != 0) {
-        output.WriteRawTag (24);
-        output.WriteInt32 (CellNum);
+        output.WriteRawTag(24);
+        output.WriteInt32(CellNum);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (Key.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Key);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Key);
       }
       if (Turn != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size (Turn);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Turn);
       }
       if (CellNum != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size (CellNum);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(CellNum);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (CellStatus other) {
+    public void MergeFrom(CellStatus other) {
       if (other == null) {
         return;
       }
@@ -1804,29 +1801,29 @@ namespace PlayCli.ProtoMod {
       if (other.CellNum != 0) {
         CellNum = other.CellNum;
       }
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              Key = input.ReadString ();
+              Key = input.ReadString();
               break;
             }
           case 16:
             {
-              Turn = input.ReadInt32 ();
+              Turn = input.ReadInt32();
               break;
             }
           case 24:
             {
-              CellNum = input.ReadInt32 ();
+              CellNum = input.ReadInt32();
               break;
             }
         }
@@ -1836,7 +1833,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class CellStatusReq : pb::IMessage<CellStatusReq> {
-    private static readonly pb::MessageParser<CellStatusReq> _parser = new pb::MessageParser<CellStatusReq> (() => new CellStatusReq ());
+    private static readonly pb::MessageParser<CellStatusReq> _parser = new pb::MessageParser<CellStatusReq>(() => new CellStatusReq());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<CellStatusReq> Parser { get { return _parser; } }
@@ -1852,14 +1849,14 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public CellStatusReq () {
-      OnConstruction ();
+    public CellStatusReq() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public CellStatusReq (CellStatusReq other) : this () {
+    public CellStatusReq(CellStatusReq other) : this() {
       userId_ = other.userId_;
       key_ = other.key_;
       switch (other.PlayerCase) {
@@ -1867,16 +1864,16 @@ namespace PlayCli.ProtoMod {
           IsPlayer = other.IsPlayer;
           break;
         case PlayerOneofCase.CellStatus:
-          CellStatus = other.CellStatus.Clone ();
+          CellStatus = other.CellStatus.Clone();
           break;
       }
 
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public CellStatusReq Clone () {
-      return new CellStatusReq (this);
+    public CellStatusReq Clone() {
+      return new CellStatusReq(this);
     }
 
     /// <summary>Field number for the "user_id" field.</summary>
@@ -1886,7 +1883,7 @@ namespace PlayCli.ProtoMod {
     public string UserId {
       get { return userId_; }
       set {
-        userId_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        userId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -1897,7 +1894,7 @@ namespace PlayCli.ProtoMod {
     public string Key {
       get { return key_; }
       set {
-        key_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        key_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -1905,7 +1902,7 @@ namespace PlayCli.ProtoMod {
     public const int IsPlayerFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bool IsPlayer {
-      get { return playerCase_ == PlayerOneofCase.IsPlayer ? (bool) player_ : false; }
+      get { return playerCase_ == PlayerOneofCase.IsPlayer ? (bool)player_ : false; }
       set {
         player_ = value;
         playerCase_ = PlayerOneofCase.IsPlayer;
@@ -1916,7 +1913,7 @@ namespace PlayCli.ProtoMod {
     public const int CellStatusFieldNumber = 4;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::PlayCli.ProtoMod.CellStatus CellStatus {
-      get { return playerCase_ == PlayerOneofCase.CellStatus ? (global::PlayCli.ProtoMod.CellStatus) player_ : null; }
+      get { return playerCase_ == PlayerOneofCase.CellStatus ? (global::PlayCli.ProtoMod.CellStatus)player_ : null; }
       set {
         player_ = value;
         playerCase_ = value == null ? PlayerOneofCase.None : PlayerOneofCase.CellStatus;
@@ -1937,97 +1934,97 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void ClearPlayer () {
+    public void ClearPlayer() {
       playerCase_ = PlayerOneofCase.None;
       player_ = null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as CellStatusReq);
+    public override bool Equals(object other) {
+      return Equals(other as CellStatusReq);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (CellStatusReq other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(CellStatusReq other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (UserId != other.UserId) return false;
-      if (Key != other.Key) return false;
-      if (IsPlayer != other.IsPlayer) return false;
-      if (!object.Equals (CellStatus, other.CellStatus)) return false;
-      if (PlayerCase != other.PlayerCase) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (UserId != other.UserId)return false;
+      if (Key != other.Key)return false;
+      if (IsPlayer != other.IsPlayer)return false;
+      if (!object.Equals(CellStatus, other.CellStatus))return false;
+      if (PlayerCase != other.PlayerCase)return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (UserId.Length != 0) hash ^= UserId.GetHashCode ();
-      if (Key.Length != 0) hash ^= Key.GetHashCode ();
-      if (playerCase_ == PlayerOneofCase.IsPlayer) hash ^= IsPlayer.GetHashCode ();
-      if (playerCase_ == PlayerOneofCase.CellStatus) hash ^= CellStatus.GetHashCode ();
-      hash ^= (int) playerCase_;
+      if (UserId.Length != 0)hash ^= UserId.GetHashCode();
+      if (Key.Length != 0)hash ^= Key.GetHashCode();
+      if (playerCase_ == PlayerOneofCase.IsPlayer)hash ^= IsPlayer.GetHashCode();
+      if (playerCase_ == PlayerOneofCase.CellStatus)hash ^= CellStatus.GetHashCode();
+      hash ^= (int)playerCase_;
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (UserId.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (UserId);
+        output.WriteRawTag(10);
+        output.WriteString(UserId);
       }
       if (Key.Length != 0) {
-        output.WriteRawTag (18);
-        output.WriteString (Key);
+        output.WriteRawTag(18);
+        output.WriteString(Key);
       }
       if (playerCase_ == PlayerOneofCase.IsPlayer) {
-        output.WriteRawTag (24);
-        output.WriteBool (IsPlayer);
+        output.WriteRawTag(24);
+        output.WriteBool(IsPlayer);
       }
       if (playerCase_ == PlayerOneofCase.CellStatus) {
-        output.WriteRawTag (34);
-        output.WriteMessage (CellStatus);
+        output.WriteRawTag(34);
+        output.WriteMessage(CellStatus);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (UserId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (UserId);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserId);
       }
       if (Key.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Key);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Key);
       }
       if (playerCase_ == PlayerOneofCase.IsPlayer) {
         size += 1 + 1;
       }
       if (playerCase_ == PlayerOneofCase.CellStatus) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize (CellStatus);
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(CellStatus);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (CellStatusReq other) {
+    public void MergeFrom(CellStatusReq other) {
       if (other == null) {
         return;
       }
@@ -2043,44 +2040,44 @@ namespace PlayCli.ProtoMod {
           break;
         case PlayerOneofCase.CellStatus:
           if (CellStatus == null) {
-            CellStatus = new global::PlayCli.ProtoMod.CellStatus ();
+            CellStatus = new global::PlayCli.ProtoMod.CellStatus();
           }
-          CellStatus.MergeFrom (other.CellStatus);
+          CellStatus.MergeFrom(other.CellStatus);
           break;
       }
 
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              UserId = input.ReadString ();
+              UserId = input.ReadString();
               break;
             }
           case 18:
             {
-              Key = input.ReadString ();
+              Key = input.ReadString();
               break;
             }
           case 24:
             {
-              IsPlayer = input.ReadBool ();
+              IsPlayer = input.ReadBool();
               break;
             }
           case 34:
             {
-              global::PlayCli.ProtoMod.CellStatus subBuilder = new global::PlayCli.ProtoMod.CellStatus ();
+              global::PlayCli.ProtoMod.CellStatus subBuilder = new global::PlayCli.ProtoMod.CellStatus();
               if (playerCase_ == PlayerOneofCase.CellStatus) {
-                subBuilder.MergeFrom (CellStatus);
+                subBuilder.MergeFrom(CellStatus);
               }
-              input.ReadMessage (subBuilder);
+              input.ReadMessage(subBuilder);
               CellStatus = subBuilder;
               break;
             }
@@ -2091,7 +2088,7 @@ namespace PlayCli.ProtoMod {
   }
 
   public sealed partial class CellStatusResp : pb::IMessage<CellStatusResp> {
-    private static readonly pb::MessageParser<CellStatusResp> _parser = new pb::MessageParser<CellStatusResp> (() => new CellStatusResp ());
+    private static readonly pb::MessageParser<CellStatusResp> _parser = new pb::MessageParser<CellStatusResp>(() => new CellStatusResp());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pb::MessageParser<CellStatusResp> Parser { get { return _parser; } }
@@ -2107,33 +2104,33 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public CellStatusResp () {
-      OnConstruction ();
+    public CellStatusResp() {
+      OnConstruction();
     }
 
-    partial void OnConstruction ();
+    partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public CellStatusResp (CellStatusResp other) : this () {
+    public CellStatusResp(CellStatusResp other) : this() {
       userId_ = other.userId_;
       key_ = other.key_;
       timestamp_ = other.timestamp_;
       status_ = other.status_;
       switch (other.ResponseMsgCase) {
         case ResponseMsgOneofCase.CellStatus:
-          CellStatus = other.CellStatus.Clone ();
+          CellStatus = other.CellStatus.Clone();
           break;
         case ResponseMsgOneofCase.ErrorMsg:
-          ErrorMsg = other.ErrorMsg.Clone ();
+          ErrorMsg = other.ErrorMsg.Clone();
           break;
       }
 
-      _unknownFields = pb::UnknownFieldSet.Clone (other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public CellStatusResp Clone () {
-      return new CellStatusResp (this);
+    public CellStatusResp Clone() {
+      return new CellStatusResp(this);
     }
 
     /// <summary>Field number for the "user_id" field.</summary>
@@ -2143,7 +2140,7 @@ namespace PlayCli.ProtoMod {
     public string UserId {
       get { return userId_; }
       set {
-        userId_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        userId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -2154,7 +2151,7 @@ namespace PlayCli.ProtoMod {
     public string Key {
       get { return key_; }
       set {
-        key_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        key_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -2165,7 +2162,7 @@ namespace PlayCli.ProtoMod {
     public string Timestamp {
       get { return timestamp_; }
       set {
-        timestamp_ = pb::ProtoPreconditions.CheckNotNull (value, "value");
+        timestamp_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -2184,7 +2181,7 @@ namespace PlayCli.ProtoMod {
     public const int CellStatusFieldNumber = 5;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::PlayCli.ProtoMod.CellStatus CellStatus {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.CellStatus ? (global::PlayCli.ProtoMod.CellStatus) responseMsg_ : null; }
+      get { return responseMsgCase_ == ResponseMsgOneofCase.CellStatus ? (global::PlayCli.ProtoMod.CellStatus)responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.CellStatus;
@@ -2195,7 +2192,7 @@ namespace PlayCli.ProtoMod {
     public const int ErrorMsgFieldNumber = 6;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::PlayCli.ProtoMod.ErrorMsg ErrorMsg {
-      get { return responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg ? (global::PlayCli.ProtoMod.ErrorMsg) responseMsg_ : null; }
+      get { return responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg ? (global::PlayCli.ProtoMod.ErrorMsg)responseMsg_ : null; }
       set {
         responseMsg_ = value;
         responseMsgCase_ = value == null ? ResponseMsgOneofCase.None : ResponseMsgOneofCase.ErrorMsg;
@@ -2216,115 +2213,115 @@ namespace PlayCli.ProtoMod {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void ClearResponseMsg () {
+    public void ClearResponseMsg() {
       responseMsgCase_ = ResponseMsgOneofCase.None;
       responseMsg_ = null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals (object other) {
-      return Equals (other as CellStatusResp);
+    public override bool Equals(object other) {
+      return Equals(other as CellStatusResp);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals (CellStatusResp other) {
-      if (ReferenceEquals (other, null)) {
+    public bool Equals(CellStatusResp other) {
+      if (ReferenceEquals(other, null)) {
         return false;
       }
-      if (ReferenceEquals (other, this)) {
+      if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (UserId != other.UserId) return false;
-      if (Key != other.Key) return false;
-      if (Timestamp != other.Timestamp) return false;
-      if (Status != other.Status) return false;
-      if (!object.Equals (CellStatus, other.CellStatus)) return false;
-      if (!object.Equals (ErrorMsg, other.ErrorMsg)) return false;
-      if (ResponseMsgCase != other.ResponseMsgCase) return false;
-      return Equals (_unknownFields, other._unknownFields);
+      if (UserId != other.UserId)return false;
+      if (Key != other.Key)return false;
+      if (Timestamp != other.Timestamp)return false;
+      if (Status != other.Status)return false;
+      if (!object.Equals(CellStatus, other.CellStatus))return false;
+      if (!object.Equals(ErrorMsg, other.ErrorMsg))return false;
+      if (ResponseMsgCase != other.ResponseMsgCase)return false;
+      return Equals(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode () {
+    public override int GetHashCode() {
       int hash = 1;
-      if (UserId.Length != 0) hash ^= UserId.GetHashCode ();
-      if (Key.Length != 0) hash ^= Key.GetHashCode ();
-      if (Timestamp.Length != 0) hash ^= Timestamp.GetHashCode ();
-      if (Status != 0) hash ^= Status.GetHashCode ();
-      if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) hash ^= CellStatus.GetHashCode ();
-      if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) hash ^= ErrorMsg.GetHashCode ();
-      hash ^= (int) responseMsgCase_;
+      if (UserId.Length != 0)hash ^= UserId.GetHashCode();
+      if (Key.Length != 0)hash ^= Key.GetHashCode();
+      if (Timestamp.Length != 0)hash ^= Timestamp.GetHashCode();
+      if (Status != 0)hash ^= Status.GetHashCode();
+      if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus)hash ^= CellStatus.GetHashCode();
+      if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg)hash ^= ErrorMsg.GetHashCode();
+      hash ^= (int)responseMsgCase_;
       if (_unknownFields != null) {
-        hash ^= _unknownFields.GetHashCode ();
+        hash ^= _unknownFields.GetHashCode();
       }
       return hash;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString () {
-      return pb::JsonFormatter.ToDiagnosticString (this);
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo (pb::CodedOutputStream output) {
+    public void WriteTo(pb::CodedOutputStream output) {
       if (UserId.Length != 0) {
-        output.WriteRawTag (10);
-        output.WriteString (UserId);
+        output.WriteRawTag(10);
+        output.WriteString(UserId);
       }
       if (Key.Length != 0) {
-        output.WriteRawTag (18);
-        output.WriteString (Key);
+        output.WriteRawTag(18);
+        output.WriteString(Key);
       }
       if (Timestamp.Length != 0) {
-        output.WriteRawTag (26);
-        output.WriteString (Timestamp);
+        output.WriteRawTag(26);
+        output.WriteString(Timestamp);
       }
       if (Status != 0) {
-        output.WriteRawTag (32);
-        output.WriteInt32 (Status);
+        output.WriteRawTag(32);
+        output.WriteInt32(Status);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) {
-        output.WriteRawTag (42);
-        output.WriteMessage (CellStatus);
+        output.WriteRawTag(42);
+        output.WriteMessage(CellStatus);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) {
-        output.WriteRawTag (50);
-        output.WriteMessage (ErrorMsg);
+        output.WriteRawTag(50);
+        output.WriteMessage(ErrorMsg);
       }
       if (_unknownFields != null) {
-        _unknownFields.WriteTo (output);
+        _unknownFields.WriteTo(output);
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize () {
+    public int CalculateSize() {
       int size = 0;
       if (UserId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (UserId);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserId);
       }
       if (Key.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Key);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Key);
       }
       if (Timestamp.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize (Timestamp);
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Timestamp);
       }
       if (Status != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size (Status);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Status);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize (CellStatus);
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(CellStatus);
       }
       if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize (ErrorMsg);
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ErrorMsg);
       }
       if (_unknownFields != null) {
-        size += _unknownFields.CalculateSize ();
+        size += _unknownFields.CalculateSize();
       }
       return size;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (CellStatusResp other) {
+    public void MergeFrom(CellStatusResp other) {
       if (other == null) {
         return;
       }
@@ -2343,65 +2340,65 @@ namespace PlayCli.ProtoMod {
       switch (other.ResponseMsgCase) {
         case ResponseMsgOneofCase.CellStatus:
           if (CellStatus == null) {
-            CellStatus = new global::PlayCli.ProtoMod.CellStatus ();
+            CellStatus = new global::PlayCli.ProtoMod.CellStatus();
           }
-          CellStatus.MergeFrom (other.CellStatus);
+          CellStatus.MergeFrom(other.CellStatus);
           break;
         case ResponseMsgOneofCase.ErrorMsg:
           if (ErrorMsg == null) {
-            ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg ();
+            ErrorMsg = new global::PlayCli.ProtoMod.ErrorMsg();
           }
-          ErrorMsg.MergeFrom (other.ErrorMsg);
+          ErrorMsg.MergeFrom(other.ErrorMsg);
           break;
       }
 
-      _unknownFields = pb::UnknownFieldSet.MergeFrom (_unknownFields, other._unknownFields);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom (pb::CodedInputStream input) {
+    public void MergeFrom(pb::CodedInputStream input) {
       uint tag;
-      while ((tag = input.ReadTag ()) != 0) {
+      while ((tag = input.ReadTag()) != 0) {
         switch (tag) {
-          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom (_unknownFields, input);
+          default : _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
           case 10:
             {
-              UserId = input.ReadString ();
+              UserId = input.ReadString();
               break;
             }
           case 18:
             {
-              Key = input.ReadString ();
+              Key = input.ReadString();
               break;
             }
           case 26:
             {
-              Timestamp = input.ReadString ();
+              Timestamp = input.ReadString();
               break;
             }
           case 32:
             {
-              Status = input.ReadInt32 ();
+              Status = input.ReadInt32();
               break;
             }
           case 42:
             {
-              global::PlayCli.ProtoMod.CellStatus subBuilder = new global::PlayCli.ProtoMod.CellStatus ();
+              global::PlayCli.ProtoMod.CellStatus subBuilder = new global::PlayCli.ProtoMod.CellStatus();
               if (responseMsgCase_ == ResponseMsgOneofCase.CellStatus) {
-                subBuilder.MergeFrom (CellStatus);
+                subBuilder.MergeFrom(CellStatus);
               }
-              input.ReadMessage (subBuilder);
+              input.ReadMessage(subBuilder);
               CellStatus = subBuilder;
               break;
             }
           case 50:
             {
-              global::PlayCli.ProtoMod.ErrorMsg subBuilder = new global::PlayCli.ProtoMod.ErrorMsg ();
+              global::PlayCli.ProtoMod.ErrorMsg subBuilder = new global::PlayCli.ProtoMod.ErrorMsg();
               if (responseMsgCase_ == ResponseMsgOneofCase.ErrorMsg) {
-                subBuilder.MergeFrom (ErrorMsg);
+                subBuilder.MergeFrom(ErrorMsg);
               }
-              input.ReadMessage (subBuilder);
+              input.ReadMessage(subBuilder);
               ErrorMsg = subBuilder;
               break;
             }

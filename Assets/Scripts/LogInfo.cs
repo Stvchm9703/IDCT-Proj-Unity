@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UIElements;
 public class LogInfo : MonoBehaviour {
     void Start () {
-        this.gameObject.GetComponent<Text> ().text =
+        // UnityEngine.UIElements.TextElement
+        this.gameObject.GetComponent<TextElement> ().text =
             this.transform.parent.gameObject.GetComponent<ScreenLog> ().Information;
     }
 }

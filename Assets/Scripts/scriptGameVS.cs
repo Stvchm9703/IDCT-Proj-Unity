@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections;
-using System.Threading;
+using System.Collections.Generic;
+//using System.Text;
+//using System.Threading;
 using System.Threading.Tasks;
+using Google.Protobuf;
 using Grpc.Core;
 using PlayCli.ProtoMod;
+//using SocketIOClient;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+// using UnityEngine.UIElements;
 using UnityEngine.UI;
 public class scriptGameVS : MonoBehaviour {
     // Background image from "board.png" asset
@@ -15,7 +20,7 @@ public class scriptGameVS : MonoBehaviour {
 
     public Texture2D cell;
     // List of sprites used in "cells" and other controls
-    public Sprite[] sprites;
+    public List<Sprite> sprites;
     // Control to output the "Indicator" state
     public Image imageIndicator;
     // Control to output the text near the "Indicator" image
@@ -32,15 +37,16 @@ public class scriptGameVS : MonoBehaviour {
     // Winner of game,  1 for "x", -1 for "o", 0 - draw. Valid only if isGameOver and not isDraw
     private ArrayList winnerCells;
     // Array of cells that take line or diagonal or both. Can be used for special effects, like stroke or blinking.
-    public int[] cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
-    private int[] sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
+    public List<int> cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
+    public List<GameObject> cellButton;
+    private List<int> sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
     // --------------------------------------------------------------------------
     // PlayCli implement 
     //  -1 == Host
     //  1 == Dueler
     private DuelConnObj DuelConn;
     public bool IsConnected = false;
-    public CancellationTokenSource close_tkn;
+    // public CancellationTokenSource close_tkn;
     public int player_sign = 1;
 
     // public DuelConnObjv2 
@@ -60,67 +66,51 @@ public class scriptGameVS : MonoBehaviour {
         //                           0 1 2
         // Cell array for the board: 3 4 5
         //                           6 7 8
-        cells = new int[9];
-        sums = new int[8]; // 3 Horizontal, 3 vertical and 2 diagonal
+        // cells = new List<int>(9) { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        sums = new List<int>(8) { 0, 0, 0, 0, 0, 0, 0, 0 }; // 3 Horizontal, 3 vertical and 2 diagonal
         winnerCells = new ArrayList();
+
         ImgBackground.SetActive(false);
         gameReset();
-        if (close_tkn == null) {
-            close_tkn = new CancellationTokenSource();
-            Debug.Log("close_tkn: " + close_tkn.IsCancellationRequested);
-        }
+        // GUIRenderCell();
         Debug.Log("room key:" + this.DuelConn.current_room.Key);
         player_sign = this.DuelConn.IsHost ? 1 : -1;
 
         InitRoomStatus();
         GUIRenderCell();
-        // hook event start
-        OnConnecterUpdate();
+        OnConnectionInit();
     }
-
-    // void Start()
-
     // --------------------------------------------------------------------------
     // Update everything
-    async void Update() {
-        if (isGameOver) {
-            return;
-        }
-        // gameUpdateIndicator();
-        // Debug.Log(DuelConn.get_only_status_stream);
+    void msgChatMsg(SocketIOClient.Arguments.ResponseArgs msgPack) {
+        Debug.Log(msgPack.RawText);
     }
-    async void OnConnecterUpdate() {
-        // var t = DuelConn.get_only_status_stream;
-        Debug.Log("is stream?");
-        Debug.Log("close token" + close_tkn.IsCancellationRequested);
 
-        try {
-            using(var t = DuelConn.StartGStream()) {
-                while (await t.ResponseStream.MoveNext(close_tkn.Token)) {
-                    // Debug.Log ("called");
-                    Debug.Log(t.ResponseStream.Current);
-                    var tok = t.ResponseStream.Current;
-                    if (tok.ErrorMsg == null) {
-                        Debug.Log(tok.CellStatus);
-                        VsPlayerCellClick(tok.CellStatus.CellNum);
-                    } else {
-                        ErrorMsgHandler(tok);
-                    }
-                    gameUpdateIndicator();
-                }
-            }
-        } catch (RpcException e) {
-            if (e.StatusCode == StatusCode.Cancelled) {
-                Debug.Log("Done");
-                GameAlertOpen("The Player is quit \n and the game room will be closed after 5 sec");
-
-            } else {
-                Debug.LogError(e);
-            }
+    void msgSystMsg(SocketIOClient.Arguments.ResponseArgs msgPack) {
+        Debug.Log(msgPack.Text);
+        var msg = CellStatusResp.Parser.ParseFrom(
+            ByteString.FromBase64(msgPack.Text.Trim('"')));
+        Debug.Log(msg);
+        if (msg.ErrorMsg == null) {
+            Debug.Log(msg.CellStatus);
+            VsPlayerCellClick(msg.CellStatus.CellNum);
+        } else {
+            ErrorMsgHandler(msg);
         }
+        gameUpdateIndicator();
+        return;
     }
+
+    void OnConnectionInit() {
+        Debug.Log("start to connect Broadcast");
+        // var KvMap = new Dictionary<string, SocketIOClient.EventHandler>();
+        // KvMap.Add("chat_msg_recv", msgChatMsg);
+        // KvMap.Add("syst_msg", msgSystMsg);
+        // await this.DuelConn.ConnectToBroadcast(null, KvMap);
+
+    }
+
     async void OnDestroy() {
-        this.close_tkn.Cancel();
         await this.DuelConn.ExitRoom();
     }
 
@@ -179,20 +169,37 @@ public class scriptGameVS : MonoBehaviour {
     }
 
     void GUIRenderCell() {
-        for (int i = 0; i < cells.Length; i++) {
-            Sprite sprite = sprites[0];
+        // Debug.Log("GUIRenderCell");
+        Debug.Log(cells.Count);
+        Debug.Log(this.sprites.Count);
+        int i = 0;
+        for (i = 0; i < cells.Count; i++) {
+            Debug.Log("i:" + i.ToString() + ",v:" + cells[i]);
+            Debug.Log(sprites[1].texture.name);
+            // Debug.Log(this.cellButton[i].GetComponent<Image>());
+            var tmp = this.cellButton[i];
+            Debug.Log("thia");
+            if (tmp == null) {
+                Debug.Log("thia");
+                tmp = GameObject.Find("cell" + i.ToString()).gameObject;
+                Debug.Log("thia");
+
+            }
+            Debug.Log("tmp[" + i.ToString() + "]" + tmp.name);
             if (cells[i] == 1) {
-                sprite = sprites[1];
+                Debug.Log("in 1");
+                this.cellButton[i].GetComponent<Image>().overrideSprite = sprites[1];
+                // this.cellButton[i].
+            } else if (cells[i] == -1) {
+                Debug.Log("in -1");
+                this.cellButton[i].GetComponent<Image>().overrideSprite = sprites[2];
             }
-            if (cells[i] == -1) {
-                sprite = sprites[2];
-            }
-            GameObject.Find("CellRendBox/cell" + i.ToString()).GetComponent<Image>().sprite = sprite;
         }
+        return;
     }
     public async void PlayerCellClick(int cell_num) {
-        Debug.Log(cell_num);
         Debug.Log("-----------------Self------------------");
+        Debug.Log(cell_num);
         if (cells[cell_num] == 0 &&
             !isGameOver &&
             this.DuelConn.able_update &&
@@ -220,13 +227,13 @@ public class scriptGameVS : MonoBehaviour {
     public void VsPlayerCellClick(int cell_num) {
         Debug.Log("-----------------VS------------------");
         Debug.Log(cell_num);
-        if (cells[cell_num] == 0 &&
-            !isGameOver
-        ) {
-            cellSetValue(cell_num, player_sign * -1);
-            GUIRenderCell();
-            onTurnComplete(this.player_sign * -1);
-        }
+        // if (cells[cell_num] == 0 &&
+        //     !isGameOver
+        // ) {
+        cellSetValue(cell_num, player_sign * -1);
+        GUIRenderCell();
+        onTurnComplete(this.player_sign * -1);
+        // }
         Debug.Log("-----------------End VS------------------");
     }
     // @OK 
@@ -238,7 +245,7 @@ public class scriptGameVS : MonoBehaviour {
     public void GameAlertOpen(string msg) {
 
         if (AlertPanel != null) {
-            this.AlertPanel.SetActiveRecursively(true);
+            this.AlertPanel.SetActive(true);
             this.AlertPanel.transform.Find("Text").gameObject.GetComponent<Text>().text = msg;
         }
     }
@@ -258,10 +265,12 @@ public class scriptGameVS : MonoBehaviour {
     // Resets cells and set all variables to defaults. Used in Start() and buttonResetGame.onClick.
     public void gameReset() {
         int i;
-        for (i = 0; i < cells.Length; i++) {
+        Debug.Log(cells);
+        for (i = 0; i < cells.Count; i++) {
             cells[i] = 0; // Fill with zeros
         }
-        for (i = 0; i < sums.Length; i++) {
+        Debug.Log(sums);
+        for (i = 0; i < sums.Count; i++) {
             sums[i] = 0; // Fill with zeros
         }
         winnerCells.Clear();
@@ -301,7 +310,7 @@ public class scriptGameVS : MonoBehaviour {
         }
 
         // Draw "Indicator" image
-        if (imageIndicator) {
+        if (imageIndicator != null) {
             if (!isGameOver) {
                 if (turn == 1) {
                     imageIndicator.sprite = sprites[1];
@@ -348,7 +357,7 @@ public class scriptGameVS : MonoBehaviour {
         // Verify is there winner. Get list of winning cells to blink, mark or something
         winner = 0;
         winnerCells.Clear();
-        for (int i = 0; i < sums.Length; i++) {
+        for (int i = 0; i < sums.Count; i++) {
             if (Math.Abs(sums[i]) >= 3) {
                 int a, b, c;
                 if (cellBySum(i, out a, out b, out c)) {
@@ -370,9 +379,9 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Event is called at the end of every turn.
     void onTurnComplete(int theTurn = 0) {
-        if (Math.Abs(theTurn) == 1) {
-            turn = theTurn;
-        }
+        // if (Math.Abs(theTurn) == 1) {
+        turn = theTurn;
+        // }
         // Override global value if parameter is set
         cellSumsUpdate();
 
@@ -400,7 +409,7 @@ public class scriptGameVS : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Sets value into calls[] array by index. Any changes of cells during the game process should be made using this method!
     bool cellSetValue(int index, int value = 0) {
-        if (index < 0 || index >= cells.Length) {
+        if (index < 0 || index >= cells.Count) {
             Debug.Log(string.Format("Invalid index parameter for setCellValue({0}, {1})", index, value));
             return false;
         }

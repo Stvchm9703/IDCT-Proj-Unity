@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,13 +13,14 @@ public class scriptGame : MonoBehaviour {
     public Texture2D cell;
     // List of sprites used in "cells" and other controls
     public Sprite[] sprites;
+    public List<Texture2D> CellT2D;
     // Control to output the "Indicator" state
     public Image imageIndicator;
     // Control to output the text near the "Indicator" image
     public Text textIndicator;
 
     // Swaps between 1 and -1 on each turn. -1 means "o" turn, 1 means "x" turn
-    private int turn;
+    int turn;
     // End of game flag. If true, winner contains result of the game
     public bool isGameOver;
     private int winner;
@@ -28,7 +30,8 @@ public class scriptGame : MonoBehaviour {
     public int[] cells; // Board cells. 1 for "x", -1 for "o", by default is Zero, means empty
     private int[] sums; // 3 Horizontal, 3 vertical and 2 diagonal sums to find best move or detect winning.
 
-    // Y coordinate for board of cells.
+    public GameObject GiveUpPanel;
+    private float cellWidth, cellSpace; // Space between cel
 
     // ==========================================================================
     // Unity specific
@@ -40,40 +43,91 @@ public class scriptGame : MonoBehaviour {
         //                           0 1 2
         // Cell array for the board: 3 4 5
         //                           6 7 8
-        cells = new int[9];
-        sums = new int[8]; // 3 Horizontal, 3 vertical and 2 diagonal
-        winnerCells = new ArrayList();
-        ImgBackground.SetActive(false);
+        EnvSetup();
         gameReset();
-        GUIRenderCell();
     }
     // void Start()
 
     // --------------------------------------------------------------------------
     // Update everything
     void Update() {
-        if (isGameOver)
+
+        if (isGameOver) {
             return;
-        if (turn == -1)
-            turnByAI(turn);
+        }
+        if (this.turn == -1) {
+            StartCoroutine(turnByAI(this.turn));
+        }
         gameUpdateIndicator();
         // if (turn == 1) turnByAI(turn); // AI for "x" player
     }
+    void OnGUI() {
+        if (!GiveUpPanel.activeSelf) {
+            GUIRenderCell();
+        }
 
+        // Draw "Indicator" text and image
+        // gameUpdateIndicator();
+    }
+    void EnvSetup() {
+        int ScreenHeight = Screen.height - 4;
+        int ScreenWidth = Screen.width - 4;
+        // float dwith = ImgBackground.GetComponent<RectTransform>().rect.width;
+        float DefaultRatio = ImgBackground.GetComponent<RectTransform>().rect.width / ImgBackground.GetComponent<RectTransform>().rect.height;
+        float ScreenRatio = ScreenWidth / ScreenHeight;
+        float wid = 0;
+
+        if (DefaultRatio < ScreenRatio) {
+            wid = ScreenHeight * DefaultRatio;
+        } else if (DefaultRatio > ScreenRatio) {
+            wid = ScreenWidth;
+        } else {
+            wid = ScreenWidth;
+        }
+        //                           0 1 2
+        // Cell array for the board: 3 4 5
+        //                           6 7 8
+        sums = new int[8] { 0, 0, 0, 0, 0, 0, 0, 0 }; // 3 Horizontal, 3 vertical and 2 diagonal
+        winnerCells = new ArrayList();
+
+        // Pixel sizes for Cells
+        cellWidth = (float)(wid / 3 * 0.9);
+
+        cellSpace = (float)(wid / 3 * 0.1);
+
+        if (Debug.isDebugBuild) {
+            Debug.Log(string.Format("Cell size is {0}x{1} offsets are: {2}, {3}", cellWidth, cellWidth, cellSpace, cellSpace));
+        }
+        ImgBackground.SetActive(false);
+        for (int i = 0; i < CellT2D.Count; i++) {
+            var newD = ScaleTexture(CellT2D[i], (int)cellWidth, (int)cellWidth);
+            CellT2D[i] = newD;
+        }
+    }
     void GUIRenderCell() {
+        // Debug.Log("GUIRenderCell");
+        float x = Screen.width;
+        float y = Screen.height;
+        Rect r = new Rect();
+        float beginX = (float)(Screen.width / 2 - (cellWidth / 0.9 * 1.5));
+        float beginY = (float)(Screen.height / 2 - (cellWidth / 0.9 * 1.5));
         for (int i = 0; i < cells.Length; i++) {
-            Sprite sprite = sprites[0];
+            x = (float)(beginX + (i % 3 * cellWidth) + ((i % 3 + 0.5) * cellSpace));
+            y = (float)(beginY + (i / 3 * cellWidth) + (i / 3 * cellSpace * 0.5));
+            r = new Rect(x, y, cellWidth, cellWidth);
+            var td = CellT2D[0];
             if (cells[i] == 1)
-                sprite = sprites[1];
+                td = CellT2D[1];
             if (cells[i] == -1)
-                sprite = sprites[2];
-            GameObject.Find("CellRendBox/cell" + i.ToString()).GetComponent<Image>().sprite = sprite;
+                td = CellT2D[2];
+            if (GUI.Button(r, td, GUIStyle.none)) {
+                PlayerCellClick(i);
+            }
         }
     }
     public void PlayerCellClick(int cell_num) {
         if (cells[cell_num] == 0 && !isGameOver) {
             cellSetValue(cell_num, 1);
-            GUIRenderCell();
             onTurnComplete(1);
         }
     }
@@ -206,22 +260,18 @@ public class scriptGame : MonoBehaviour {
     // --------------------------------------------------------------------------
     // Event is called at the end of every turn.
     void onTurnComplete(int theTurn = 0) {
-        if (Math.Abs(theTurn) == 1)
+        if (Math.Abs(theTurn) == 1) {
             turn = theTurn;
-        // Override global value if parameter is set
-
+        }
         cellSumsUpdate();
-
         if (cellEmptyCount() < 1) {
             gameStop(turn);
             return; // Stop game right there, there is no cells to make turn. Todo: Verify is it Draw?
         }
-
         if (gameIsThereWinner()) {
             gameStop(turn);
             return; // Stop game right there, somebody wins
         }
-
         turn = turn * -1; // Set turn to opposite value
     }
 
@@ -447,7 +497,7 @@ public class scriptGame : MonoBehaviour {
 
     // --------------------------------------------------------------------------
 
-    private int levelAI = 5; // 0 - no AI (manual play), from 1 to 5  - easy to hard AI
+    private int levelAI = 3; // 0 - no AI (manual play), from 1 to 5  - easy to hard AI
 
     IEnumerator turnByAI(int theTurn = 0) {
         if (levelAI < 1)
@@ -499,5 +549,16 @@ public class scriptGame : MonoBehaviour {
     }
 
     // --------------------------------------------------------------------------
-
+    private Texture2D ScaleTexture(Texture2D source, int targetWidth, int targetHeight) {
+        Texture2D result = new Texture2D(targetWidth, targetHeight, source.format, true);
+        Color[] rpixels = result.GetPixels(0);
+        float incX = (1.0f / (float)targetWidth);
+        float incY = (1.0f / (float)targetHeight);
+        for (int px = 0; px < rpixels.Length; px++) {
+            rpixels[px] = source.GetPixelBilinear(incX * ((float)px % targetWidth), incY * ((float)Mathf.Floor(px / targetWidth)));
+        }
+        result.SetPixels(rpixels, 0);
+        result.Apply();
+        return result;
+    }
 }

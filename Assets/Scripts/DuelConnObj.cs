@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Google.Protobuf;
 using Grpc.Core;
 using PlayCli;
 using PlayCli.ProtoMod;
+// using SocketIOClient;
 using UnityEngine;
 // using UnityEditor;
 
 public class DuelConnObj : MonoBehaviour {
     // Start is called before the first frame update
     public DuelConnector conn;
+    public WSConnect2 wsConnect;
+    List<System.EventHandler<WebSocketSharp.MessageEventArgs>> wscHandler = new List<System.EventHandler<WebSocketSharp.MessageEventArgs>>();
     public Room current_room;
-    public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
-    public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
+    // public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> stream_status;
+    // public AsyncServerStreamingCall<CellStatusResp> get_only_status_stream;
     public bool isBroadcast { get { return is_bc; } }
     bool is_bc = false;
     public bool able_update = false;
@@ -28,7 +32,9 @@ public class DuelConnObj : MonoBehaviour {
         Debug.Log("on Awake process - DuelConnObj");
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Connector");
         if (objs.Length > 1) {
-            Destroy(this.gameObject);
+            if (this.conn == null) {
+                Destroy(this.gameObject);
+            }
         } else {
             DontDestroyOnLoad(this.gameObject);
             this.gameObject.tag = "Connector";
@@ -39,6 +45,13 @@ public class DuelConnObj : MonoBehaviour {
         }
     }
 
+    public void Init() {
+        if (this.conn == null) {
+            ConfigFile = Config.LoadCfFile(PlayCli.ConfigPath.StreamingAsset).remote;
+            this.conn = new DuelConnector(ConfigFile);
+        }
+    }
+
     public async Task<bool> CreateRoom() {
         Debug.Log("on CreateRoom process - DuelConnObj");
         // open loading 
@@ -46,6 +59,7 @@ public class DuelConnObj : MonoBehaviour {
             this.current_room = await this.conn.CreateRoom();
             this.able_update = true;
             this.IsHost = true;
+            // await this.conn.ConnectToBroadcast();
             return true;
         } catch (RpcException e) {
             Debug.Log(e);
@@ -63,6 +77,14 @@ public class DuelConnObj : MonoBehaviour {
             current_room = ri.RoomInfo;
             this.able_update = is_player;
             this.IsHost = false;
+            if (is_player) {
+                await this.conn.UpdateRoomTurn(new CellStatus {
+                    Key = key,
+                        Turn = 0,
+                        CellNum = -21
+                });
+            }
+            // await this.conn.ConnectToBroadcast();
             return true;
         } catch (RpcException e) {
             Debug.Log(e);
@@ -79,7 +101,6 @@ public class DuelConnObj : MonoBehaviour {
         try {
             if (able_update) {
                 CellStatus d = await this.conn.UpdateRoomTurn(cs);
-                this.current_room.CellStatus.Add(d);
                 return true;
             }
             return false;
@@ -92,26 +113,15 @@ public class DuelConnObj : MonoBehaviour {
 
     public async Task<bool> ExitRoom() {
         bool status = false;
-        // Time.Wait
-        if (stream_status != null) {
-            var shutdownTkn = new CancellationTokenSource();
-            await stream_status.ResponseStream.MoveNext(shutdownTkn.Token);
-            shutdownTkn.Cancel();
-            stream_status = null;
-        }
-        if (get_only_status_stream != null) {
-            var shutdownTkn = new CancellationTokenSource();
-            await get_only_status_stream.ResponseStream.MoveNext(shutdownTkn.Token);
-            shutdownTkn.Cancel();
-            get_only_status_stream = null;
-        }
 
         if (this.current_room != null) {
             status = await this.conn.QuitRoom();
-            status = true;
             this.current_room = null;
         }
-
+        if (this.wsConnect != null) {
+            await this.wsConnect.DisconnectToBroadcast();
+            this.wsConnect = null;
+        }
         return status;
     }
 
@@ -128,36 +138,105 @@ public class DuelConnObj : MonoBehaviour {
         return null;
     }
 
-    public AsyncDuplexStreamingCall<CellStatusReq, CellStatusResp> StartBroadCast() {
-        if (stream_status != null)return this.stream_status;
-        if (current_room != null && stream_status == null) {
-            is_bc = true;
-            this.stream_status = this.conn.RoomStream();
-            return this.stream_status;
-        }
-        return null;
-    }
+    // public async Task<bool> ConnectToBroadcast(
+    //     Dictionary<string, string> ConnOption = null,
+    //     Dictionary<string, SocketIOClient.EventHandler> EventMap = null
+    // ) {
+    //     var option = ConnOption == null?
+    //     new Dictionary<string, string> { { "uid", this.conn.HostId },
+    //             { "test_eng", "Unity" },
+    //             { "room_key", this.current_room.Key },
+    //         }:
+    //         ConnOption;
 
-    public AsyncServerStreamingCall<CellStatusResp> StartGStream() {
-        if (get_only_status_stream != null) {
-            return this.get_only_status_stream;
+    //     Debug.Log("try connect to Broacast");
+    //     var conn = await this.conn.ConnectToBroadcast(
+    //         ConfigFile, option);
+    //     if (!conn) {
+    //         return false;
+    //     }
+    //     foreach (KeyValuePair<string, SocketIOClient.EventHandler> kv in EventMap) {
+    //         this.conn.AddEventFunc(kv.Key, kv.Value);
+    //     }
+    //     // StartCoroutine(PingReturn());
+    //     await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
+
+    //     return true;
+    // }
+    public async Task<bool> ConnectToBroadcast() {
+        Debug.Log("try connect to Broacast");
+        if (this.wsConnect == null) {
+            this.wsConnect = new WSConnect2();
         }
-        if (current_room != null && get_only_status_stream == null) {
-            get_only_status_stream = this.conn.GetRoomStream(
-                new CellStatusReq {
-                    Key = this.current_room.Key,
-                        UserId = this.conn.HostId,
-                }
+        var conn = await this.wsConnect.ConnectToBroadcast(
+            this.current_room.Key, ConfigFile, wscHandler);
+        if (!conn) {
+            return false;
+        }
+        // await this.conn.RoomBroadcast.EmitAsync("join_room", this.current_room.Key);
+        return true;
+    }
+    ///<method>
+    ///     For Socket-IO-Impl 
+    /// </method>
+    // public bool AddEventFunc(string eventName, EventHandler func, params EventHandler[] extraFunc) {
+    //     return this.conn.AddEventFunc(eventName, func, extraFunc);
+    // }
+
+    ///<method>
+    ///     For WebSocket-Impl 
+    /// </method>
+    // public bool AddEventFunc(System.Action<Websocket.Client.ResponseMessage> messageEvent) {
+    //     this.wsConnect.AddEventFunc(messageEvent);
+    //     return true;
+    // }
+
+    ///<method>
+    ///     For WebSocket-Impl 
+    /// </method>
+    // public bool AddEventFunc(System.Action<CellStatusResp> func) {
+    //     this.wsConnect.AddEventFunc((msg) => {
+    //         var MsgBlock = CellStatusResp.Parser.ParseFrom(
+    //             ByteString.FromBase64(
+    //                 msg.Text.Trim('"')
+    //             )
+    //         );
+    //         func(MsgBlock);
+    //     });
+    //     return true;
+    // }
+
+    ///<method>
+    ///     For WebSocket-Impl 2
+    /// </method>
+    public bool AddPendingEventFunc(System.EventHandler<WebSocketSharp.MessageEventArgs> funcHandler) {
+        // if (this.wsConnect != null) {
+        //     this.wsConnect.AddEventFunc(funcHandler);
+        // }
+        this.wscHandler.Add(funcHandler);
+        return true;
+    }
+    public bool AddPendingEventFunc(System.EventHandler<CellStatusResp> funcHandler) {
+        var wrapFunc = new System.EventHandler<WebSocketSharp.MessageEventArgs>((co, msg) => {
+            Debug.Log($"sender:{co.ToString()}");
+            Debug.Log($"Msg :{msg.Type.ToString()}");
+            var msgBlock = CellStatusResp.Parser.ParseFrom(
+                msg.RawData
             );
-            return this.get_only_status_stream;
-        }
-
-        return null;
+            funcHandler(co, msgBlock);
+        });
+        // if (this.wsConnect != null) {
+        //     return this.wsConnect.AddEventFunc(wrapFunc);
+        // }
+        this.wscHandler.Add(wrapFunc);
+        return true;
     }
-    async void Destroy() {
-        // this.conn destruct call;
-        if (stream_status != null) {
-            Debug.Log(stream_status);
-        }
+
+    public async Task<bool> DisconnectToBroadcast() {
+        return await this.wsConnect.DisconnectToBroadcast();
+    }
+
+    void Destroy() {
+        this.DisconnectToBroadcast();
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-public class scriptGame_copy : MonoBehaviour {
+public class scriptGame_copy_copy : MonoBehaviour {
     // Background image from "board.png" asset
     public Texture2D background;
     // Cell image from "cell.png" asset
