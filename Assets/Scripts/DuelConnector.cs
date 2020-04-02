@@ -161,8 +161,6 @@ namespace PlayCli {
         //  --------------------------------------------
         // Socket-IO
 
-      
-
         ~DuelConnector() {
             // this.DisconnectToBroadcast();
             this.client = null;
